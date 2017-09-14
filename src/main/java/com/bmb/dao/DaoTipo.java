@@ -26,4 +26,56 @@ public class DaoTipo {
             System.out.println("Não foi possível cadastrar o tipo");
         }
     }
+    
+    public static void alterarTipo(Tipo tipo){
+    	try{
+    		for(int i = 0; i < tipos.size(); i++){
+    			if(tipos.get(i).getIdTipo() == (tipo.getIdTipo())){
+    				tipos.add(i, tipo);
+    				break;
+    			}
+    		}
+    	}catch(Exception e){
+    		System.out.println("Não foi possível alterar o tipo");
+    	}
+    }
+    
+    public static Tipo obter(int idTipo){
+    	Tipo tipo = new Tipo();
+
+    	try{
+    		for(int i = 0; i < tipos.size(); i++){
+    			if(tipos.get(i).getIdTipo() == idTipo){
+    				tipo = tipos.get(i);
+    				break;
+    			} 
+    		}
+    	} catch(Exception e){
+    		System.out.println("Não foi possível obter o tipo");
+    	}
+    	return tipo;
+    }
+    
+    public static List<Tipo> obter(){
+    	List<Tipo> tiposCadastrados = new ArrayList<>();
+    	try{
+    		tiposCadastrados = tipos;
+    	}catch(Exception e){
+    		System.out.println("Não foi possível obter os tipos");
+    	}
+    	return tiposCadastrados;
+    }
+    
+    public static void deletarTipo(int idTipo){
+    	try{
+    		for(int i = 0; i < tipos.size(); i++){
+    			if(tipos.get(i).getIdTipo() == idTipo){
+    				tipos.remove(i);
+    				break;
+    			} 
+    		}
+    	} catch(Exception e){
+    		System.out.println("Não foi possível remover o tipo");
+    	}
+    }
 }
