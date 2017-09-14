@@ -25,15 +25,15 @@
 				<table class="table table-hover">
 					<tr>
 						<th>ID</th>
-						<th>Marca</th> 
+						<th>Tipo</th> 
 					</tr>
 					<tr>
 						<td>0</td>
-						<td>Skol</td> 
+						<td>Cerveja</td> 
 					</tr>
 					<tr>
 						<td>1</td>
-						<td>Budweiser</td> 
+						<td>Vinho</td> 
 					</tr>
 				</table>
 			</div>
@@ -46,12 +46,12 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Cadastro de Marca</h4>
+						<h4 class="modal-title">Cadastro de Tipo</h4>
 					</div>
 					<div class="modal-body">
-						<form action="MarcaCadastrar">
-							<label for="marca">Marca:</label>
-							<input type="text" class="form-control" name="marca">
+						<form action="TipoCadastrar">
+							<label for="tipo">Tipo:</label>
+							<input type="text" class="form-control" name="tipo">
 							<input type="hidden" name="country" value="0">						
 						</form>
 					</div>
@@ -71,12 +71,12 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Alterar Marca</h4>
+						<h4 class="modal-title">Alterar Tipo</h4>
 					</div>
 					<div class="modal-body">
-						<form action="MarcaAlterar">
-							<label for="marca">Marca:</label>
-							<input type="" class="form-control" name="marca">
+						<form action="TipoAlterar">
+							<label for="tipo">Tipo:</label>
+							<input type="" class="form-control" name="tipo">
 							<input type="hidden" name="country" value="0">
 
 							<button type="reset" class="btn btn-danger">Limpar</button>
@@ -97,7 +97,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Cadastro de Marca</h4>
+						<h4 class="modal-title">Cadastro de Tipo</h4>
 					</div>
 					<div class="modal-body">
 						<h3>Deseja realmente excluir?</h3> 											

@@ -1,4 +1,3 @@
-
 package com.bmb.model;
 
 public class Marca {
