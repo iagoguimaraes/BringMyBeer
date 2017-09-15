@@ -20,6 +20,18 @@
         <servlet-name>ListarTipo</servlet-name>
         <servlet-class>com.bmb.servlet.ListarTipo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CadastrarProduto</servlet-name>
+        <servlet-class>com.bmb.servlet.CadastrarProduto</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListarProduto</servlet-name>
+        <servlet-class>com.bmb.servlet.ListarProduto</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarProduto</servlet-name>
+        <servlet-class>com.bmb.servlet.EditarProduto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -39,6 +51,18 @@
     <servlet-mapping>
         <servlet-name>ListarTipo</servlet-name>
         <url-pattern>/ListarTipo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CadastrarProduto</servlet-name>
+        <url-pattern>/CadastrarProduto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListarProduto</servlet-name>
+        <url-pattern>/ListarProduto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarProduto</servlet-name>
+        <url-pattern>/EditarProduto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
