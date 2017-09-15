@@ -7,6 +7,7 @@ package com.bmb.controller;
 
 import com.bmb.dao.DaoTipo;
 import com.bmb.model.Tipo;
+import java.util.List;
 
 /**
  *
@@ -45,11 +46,12 @@ public class ControllerTipo {
     	}
     }
     
-    public static void obter(){
+    public static List<Tipo> obter(){
     	try{
-    		DaoTipo.obter();
+    		return DaoTipo.obter();
     	}catch(Exception e){
     		System.out.println("Não foi possível fazer a chamada dod método 'obter lista de Tipos'" + "/n"+ e);
+                return null;
     	}
     }
 }

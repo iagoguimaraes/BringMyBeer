@@ -5,6 +5,8 @@
  */
 package com.bmb.servlet;
 
+import com.bmb.controller.ControllerTipo;
+import com.bmb.model.Tipo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,18 +31,17 @@ public class CadastrarTipo extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CadastrarTipo</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CadastrarTipo at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            
+        
+        try{
+            Tipo tipo = new Tipo();
+            tipo.setTipo(request.getParameter("tipo"));
+            ControllerTipo.cadastrarTipo(tipo);
+            request.getRequestDispatcher("./ListarTipo").forward(request, response);
+        }catch(Exception e){
+            System.err.println("ERROR-----> " + e);
+            request.getSession().setAttribute("erro", "Algo de Errado Ocorreu: " + e.getMessage());
+            request.getRequestDispatcher("./ListarTipo").forward(request, response);
         }
     }
 
