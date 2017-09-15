@@ -4,9 +4,41 @@
         <servlet-name>NewServlet</servlet-name>
         <servlet-class>com.bmb.controller.NewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CadastrarTipo</servlet-name>
+        <servlet-class>com.bmb.servlet.CadastrarTipo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarTipo</servlet-name>
+        <servlet-class>com.bmb.servlet.EditarTipo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeletarTipo</servlet-name>
+        <servlet-class>com.bmb.servlet.DeletarTipo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListarTipo</servlet-name>
+        <servlet-class>com.bmb.servlet.ListarTipo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CadastrarTipo</servlet-name>
+        <url-pattern>/CadastrarTipo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarTipo</servlet-name>
+        <url-pattern>/EditarTipo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletarTipo</servlet-name>
+        <url-pattern>/DeletarTipo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListarTipo</servlet-name>
+        <url-pattern>/ListarTipo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
