@@ -20,5 +20,4 @@ public class SQLConnection {
             throw new Exception("Erro ao fazer conexao com banco de dados: " + e.getMessage());
         }
     }
-
 }
