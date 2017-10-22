@@ -1,0 +1,50 @@
+<div class="page-header text-center">
+    <h1>Register {{photos.title}}</h1>
+</div>
+
+<div class="alert alert-info" ng-if="message.length">
+    {{message}}
+</div>
+
+<form novalidate name="form" class="row" ng-submit="submit()">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Título</label>
+            <input name="title" ng-model="photos.title" class="form-control" required minlength=3/>    
+            <div ng-show="form.title.$error.required && form.$submitted" class="alert alert-danger">
+                    This field is required
+            </div>
+            <div ng-show="form.title.$error.minlength && form.$submitted" class="alert alert-danger">
+                    This field must contain at least 3 characteres.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>URL</label>
+            <input name="url" ng-model="photos.url" class="form-control" required/>
+            <div ng-show="form.url.$error.required && form.$submitted" class="alert alert-danger">
+                    This field is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Descrição</label>
+            <textarea name="description" ng-model="photos.desc"  class="form-control"/>
+            </textarea>
+        </div>
+        <groups></groups>
+        <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">
+            Salvar
+        </button>
+            <a href="/" class="btn btn-primary" focused>Voltar</a>
+        <hr>
+    </div>
+    <div class="col-md-6">
+        <my-photo url="{{photos.url}}" titulo="{{photos.title}}"></my-photo>
+    </div>
+</form>
+
+<style>
+    option{
+        text-transform: capitalize;
+    }
+</style>

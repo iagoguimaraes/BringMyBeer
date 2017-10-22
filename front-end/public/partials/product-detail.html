@@ -1,0 +1,56 @@
+<nav aria-label="breadcrumb" role="navigation">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+    <li class="breadcrumb-item"><a href="/products/category/{{product.category}}">{{product.category}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{product.name}}</li>
+  </ol>
+</nav>
+<div class="row">
+	<div class="col-md-6">
+		<div id="carouselExampleControls2" class="carousel slide" data-keyboard="true" data-pause="true">
+		  	<div class="carousel-inner">
+		  		<div class="carousel-item active">
+				      <img class="d-block w-100" src="{{product.images[0]}}" alt="First slide">
+				</div>
+		  			<div class="carousel-item" ng-repeat="image in product.images track by $index" ng-if="$index > 0">
+				      <img class="d-block w-100" src="{{image}}" alt="First slide">
+				    </div>
+			</div>
+			<a class="carousel-control-prev bg-dark" href="#carouselExampleControls2" ng-click="prevent();" role="button" data-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next bg-dark" href="#carouselExampleControls2" ng-click="prevent();"  role="button" data-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Next</span>
+			</a>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<h2>{{product.name}}</h2>
+		<hr>
+		<p class="text-secondary">{{product.desc}}</p>
+		<p class="text-right"><h5 class="text-success text-center">Preço R$ {{product.price | currency: 2}}</h5></p>
+		<div class="btn-group" style="width: 100%">
+			<a href="/checkout" style="width: 50%" class="btn btn-default btn-success">
+				Comprar
+			</a>
+			<a style="width: 50%" class="btn btn-default btn-primary">
+				Adicionar ao Carrinho
+			</a>
+		</div>
+		<div class="card mt-3">
+			<div class="card-header">
+				<h5 class="card-title">Calcular Frete</h5>
+			</div>
+			<div class="card-body">
+				<div class="input-group">
+					<input type="text" placeholder="CEP 044444-10" class="form-control"/>
+					<span class="input-group-btn">
+				        <button class="btn btn-warning" type="button">Buscar</button>
+				    </span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

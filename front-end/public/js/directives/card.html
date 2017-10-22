@@ -1,0 +1,11 @@
+<div class="card product rounded-0">
+  <img class="card-img-top" ng-click="detail()" src="{{url}}" alt="Card image cap">
+  <div class="card-body">
+    <h6 class="card-title" ng-click="detail()">{{title}}</h6>
+    <p class="card-text" ng-click="detail()">{{desc}}</p>
+   	<div class="body-bottom">
+   		<p class="text-secondary">{{price | currency : 'R$' : 2}}</p>
+    	<button type="button" ng-click="action()" class="btn btn-primary">Add ao carrinho</button>
+   	</div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<nav class="navbar navbar-expand-lg navbar-light color-primary text-center">
+	<div class="container">
+	  	<a class="navbar-brand name-company" href="#">
+	  		<i class="fa fa-beer" aria-hidden="true"></i>
+	  		Bring My Beer
+	  	</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		</button>
+		  	<form class="form-group pt-3 col-md-6 col-sm-12 mx-auto">
+		      <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+		      <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+		      <div>
+		      </div>
+		    </form>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<i class="fa fa-user-o" aria-hidden="true"></i>
+						Minha Conta
+					</a>
+				<!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
+				</li>
+				<li class="nav-item">
+					<div class="dropdown" ng-controller="MenuController">
+						<a class="nav-link" ng-click="test()" data-toggle="collapse" data-target="#navbarToggleExternalContent">
+							<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+								Meu Carrinho
+							<div class="cart-cont" ng-if="products.length">
+								<span>{{products.length}}</span>
+							</div>
+						</a>
+						<div ng-if="products.length" class="collapse" id="navbarToggleExternalContent" style="background: transparent; border: none; left: -150px; position: absolute; overflow-y:auto; max-height: 500px;">
+							<div id="table-container" class="table box-shadow" style="position: relative; z-index: 1" >
+						  		<div class=" color-primary text-white px-5 py-3">
+						  			<p class="table-header-desc text-left">Minhas Beers<span class="text-right">SubTotal: $5.00</span></p>
+						  		</div>
+								<div class="">
+									<input type="text" class="form-control rounded-0" placeholder="search for.." ng-model="searchProduct">
+								</div>
+								<div class="lines" ng-repeat="product in products | filter: searchProduct">
+								   	<div class="cols">
+								   		<b>{{product.name}}</b> <br>
+									 	<img ng-src="{{product.images[0]}}" width=60 class="img-circle">
+								   	</div>
+								   	<div class="cols">
+									 	<b>Descrição</b><br>
+									 	{{product.desc | limitTo: 30}}
+								    </div>
+								    <div class="cols">
+										<b>Valor</b><br>
+										{{product.price}}
+								    </div>
+								    <div class="cols" style="vertical-align: middle">
+								    	<button ng-click="removeProduct(product)" type="button" class="btn btn-danger">Remover</button>
+								    </div>
+								</div>
+						   	</div>
+						   	<div class="text-right">
+						   		<a class="btn btn-success" href="/checkout">Finalizar Pedido</a>
+						   	</div>
+						</div>
+					</div>
+				</li>
+		      	<li class="hidden nav-item">
+			      	<a class="nav-link" href="/home">
+			      		<i class="fa fa-home" aria-hidden="true"></i>
+			      		Home
+			      	</a>
+		      	</li>			      
+		      	<li class="hidden nav-item">
+			      	<a class="nav-link" href="/list-product/cervejas">
+			      		<i class="fa fa-beer" aria-hidden="true"></i>
+			      		Cervejas
+			      	</a>
+		      	</li>			      
+		      	<li class="hidden nav-item">
+			      	<a class="nav-link" href="/list-product/vinhos">
+			      		<i class="fa fa-glass" aria-hidden="true"></i>
+			      		Vinhos
+			      	</a>
+		      	</li>			      
+		      	<li class="hidden nav-item">
+			      	<a class="nav-link" href="/list-product/outros">
+			      		Outros
+			      	</a>
+		      	</li>
+<!-- 		      <li class="nav-item">
+		        <a class="nav-link" href="#">Disabled</a>
+		      </li> -->
+		    </ul>
+		</div>
+	</div>
+</nav>
+<nav class="navbar navbar-expand-lg navbar-light color-primary text-center" style="z-index: -1;">
+  	<div class="container">
+	    <div class="collapse navbar-collapse ">
+		    <a class="text-dark nav-item nav-link active" href="/home">
+		    	<i class="fa fa-home" aria-hidden="true"></i>
+		    	Home
+		    </a>
+		    <a class="text-dark nav-item nav-link" href="/list-product/cervejas">
+		    	<i class="fa fa-beer" aria-hidden="true"></i>
+		    	Cervejas
+		    </a>
+		    <a class="text-dark nav-item nav-link" href="/list-product/vinhos">
+		    	<i class="fa fa-glass" aria-hidden="true"></i>
+		    	Vinhos
+		    </a>
+		    <a class="text-dark nav-item nav-link" href="/list-product/outros">Outros</a>
+		</div>
+	</div>
+</nav>
