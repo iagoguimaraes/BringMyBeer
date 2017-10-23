@@ -1,5 +1,5 @@
 <div class="row no-gutters">
-	<div class="col-md-3 filters bg-dark text-secondary">
+	<div class="col-md-3 filters bg-dark text-secondary pb-1">
 		<label class="text-center pt-1" style="width: 100%" for="">Categorias</label>
 		<div class="btn-group" style="width: 100%">
 			<button ng-click="all()"  type="button" style="width: 50%" class="btn border-bottom-0 border-left-0 border-right-0 btn-outline-secondary rounded-0">Todos</button>
@@ -12,7 +12,6 @@
 		<div class="form-group pt-1 px-1 text-center">
 			<label for="price">Preço: R{{price | currency}}</label>
 			<input ng-change="searchByPrice()" ng-model-options="{debounce: 500}" ng-model="price" class="form-control" type="range" name="price" max="999" style="width: 100%;">
-
 		</div>
 		<label class="text-center pt-1" style="width: 100%" for="">Buscar Por</label>
 		<div class="form-group text-center">
@@ -38,18 +37,21 @@
 			  </label>
 			</div>
 		</div>
+		<div class="text-center">
+			<button class="btn-outline-secondary btn rounded-0" ng-click="cleanFilter()">Limpar filtros</button>
+		</div>
 	</div>
 	<div class="col-md-9">
 		<div class="row no-gutters">
-			<div ng-repeat="product in productList | orderBy: ['category', 'name']" class="col-md-4 col-sm-6">
-			<card title="{{product.name}}" 
-				  url="{{product.images[0]}}"
-				  desc="{{product.desc | limitTo: 50}}..."
-				  price="{{product.price}}"
-				  action="addProduct(product)"
-				  detail="goToDetail(product._id)">
-			</card>	
-		</div>
+			<div ng-repeat="product in productList | orderBy: ['category', 'name']" class="col-md-4 col-sm-6 card-animation">
+				<card title="{{product.name}}" 
+					  url="{{product.images[0]}}"
+					  desc="{{product.desc | limitTo: 50}}..."
+					  price="{{product.price}}"
+					  action="addProduct(product)"
+					  detail="goToDetail(product._id)">
+				</card>	
+			</div>
 		</div>
 	</div>
 </div>

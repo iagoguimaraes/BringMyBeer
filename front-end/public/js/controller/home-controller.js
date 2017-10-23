@@ -18,10 +18,10 @@ angular.module('bringmybeer').controller('HomeController', function(productServi
 	};
 
 	$scope.all = function(){
-			params.category = 'all';
-			params.price = 500;
-			params.off = false;
-			params.sale = false;
+			params.category = $scope.category = 'all';
+			params.price = $scope.price = 500;
+			params.off = $scope.off = false;
+			params.sale = $scope.sale = false;
 			$scope.searchFilter();
 	}
 
@@ -71,5 +71,13 @@ angular.module('bringmybeer').controller('HomeController', function(productServi
 		cartService.addProduct(product);
 	}
 
+
+	$scope.cleanFilter = function(){
+		params.category = $scope.category = 'all';
+		params.price = $scope.price = 500;
+		params.off = $scope.off = false;
+		params.sale = $scope.sale = false;
+		$scope.searchFilter();
+	}
 
 });

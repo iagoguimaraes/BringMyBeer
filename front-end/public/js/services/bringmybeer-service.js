@@ -7,13 +7,19 @@ angular.module('mybeerService', ['ngResource'])
     });
 }).factory('categoryResource', function($resource){
     // { params: { category: '@category', price: '@price', sale: '@sale', off: '@off'} }
-    return $resource('/products/filters', { category: '@category', price: '@price', sale: '@sale', off: '@off'}, {
+    return $resource('/products/filters', {params: '@params'}, {
         'update': {
             method: 'PUT'
         }
     });
-}).factory('productService', function(photoResource, categoryResource, $q, $rootScope, cartService){
-
+}).factory('searchResource', function($resource){
+    // { params: { category: '@category', price: '@price', sale: '@sale', off: '@off'} }
+    return $resource('/products/search/:name', null, {
+        'update': {
+            method: 'PUT'
+        }
+    });
+}).factory('productService', function(photoResource, categoryResource, $q, $rootScope, cartService, searchResource){
 
     var service = {};
     const event = 'focused';
@@ -50,6 +56,17 @@ angular.module('mybeerService', ['ngResource'])
     //         }
     //     });
     // }
+
+    service.getDesc = function(desc){
+        return $q(function(resolve, reject){
+            searchResource.query({name: desc}, function(products){
+                resolve(products);
+            }, function(errors){
+                reject({message: errors});
+            })
+        })
+    }
+
 
     service.getProducts = function(){
         $rootScope.$broadcast('show');
@@ -99,20 +116,33 @@ angular.module('mybeerService', ['ngResource'])
 }).factory('cartService', function($rootScope){
 
     $rootScope.products = [];
+    $rootScope.subTotal = 0;
     var service = {};
 
     service.addProduct = function(product){
         var isAlredy = $rootScope.products.filter(function(p){ if(p._id===product._id){ return p;} })
         if(isAlredy.length) { alert('product alredy taken'); return; }
+        if($rootScope.productList){
+            $rootScope.productList.splice($rootScope.productList.indexOf(product), 1);
+        }
+        product.quantity = 1;
         $rootScope.products.push(product);
-        $rootScope.productList.splice($rootScope.productList.indexOf(product), 1);
-
+        service.getTotal();
     }
 
     service.removeProduct = function(product){
         var indexOf = $rootScope.products.indexOf(product);
+        delete product['quantity'];
         $rootScope.products.splice(indexOf, 1);
         $rootScope.productList.push(product);
+        service.getTotal();
+    }
+
+    service.getTotal = function() {
+        $rootScope.subTotal = 0;
+        $rootScope.products.forEach(function(product){
+            $rootScope.subTotal += parseFloat(product.price * (product.quantity || 0));
+        })
     }
 
     return service;

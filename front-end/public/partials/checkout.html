@@ -1,37 +1,43 @@
 <div class="row ">
    	<div class="col-md-8 col-sm-12 mx-auto">
-	  	<div id="table-container" class="table box-shadow">
-	  		<div class=" color-primary text-white px-5 py-3"><h4 class="table-header-desc">Minhas Beers <span class="text-right">SubTotal: $5.00</span></h4></div>
+	  	<div id="table-container" class="table box-shadow" ng-if="products.length">
+	  		<div class=" color-primary text-white px-3 py-2">
+	  			<h5 class="table-header-desc">
+	  				Minhas Beers <span class="text-right">SubTotal: {{subTotal | currency : 'R$' : 2}}</span>
+	  			</h5>
+	  		</div>
 			<div class="">
-				<input type="text" class="form-control rounded-0" placeholder="search for.." ng-model="searchUser">
+				<input type="text" class="form-control rounded-0" placeholder="search for.." ng-model="search">
 			</div>
-			<div class="lines">
+			<div class="lines" ng-repeat="product in products | filter: search">
 			   	<div class="cols">
-			   		<b>Nome do Produto</b>
-				 	<img ng-src="https://emporiodacerveja.vteximg.com.br/arquivos/ids/155442-500-500/original_600.jpg" width=60 class="img-circle">
-				 	
+			   		<b>{{product.name}}</b>
+				 	<img src="{{product.images[0]}}" width=60 class="img-circle">
 			   	</div>
 			   	<div class="cols">
 				 	<b>Descrição</b><br>
-				 	teste
+				 	{{product.desc | limitTo: 50}}
 			    </div>
 			    <div class="cols">
 					<b>Valor</b><br>
-					R$ 5,00;
+					{{(product.price * product.quantity) | currency : 'R$' : 2}}
 			    </div>
 			    <div class="cols">
 			    	<b>Quantidade</b>
 					<div class="input-group bg-white">
 						<span class="input-group-addon bg-white border-0">
-							<button class="btn btn-outline-success">+</button>
+							<button class="btn btn-outline-success" ng-click="increment(product)">+</button>
 						</span>
-					  	<input type="text" class="form-control text-center" aria-label="Amount (to the nearest dollar)" disabled value="0">
+					  	<input ng-model="product.quantity" type="text" class="form-control text-center" aria-label="Amount (to the nearest dollar)" disabled>
 					  	<span class="input-group-addon bg-white border-0">
-					  		<button class="btn btn-outline-danger">-</button>
+					  		<button class="btn btn-outline-danger" ng-click="decrement(product)">-</button>
 					  	</span>
 					</div>
 			    </div>
 			</div>
+	   	</div>
+	   	<div class="alert alert-info" ng-if="!products.length">
+	   		Você não possui produtos no carrinho de compras ainda ;(
 	   	</div>
 	   	<div class="text-right">
 	   		<a href="/login" class="btn btn-success">Finalizar Pedido</a>
@@ -39,7 +45,9 @@
    	</div>
    	<div class="col-md-4 text-center">
    		<div id="table-container" class="table box-shadow ">
-   			<div class=" color-primary text-white px-5 py-3"><h4>Meus Endereços</h4></div>
+   			<div class=" color-primary text-white px-3 py-2">
+   				<h5>Meus Endereços</h5>
+   			</div>
 			<div class="lines" style="width: 100%">
 				<div class="cols px-5" style="vertical-align: middle;">
 					<input type="radio" aria-label="Checkbox for following text input">
@@ -58,7 +66,9 @@
 			</div>
 	   	</div>
 	   	<div id="table-container" class="table box-shadow">
-   			<div class=" color-primary text-white px-5 py-3"><h4>Meus Dados</h4></div>
+   			<div class=" color-primary text-white px-3 py-2">
+   				<h5>Meus Dados</h5>
+   			</div>
 			<div class="lines" style="width: 100%">
 			    <div class="px-5 py-3" style="width: 100%">
 			   		<b>Nome</b><br>

@@ -113,8 +113,7 @@ app.get('/products', function(req, res){
 
 app.get('/products/:filters', function(req, res){
 	var query = JSON.parse(req.query.params);
-
-	var category = products.filter(function(product){
+	var result = products.filter(function(product){
 		if(product.category===query.category && product.price <= parseFloat(query.price) || query.category==='all' && product.price <= parseFloat(query.price)){
 			if(query.off) {
 				if(product.off > 0) {
@@ -127,10 +126,23 @@ app.get('/products/:filters', function(req, res){
 		}
 	});
 
-	console.log(category);
+	setTimeout(function(){
+		res.json(result);
+	}, 500);
+});
+
+
+app.get('/products/search/:name', function(req, res){
+	var query = req.params;
+	// console.log(query);
+	var result = products.filter(function(product){
+		if(product.name.toLowerCase().indexOf(query.name.toLowerCase()) > 0 || product.desc.toLowerCase().indexOf(query.name.toLowerCase()) > 0) {
+			return product;
+		}
+	});
 
 	setTimeout(function(){
-		res.json(category);
+		res.send(result);
 	}, 500);
 });
 

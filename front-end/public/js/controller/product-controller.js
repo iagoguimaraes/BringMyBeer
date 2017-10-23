@@ -1,4 +1,4 @@
-angular.module('bringmybeer').controller('ProductController', function($scope, $routeParams, productService){
+angular.module('bringmybeer').controller('ProductController', function($scope, $routeParams, productService, cartService){
 
 	$scope.product = {};
 
@@ -16,5 +16,9 @@ angular.module('bringmybeer').controller('ProductController', function($scope, $
 
 	$scope.prevent = function(e){
 		event.preventDefault();
+	}
+
+	$scope.addProduct = function() {
+		cartService.addProduct($scope.product)
 	}
 })

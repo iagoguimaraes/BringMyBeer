@@ -9,9 +9,19 @@ menu-top{
 	-moz-box-shadow: 1px 1px 7px rgba(0,0,0, 0.5);
 	background-color: 1px 1px 7px rgba(0,0,0, 0.5);
 }
-button.navbar-toggler{
+
+menu-top .fa-search{
 	position: absolute;
-    right: 30px;
+    right: 27px;
+    top: 22px;
+    font-size: 27px;
+    color: #0c6e79;
+}
+
+
+button.navbar-toggler{
+    position: absolute;
+    right: 18px;
     top: 22px;
 }
 @media screen and (max-width: 992px) {
@@ -23,25 +33,32 @@ button.navbar-toggler{
 	    left: 20%;
 	    top: 4px;
 	}
+	.cart-list{
+		left: 0 !important;
+	}
+	.cart-cont{
+		right: 18px !important;
+	}
 }
 @media screen and (min-width: 992px) {
 	.hidden{
 		display: none !important;
 	}
+
 }
 a.nav-item .fa{
 	font-size: 15px;
 }
-menu-top input:focus + div{
+menu-top input + div{
 	position: fixed;
 	right: 0;
 	left: 0;
 	top: 0;
 	bottom: 0;
 	background-color: rgba(0,0,0, 0.5);
-	z-index: 1333;
+	z-index: 1000;
 }
-input:focus{
+menu-top input{
 	z-index: 1334;
 	position: relative;
 }
@@ -66,17 +83,18 @@ input:focus{
     width: 100%;
 }
 
+.cart-list{
+	border: none; 
+	left: -500px; 
+	position: absolute; 
+	overflow-y:auto; 
+	max-height: 500px;
+}
+
+
 /*foooter*/
 .footer-main{
     height: 100px !important;
-}
-
-/*colors*/
-.color-primary{
-	background: #4ABBC7;
-}
-.color-secondary{	
-	background: #4ABBC7;
 }
 
 /**/
@@ -104,11 +122,11 @@ input:focus{
 	position: relative;
 	z-index: 1000;
 }
-.ng-leave {
+.card-animation.ng-leave {
 	animation: bounceOut 0.5s;
 }
 
-.ng-enter {
+.card-animation.ng-enter {
 	animation: bounceIn 0.7s;
 }
 
@@ -133,6 +151,16 @@ input:focus{
 }
 
 /*table checkout component*/
+.table.search {
+	position: absolute;
+    z-index: 2000;
+    overflow-y: scroll;
+    max-width: 526px;
+    max-height: 500px;
+    top: 54px;
+}
+
+
 .table-header-desc{
 	position: relative;
 }
@@ -152,6 +180,10 @@ input:focus{
 .lines {
   border-bottom: thin solid #e1e3e3;
   position: relative;
+}
+
+.lines:last-child {
+	border: none;
 }
 
 
@@ -224,4 +256,77 @@ body{
 	.main-container{
 			margin-top: 140px ;
 	}
+}
+
+/*image outline*/
+img {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+/*scroll bar table*/
+::-webkit-scrollbar
+{
+  width: 6px;  /* for vertical scrollbars */
+  height: 12px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: #000;
+}
+
+/*btn patterns*/
+.color-primary{
+	background: #4ABBC7;
+}
+.color-secondary{	
+	background: #4ABBC7;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #f07306;
+    border-color: #f07306;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #d26b12;
+    border-color: #d26b12;
+}
+
+button.btn-primary:focus{
+	background: #d26b12 !important;
+	border-color: #c7630b;
+}
+
+/*product detail*/
+.breadcrumb{
+	background: linear-gradient(91deg, #75c5c5, #afccb0);
+}
+.breadcrumb-item a {
+	text-decoration: none;
+    color: #d7ecf0;
+}
+
+.product-desc{
+	box-shadow: 0 0 1px 0px;
+}
+
+.product-desc p,h2, div{
+	color: #5c6263;
+}
+.card.detail{
+	background: transparent;
+}
+.fa.fa-angle-right,.fa.fa-angle-left{
+	font-size: 73px;
+    color: black;
 }
