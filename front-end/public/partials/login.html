@@ -1,150 +1,103 @@
+<a href="../" class="btn-lg btn btn-outline-warning rounded-0 back" >Voltar</a>
 <div class="row">
-  <form id="semcadastro" name="semcadastro" action="#" class="col-md-6 form-container">
-    <div class="form-header">
-      <h4>AINDA NÃO POSSUI CADASTRO?</h4>
+  <div class="col-md-3 col-sm-3 mx-auto">
+    <img src="img/logo.png" class="img-fluid login-logo" alt="">
+  </div>
+</div>
+<video-background></video-background>
+<div class="row">
+  <form name="formLogin" class="ml-auto mr-auto  px-5 col-md-4 col-sm-6 form-container bg-light box-shadow mt-5 animated bounceIn">
+    <div class="form-header pt-3 pb-2 ">
+        <h4 class="text-center"><a href="/register" class="badge text-secondary badge-light">Cadastre-se Agora! </a></h4>
     </div>
     <div class="form-group">
-      <label for="email">Email</label>
+      <label for="email">E-mail</label>
       <input type="text"
              class="form-control"
              name="email"
-             id="emaillogin"
-             >
+             ng-model="user.email"
+             required>
+             <div ng-if="formLogin.email.$error.required && !formLogin.email.$pristine" class="alert alert-warning rounded-0">
+               Este campo é obrigatório
+             </div>
     </div>
     <div class="form-group">
-      <label for="cpf">CPF</label>
-      <input type="text"
+      <label for="password">Senha</label>
+      <input type="password"
              class="form-control"
-             name="cpf"
-             id="cpf"
+             name="password"
+             ng-model="user.password"
              required>
+            <div ng-if="formLogin.password.$error.required && !formLogin.password.$pristine" class="alert alert-warning rounded-0">
+               Este campo é obrigatório
+            </div>
     </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email"
-             class="form-control"
-             name="email"
-             id="email"
-             required>
+    <div class="text-center my-5">
+      <button ng-click="login()" class="btn btn-warning login" ng-disabled="formLogin.$invalid">ENTRAR</button>
+      <a href="#" ng-click="showPassword()" class="btn btn-outline-secondary mt-2 login">Esqueceu a senha</a>
     </div>
-    <div class="form-group">
-      <label for="telefone">DDD + Telefone</label>
-      <input type="number"
-             class="form-control"
-             name="telefone"
-             id="telefone"
-             required>
-    </div>
-   <!--  <div class="form-group">
-      <label for="telefone">Empresa</label>
-      <input type="number"
-             class="form-control"
-             name="empresa"
-             id="empresa"
-             required>
-    </div>
-    <div class="form-group">
-      <label for="cnpj">CNPJ</label>
-      <input type="number"
-             class="form-control"
-             name="cnpj"
-             id="cnpj"
-             required>
-    </div> -->
-    <a href="/payment" class="btn btn-primary">Prosseguir</a>
   </form>
-  
-  <form id="cadastrado" action="#" class="col-md-6 form-container">
-    <div class="form-header">
-      <h4>JÁ TEM CADASTRO?</h4>
+  <form name="formRecovery" class="px-5 mr-auto  col-md-4 col-sm-6 form-container bg-light box-shadow mt-5" ng-if="show">
+    <div class="form-header pt-3 pb-2">
+      <h4>Digite o e-mail</h4>
     </div>
     <div class="form-group">
       <label for="nome">E-mail</label>
       <input type="text"
              class="form-control"
-             name="email">
+             ng-model="email"
+             name="email"
+             required="">
+            <div ng-if="formRecovery.email.$error.required && !formRecovery.email.$pristine" class="alert alert-warning rounded-0">
+               Este campo é obrigatório
+            </div>
     </div>
-    <div class="form-group">
-      <label for="senha">Senha</label>
-      <input type="password"
-             class="form-control"
-             name="senha">
+    <div class="text-center">
+       <a href="#" class="btn btn-primary login">Enviar</a>
     </div>
-    <a href="/payment" class="btn btn-primary">ENTRAR</a>
+    <p class="secondary pt-3">A mensagem de recuperação de senha pode levar algum tempo até que chege ao destinatário agradecemos a compreemção</p>
   </form>
 </div>
-
 <style>
-/*  @import url('https://fonts.googleapis.com/css?family=Roboto');
-
-body{
-  background-color: #daecff;
-  font-family: 'Roboto', sans-serif;
-}*/
-
-/*h4{
-  color: #51b0f1;
-  // color: #adb8c3;
-  font-weight: 600;
-  text-align: center;
-}
-
-h5{
-  color: #adb8c3;
-  font-weight: 400;
-  text-align: center;
-}*/
+  .form-container{
+    position: relative;
+    z-index: 2001;
+  }
 
 
-.form-control{
-  border-radius: 7px;
-  border: 1.5px #adb8c3 solid;
-  background: #f8f8f8 !important;
-}
+  @media (min-width: 767px) {
+    body{
+      overflow: hidden;
+    }
 
-.form-header{
-  padding: 30px 0 15px 0;
-}
+    .main-container{
+      margin-top: -1%;
+    }
+   
+  }
 
-.form-container{
-  margin: 50px 0 50px 0;
-  max-width: 500px;
-  height: 100%;
-  background: #f8f8f8;
-  border-radius: 10px;
-  -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5);
-  -moz-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5);
-  box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5);
-}
+  .back{
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 2001;
+  }
+  @media (max-width: 767px) {
+    .back.btn{
+      display: none;
+    }
 
-label {
-  position: relative;
-  left: 10px;
-  bottom: -8px;
-  color: #adb8c3;
-  font-weight: 600;
-}
+    .login-logo{
+      display: none;
+    }
 
-.form-container a{
-  width: 80%;
-  margin: 20px 10%;
-  border-radius: 30px;
-  background: #51b0f1;
-  border: none;
-}
-
-#cadastrado{
-  left: 1%;
-  box-sizing: border-box;
-}
-#semcadastro{
-  right: 1%;
-  margin: 50px auto;
-  position: relative;
-}
-
-.error{
-  color: #E33927;
-}
-
+    .form-container{
+      position:inherit;
+      z-index: 0;
+    }
+  }
+  .login-logo{
+    position: relative;
+    z-index: 2001;
+  }
 </style>

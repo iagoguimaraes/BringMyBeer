@@ -11,7 +11,12 @@
 		</div>
 		<div class="form-group pt-1 px-1 text-center">
 			<label for="price">Preço: R{{price | currency}}</label>
-			<input ng-change="searchByPrice()" ng-model-options="{debounce: 500}" ng-model="price" class="form-control" type="range" name="price" max="999" style="width: 100%;">
+			<input ng-change="searchByPrice()" 
+				   ng-model-options="{debounce: 500}" 
+				   ng-model="price" class="form-control" 
+				   type="range" name="price" max="999" 
+				   style="width: 100%;"
+				   id="range">
 		</div>
 		<label class="text-center pt-1" style="width: 100%" for="">Buscar Por</label>
 		<div class="form-group text-center">
@@ -28,12 +33,12 @@
 			<label class="text-center pt-1" style="width: 100%" for="">Ordenar Por</label>
 			<div class="form-check form-check-inline">
 			  <label class="form-check-label">
-			    <input class="form-check-input" type="radio" id="inlineCheckbox1" value="option1" name="order"> Crescente
+			    <input ng-click="orderPrice()" ng-model="updown" class="form-check-input" type="radio" id="inlineCheckbox1" value="price" name="order"> Crescente
 			  </label>
 			</div>
 			<div class="form-check form-check-inline">
 			  <label class="form-check-label">
-			    <input class="form-check-input" type="radio" id="inlineCheckbox2" value="option2" name="order"> Descrecente
+			    <input ng-click="orderPrice()" ng-model="updown" class="form-check-input" type="radio" id="inlineCheckbox2" value="-price" name="order"> Descrecente
 			  </label>
 			</div>
 		</div>
@@ -42,15 +47,22 @@
 		</div>
 	</div>
 	<div class="col-md-9">
-		<div class="row no-gutters">
-			<div ng-repeat="product in productList | orderBy: ['category', 'name']" class="col-md-4 col-sm-6 card-animation">
-				<card title="{{product.name}}" 
-					  url="{{product.images[0]}}"
-					  desc="{{product.desc | limitTo: 50}}..."
-					  price="{{product.price}}"
-					  action="addProduct(product)"
-					  detail="goToDetail(product._id)">
-				</card>	
+		<div class="row no-gutters" ng-repeat="product in productList">
+		<!-- 	<div class="breadcrumb-home col-md-12 rounded-0 text-center text-white" ng-if="product.productList.length">
+				{{product.category}}
+			</div> -->
+			<card dir-paginate="item in product.productList | orderBy: orderByCustom | itemsPerPage: itemPerPage " pagination-id="product.category"
+				  class="col-md-3 col-sm-6 card-animation"
+				  title="{{item.name}}" 
+				  url="{{item.images[0]}}"
+				  desc="{{item.desc | limitTo: 40}}..."
+				  price="{{item.price}}"
+				  action="addProduct(item)"
+				  detail="goToDetail(item._id)"
+				  off="{{item.off}}">
+			</card>
+			<div class="col-md-12 py-0 rounded-0 text-center text-white" ng-if="product.productList.length > itemPerPage">
+				<dir-pagination-controls class="mx-auto" pagination-id="product.category"></dir-pagination-controls>
 			</div>
 		</div>
 	</div>

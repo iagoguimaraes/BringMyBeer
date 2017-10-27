@@ -11,7 +11,40 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 var products = [
 		{
-			_id: '1sadDASDdasd554456',
+			_id: '1sadDASDdasd5544i56',
+			name: 'Cerveja Serramalte 600ml', 
+			price: 7.49, 
+			desc: 'Fundada em 1957, em Getúlio Vargas (RS), a Serramalte (600 ml) é uma Premium American Lager de cor amarelo claro, e muito refrescante.',
+			images: ['https://emporiodacerveja.vteximg.com.br/arquivos/ids/159716-1000-1000/serramalte600-2.jpg',
+					 'https://emporiodacerveja.vteximg.com.br/arquivos/ids/159717-55-55/serramalte600-3.jpg',
+					 'https://emporiodacerveja.vteximg.com.br/arquivos/ids/159718-55-55/serramalte600-4.jpg',
+					 'https://emporiodacerveja.vteximg.com.br/arquivos/ids/159719-55-55/serramalte600-5.jpg'],
+			off: 10,
+			category: 'cerveja'
+		},{
+			_id: '1sadDASDdasd5544o56',
+			name: 'Cerveja Serramalte 600ml', 
+			price: 7.49, 
+			desc: 'Fundada em 1957, em Getúlio Vargas (RS), a Serramalte (600 ml) é uma Premium American Lager de cor amarelo claro, e muito refrescante.',
+			images: ['https://emporiodacerveja.vteximg.com.br/arquivos/ids/159716-1000-1000/serramalte600-2.jpg',
+					 'https://emporiodacerveja.vteximg.com.br/arquivos/ids/159717-55-55/serramalte600-3.jpg',
+					 'https://emporiodacerveja.vteximg.com.br/arquivos/ids/159718-55-55/serramalte600-4.jpg',
+					 'https://emporiodacerveja.vteximg.com.br/arquivos/ids/159719-55-55/serramalte600-5.jpg'],
+			off: 10,
+			category: 'cerveja'
+		},{
+			_id: '1sadDASDdasd554p456',
+			name: 'Cerveja Serramalte 600ml', 
+			price: 7.49, 
+			desc: 'Fundada em 1957, em Getúlio Vargas (RS), a Serramalte (600 ml) é uma Premium American Lager de cor amarelo claro, e muito refrescante.',
+			images: ['https://emporiodacerveja.vteximg.com.br/arquivos/ids/159716-1000-1000/serramalte600-2.jpg',
+					 'https://emporiodacerveja.vteximg.com.br/arquivos/ids/159717-55-55/serramalte600-3.jpg',
+					 'https://emporiodacerveja.vteximg.com.br/arquivos/ids/159718-55-55/serramalte600-4.jpg',
+					 'https://emporiodacerveja.vteximg.com.br/arquivos/ids/159719-55-55/serramalte600-5.jpg'],
+			off: 10,
+			category: 'cerveja'
+		},{
+			_id: '1sadDASDdasd5544556',
 			name: 'Cerveja Serramalte 600ml', 
 			price: 7.49, 
 			desc: 'Fundada em 1957, em Getúlio Vargas (RS), a Serramalte (600 ml) é uma Premium American Lager de cor amarelo claro, e muito refrescante.',
@@ -62,7 +95,47 @@ var products = [
 			category: 'cerveja'
 		},		
 		{
-			_id: '1sadDASDdas555a5sdsddpp',
+			_id: '1sadDASDds555a5sdsddpp',
+			name: 'Vinho Château Fontarèche Domaine de Lamy Rosé - 750ml',
+			price: 35.00,
+			desc: 'Um dos cinco melhores vinhos rosés do mundo", foi assim que o Gentleman\'s Journal, uma das publicações de estilo mais ',
+			images: ['https://emporiodacerveja.vteximg.com.br/arquivos/ids/168013-1000-1000/vinho-rose-frances-barato-premiado-melhor-mundo-fontareche.jpg'
+					],
+			off: 50,
+			category: 'vinho'
+		},		
+		{
+			_id: '1sadDASDdas55a5sdsEddpp',
+			name: 'Vinho Château Fontarèche Domaine de Lamy Rosé - 750ml',
+			price: 35.00,
+			desc: 'Um dos cinco melhores vinhos rosés do mundo", foi assim que o Gentleman\'s Journal, uma das publicações de estilo mais ',
+			images: ['https://emporiodacerveja.vteximg.com.br/arquivos/ids/168013-1000-1000/vinho-rose-frances-barato-premiado-melhor-mundo-fontareche.jpg'
+					],
+			off: 50,
+			category: 'vinho'
+		},		
+		{
+			_id: '1sadDASDdaD555a5sdsddpp',
+			name: 'Vinho Château Fontarèche Domaine de Lamy Rosé - 750ml',
+			price: 35.00,
+			desc: 'Um dos cinco melhores vinhos rosés do mundo", foi assim que o Gentleman\'s Journal, uma das publicações de estilo mais ',
+			images: ['https://emporiodacerveja.vteximg.com.br/arquivos/ids/168013-1000-1000/vinho-rose-frances-barato-premiado-melhor-mundo-fontareche.jpg'
+					],
+			off: 50,
+			category: 'vinho'
+		},		
+		{
+			_id: '1sadDASSDdas555a5sdsddpp',
+			name: 'Vinho Château Fontarèche Domaine de Lamy Rosé - 750ml',
+			price: 35.00,
+			desc: 'Um dos cinco melhores vinhos rosés do mundo", foi assim que o Gentleman\'s Journal, uma das publicações de estilo mais ',
+			images: ['https://emporiodacerveja.vteximg.com.br/arquivos/ids/168013-1000-1000/vinho-rose-frances-barato-premiado-melhor-mundo-fontareche.jpg'
+					],
+			off: 50,
+			category: 'vinho'
+		},		
+		{
+			_id: '1sadDASSDdas5555sdsddpp',
 			name: 'Vinho Château Fontarèche Domaine de Lamy Rosé - 750ml',
 			price: 35.00,
 			desc: 'Um dos cinco melhores vinhos rosés do mundo", foi assim que o Gentleman\'s Journal, uma das publicações de estilo mais ',
@@ -72,7 +145,7 @@ var products = [
 			category: 'vinho'
 		},
 		{
-			_id: '1sadDsdsadsd55566578dasd',
+			_id: '1sadDsdsadsd556D6578dasd',
 			name: 'Vinho Louis Vallon Bordeaux Rosé 2014 - 750ml',
 			price: 73.00,
 			desc: 'Quando se fala em rosé francês, a primeira região que vem à cabeça é a Provença e seus blends com Grenache.',
@@ -82,7 +155,7 @@ var products = [
 			category: 'vinho'
 		},
 		{
-			_id: '1sadDAasdasdasd554SDdasd',
+			_id: '1sadDAasdasdasdA54SDdasd',
 			name: 'Kit Vinho - Giacondi Rosso + Garrafa Baby',
 			price: 73.00,
 			desc: '1x Vinho Giacondi Rosso - 750ml: Simples, econômico, aroma de frutas vermelhas e boa acidez, este tinto de coloração vermelho rubi ',

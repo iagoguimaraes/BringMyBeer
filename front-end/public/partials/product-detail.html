@@ -12,15 +12,15 @@
 		  		<div class="carousel-item active">
 				      <img class="d-block w-100" src="{{product.images[0]}}" alt="First slide">
 				</div>
-		  			<div class="carousel-item" ng-repeat="image in product.images track by $index" ng-if="$index > 0">
-				      <img class="d-block w-100" src="{{image}}" alt="First slide">
-				    </div>
+	  			<div class="carousel-item" ng-repeat="image in product.images track by $index" ng-if="$index > 0">
+			      <img class="d-block w-100" src="{{image}}" alt="First slide">
+			    </div>
 			</div>
-			<a class="carousel-control-prev" href="#carouselExampleControls2" ng-click="prevent();" role="button" data-slide="prev">
+			<a ng-if="product.images.length > 1" class="carousel-control-prev" href="#carouselExampleControls2" ng-click="prevent();" role="button" data-slide="prev">
 			    <i class="fa fa-angle-left" aria-hidden="true"></i>
 			    <span class="sr-only">Previous</span>
 			</a>
-			<a class="carousel-control-next" href="#carouselExampleControls2" ng-click="prevent();"  role="button" data-slide="next">
+			<a ng-if="product.images.length > 1" class="carousel-control-next" href="#carouselExampleControls2" ng-click="prevent();"  role="button" data-slide="next">
 			    <i class="fa fa-angle-right" aria-hidden="true"></i>
 			    <span class="sr-only">Next</span>
 			</a>
@@ -30,14 +30,17 @@
 		<h2>{{product.name}}</h2>
 		<hr>
 		<p>{{product.desc}}</p>
-		<p class="text-right"><h5 class="text-success text-center">Preço R$ {{product.price | currency: 2}}</h5></p>
+		<h5 class="text-secondary text-center py-4" >
+	        <span ng-class="{'valid-off mr-1': product.off > 0}">{{product.price | currency : 'R$' : 2}}</span> 
+	        <span ng-if="product.off > 0" class="text-success"> por apenas {{product.price * (1-(product.off/100)) | currency: 'R$' : 2}}</span> 
+      	</h5>
 		<div class="btn-group" style="width: 100%">
-			<a href="/checkout" style="width: 50%" class="btn btn-default btn-success">
+			<button ng-click="buy(product)" style="width: 50%" class="btn btn-success">
 				Comprar
-			</a>
-			<a ng-click="addProduct()" style="width: 50%" class="btn btn-default btn-primary text-white">
-				Adicionar ao Carrinho
-			</a>
+			</button>
+			<button ng-click="addProduct(product)" style="width: 50%" class="btn btn-warning ">
+				Adicionar
+			</button>
 		</div>
 		<div class="card detail mt-3">
 			<div class="card-header">
@@ -52,5 +55,23 @@
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+<div class="row no-gutters" ng-repeat="product in productList">
+	<div class="breadcrumb-home col-md-12 rounded-0 text-center text-white" ng-if="product.productList.length">
+		Similares
+	</div>
+	<card dir-paginate="item in product.productList | orderBy: orderByCustom | itemsPerPage: itemPerPage" 
+		  class="col-md-2 col-sm-6 card-animation"
+		  title="{{item.name}}" 
+		  url="{{item.images[0]}}"
+		  desc="{{item.desc | limitTo: 60}}"
+		  price="{{item.price}}"
+		  action="addProduct(item)"
+		  detail="goToDetail(item._id)"
+		  off="{{item.off}}">
+	</card>
+	<div class="col-md-12 py-0 rounded-0 text-center text-white" ng-if="productList.length > itemPerPage">
+		<dir-pagination-controls class="mx-auto" ></dir-pagination-controls>
 	</div>
 </div>

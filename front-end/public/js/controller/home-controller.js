@@ -4,6 +4,8 @@ angular.module('bringmybeer').controller('HomeController', function(productServi
 	$scope.off = false;
 	$scope.sale = false;
 	$scope.category = 'all';
+	$scope.orderByCustom = ['category', 'name'];
+	$scope.itemPerPage = 4;
 
 	var params = {
 		category: $scope.category,
@@ -23,6 +25,8 @@ angular.module('bringmybeer').controller('HomeController', function(productServi
 			params.off = $scope.off = false;
 			params.sale = $scope.sale = false;
 			$scope.searchFilter();
+			$scope.orderByCustom = ['category', 'name'];
+			$scope.updown = null;
 	}
 
 
@@ -34,7 +38,7 @@ angular.module('bringmybeer').controller('HomeController', function(productServi
 	$scope.searchFilter = function(){
 		productService.searchFilter(params)
 						  .then(function(productList){
-				                $rootScope.productList = productList;
+				          	$scope.orderByCategory(productList);
 						  }).catch(function(errors){
 						  	console.log(errors.message);
 						  });
@@ -61,7 +65,7 @@ angular.module('bringmybeer').controller('HomeController', function(productServi
 	} else {
 		productService.getProducts()
 			  .then(function(productList){
-			  	$rootScope.productList = productList;
+			  	$scope.orderByCategory(productList);
 			  }).catch(function(errors){
 			  	console.log(errors);
 			  });
@@ -73,11 +77,35 @@ angular.module('bringmybeer').controller('HomeController', function(productServi
 
 
 	$scope.cleanFilter = function(){
-		params.category = $scope.category = 'all';
-		params.price = $scope.price = 500;
-		params.off = $scope.off = false;
-		params.sale = $scope.sale = false;
-		$scope.searchFilter();
+		$scope.all();
+	}
+
+	$scope.orderByCategory = function(productList) {
+		var test = [];
+		['cerveja', 'vinho', 'outros'].some(function(key){
+  			//e.hasOwnProperty(test) && e['category'].test(e[key])
+  				test.push({ category: key, productList: [] });
+  		});
+
+	  	productList.forEach(function(p){
+	  		for(var i in test){
+	  			if(p.category===test[i].category){
+	  				test[i].productList.push(p);
+	  			}
+	  		}
+	  		return;
+	  	});
+	  	$rootScope.productList = test;
+	}
+
+	$scope.test = function(){
+		var cont = 0;
+		cont++;
+		return "test"+cont;
+	}
+
+	$scope.orderPrice = function(){
+		$scope.orderByCustom = $scope.updown;
 	}
 
 });

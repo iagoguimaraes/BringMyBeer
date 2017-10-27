@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="js/bootstrap/bootstrap.bundle.min.js"></script>
 	<script src="js/bootstrap/bootstrap.min.js"></script>
@@ -14,14 +15,32 @@
 	<script src="js/lib/angular-resource.min.js"></script>
 	<script src="js/lib/angular-animate.min.js"></script>
 	<script src="js/lib/angular-route.min.js"></script>
+	<script src="js/lib/angular-cookies.min.js"></script>
+	<script src="js/lib/inputmask.js"></script>
+<!-- 	<script src="js/lib/inputmask.extensions.js"></script>
+	<script src="js/lib/inputmask.numeric.extensions.js"></script>
+	<script src="js/lib/inputmask.phone.extensions.js"></script> -->
+	<script src="js/lib/inputmask.date.extensions.js"></script>
+	<script src="js/lib/jquery.inputmask.js"></script>
+	<script src="js/lib/dirPagination.js"></script>
+	<script src="js/lib/zxcvbn.js"></script>
+	<!-- <script src="js/lib/fontawesome.js"></script> -->
+	<!-- <script src="js/externals/angular-utils-pagination/dirPagination.js"></script> -->
 	<script src="js/main.js"></script>
 	<script src="js/controller/home-controller.js"></script>
 	<script src="js/controller/product-controller.js"></script>
 	<script src="js/controller/checkout-controller.js"></script>
 	<script src="js/controller/menu-controller.js"></script>
+	<script src="js/controller/login-controller.js"></script>
+	<script src="js/controller/register-controller.js"></script>
+	<script src="js/controller/home-user-controller.js"></script>
+	<script src="js/controller/payment-controller.js"></script>
 	<script src="js/directives/menu-top.js"></script>
 	<script src="js/services/bringmybeer-service.js"></script>
 	<script src="https://use.fontawesome.com/f58eb132fb.js"></script>
+	<!-- <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- Angular Material Library -->
 	<title>Bring My Beer</title>
 </head>
 <body>
@@ -49,7 +68,7 @@
 			    <span class="sr-only">Next</span>
 			  </a>
 			</div> -->
-	<div class="container main-container py-5">
+	<div class="container-fluid main-container py-5">
 		<ng-view></ng-view>
 	</div>
 	<menu-bottom></menu-bottom>

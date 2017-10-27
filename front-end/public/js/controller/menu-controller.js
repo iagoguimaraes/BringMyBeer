@@ -1,7 +1,8 @@
-angular.module('bringmybeer').controller('MenuController', function($scope, $rootScope, cartService, productService, $location){
+angular.module('bringmybeer').controller('MenuController', function($scope, $rootScope, cartService, productService, $location, SessionService){
 	// $scope.total = 0;
 	$scope.searchDesc = '';
 	$scope.productSearch = []
+	
 	$scope.test = function() {
 		// $scope.total = cartService.getTotal();
 	}
@@ -25,6 +26,15 @@ angular.module('bringmybeer').controller('MenuController', function($scope, $roo
 		$location.path('/product/detail/'+path);
 		$scope.showList = false;
 	}	
+
+	$scope.goToUser = function() {
+		if(!SessionService.getSession()){ 
+			alert('Usuário não logado')
+			$location.path('/login');
+			return;
+		}
+		$location.path('/user-home');
+	}
 
 	$scope.teste = function() {
 		$scope.showList = false;

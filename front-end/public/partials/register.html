@@ -1,50 +1,275 @@
-<div class="page-header text-center">
-    <h1>Register {{photos.title}}</h1>
-</div>
-
-<div class="alert alert-info" ng-if="message.length">
-    {{message}}
-</div>
-
-<form novalidate name="form" class="row" ng-submit="submit()">
-    <div class="col-md-6">
-        <div class="form-group">
-            <label>Título</label>
-            <input name="title" ng-model="photos.title" class="form-control" required minlength=3/>    
-            <div ng-show="form.title.$error.required && form.$submitted" class="alert alert-danger">
-                    This field is required
-            </div>
-            <div ng-show="form.title.$error.minlength && form.$submitted" class="alert alert-danger">
-                    This field must contain at least 3 characteres.
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>URL</label>
-            <input name="url" ng-model="photos.url" class="form-control" required/>
-            <div ng-show="form.url.$error.required && form.$submitted" class="alert alert-danger">
-                    This field is required
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Descrição</label>
-            <textarea name="description" ng-model="photos.desc"  class="form-control"/>
-            </textarea>
-        </div>
-        <groups></groups>
-        <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">
-            Salvar
-        </button>
-            <a href="/" class="btn btn-primary" focused>Voltar</a>
-        <hr>
+<nav aria-label="breadcrumb" role="navigation">
+  <ol class="breadcrumb rounded-0">
+    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+    <li class="breadcrumb-item"><a href="/login">Login</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Cadastro</li>
+  </ol>
+</nav>
+<div class="row">
+    <div class="col-md-4 mx-auto">
+      <img src="img/logo.png" class="img-fluid " alt="logo">
     </div>
-    <div class="col-md-6">
-        <my-photo url="{{photos.url}}" titulo="{{photos.title}}"></my-photo>
+</div>
+<div class="row">
+  <form novalidate name="form" class="col-md-6 mx-auto" ng-if="!show">
+    <div class="form-header">
+      <h4 class="text-center">Dados Pessoais</h4>
     </div>
-</form>
+    <div class="form-group">
+      <label for="name">Nome</label>
+      <input type="text"
+             class="form-control"
+             name="name"
+             id="name"
+             ng-model="user.name"
+             required>
+      <div ng-show="form.name.$error.required && !form.name.$pristine" class="alert alert-warning rounded-0 mt-1">
+        Este campo é obrigatorio*
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lastname">Sobrenome</label>
+      <input type="text"
+             class="form-control"
+             name="lastname"
+             id="lastname"
+             ng-model="user.lastname"
+             required/>
+      <div ng-show="form.lastname.$error.required && !form.lastname.$pristine" class="alert alert-warning rounded-0 mt-1">
+        Este campo é obrigatorio*
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input type="text"
+                 class="form-control"
+                 name="cpf"
+                 id="cpf"
+                 ng-model="user.cpf"
+                 required
+                 input-mask="{mask: '999.999.999-99'}"/>
+          <div ng-show="form.cpf.$error.required && !form.cpf.$pristine" class="alert alert-warning rounded-0 mt-1">
+            Este campo é obrigatorio*
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <label for="date">Data de Nascimento</label>
+          <input name="date"
+                 type="text" 
+                 class="form-control" 
+                 input-mask="{'mask': '99/99/9999' }" 
+                 ng-model="user.dt" 
+                 required/>
+          <div ng-show="form.date.$error.required && !form.date.$pristine" class="alert alert-warning rounded-0 mt-1">
+            Este campo é obrigatorio*
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email"
+             class="form-control"
+             name="email"
+             id="email"
+             ng-model="user.email"
+             required>
+      <div ng-show="form.email.$error.required && !form.email.$pristine" class="alert alert-warning rounded-0 mt-1">
+        Este campo é obrigatorio*
+      </div>       
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <label for="tel">DDD + Telefone</label>
+          <input type="text"
+                 class="form-control"
+                 name="tel"
+                 id="tel"
+                 ng-model="user.tel"
+                 required
+                 input-mask="{mask: '(99) - 9999 9999'}">
+          <div ng-show="form.tel.$error.required && !form.tel.$pristine" class="alert alert-warning rounded-0 mt-1">
+            Este campo é obrigatorio*
+          </div>  
+        </div>    
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <label for="cellphone">DDD + Celular</label>
+          <input type="text"
+                 class="form-control"
+                 name="cellphone"
+                 ng-model="user.cellphone"
+                 required
+                 input-mask="{mask: '(99) - 99999 9999'}">
+          <div ng-show="form.cellphone.$error.required && !form.cellphone.$pristine" class="alert alert-warning rounded-0 mt-1">
+            Este campo é obrigatorio*
+          </div>  
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" ng-model="user.password" name="password" class="form-control ok-password" required/>
+        </div>
+        <div ng-show="form.password.$error.required && !form.password.$pristine" class="alert alert-warning rounded-0 mt-1">
+          Este campo é obrigatorio*
+        </div>  
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group">
+          <label for="cofirm">Confirmar Senha</label>
+          <input type="password" ng-model="confirm" name="confirm" class="form-control" required/>
+        </div>
+        <div ng-show="form.confirm.$error.required && !form.confirm.$pristine" class="alert alert-warning rounded-0 mt-1">
+          Este campo é obrigatorio*
+        </div>  
+      </div>
+      <div class="col-md-12 py-0 my-0">          
+        <div class="strength-meter py-0 my-0">
+            <div class="strength-meter-fill" data-strength="{{passwordStrength}}"></div>
+        </div>
+      <div ng-show="user.password != confirm && !form.confirm.$pristine" class="alert alert-danger rounded-0 mt-1">
+          As senhas não conferem.
+      </div> 
+      <div class="alert alert-danger" ng-if="passwordStrength <= 0 ">
+        Senha fraca
+      </div>
+      </div>
+    </div>
+    <div class="text-center my-5">
+      <button  class="btn btn-primary login" ng-disabled="form.$invalid || user.password != confirm" ng-click="keepup()">Prosseguir</button>
+    </div>
+  </form>
+  <form name="formaddress" class="col-md-6 mx-auto" ng-submit="submit()" ng-if="show">
+    <div class="form-header">
+      <h4 class="text-center">Endereço</h4>
+    </div>
+    <div class="input-group mt-4 mb-3 pt-3">
+      <input type="text"
+             class="form-control col-md-3 col-sm-4"
+             name="cep"
+             id="cep"
+             ng-model="user.address.cep"
+             required
+             input-mask="{mask: '99999-999'}">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="button" ng-click="getAddress()">Buscar CEP</button>
+      </span>
+    </div>     
+    <div ng-show="formaddress.cep.$error.required && !form.cep.$pristine" class="alert alert-warning rounded-0">
+      Este campo é obrigatorio*
+    </div>
+    <div class="form-group">
+      <label for="address">Logradoura</label>
+      <input type="text"
+             class="form-control"
+             name="address"
+             id="address"
+             ng-model="user.address.street"
+             disabled
+             required>
+    </div>
+    <div class="row">
+      <div class="col-md-7">
+        <div class="form-group">
+          <label for="neighborhood">Bairro</label>
+          <input type="text"
+                 class="form-control"
+                 name="neighborhood"
+                 id="neighborhood"
+                 ng-model="user.address.neighborhood"
+                 disabled
+                 required>
+        </div>    
+      </div>
+      <div class="col-md-5">
+        <div class="form-group">
+          <label for="complement">Complement</label>
+          <input type="text"
+                 class="form-control"
+                 name="complement"
+                 id="complement"
+                 ng-model="user.address.complement">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-6 col-sm-6">
+        <label for="city">Localidade</label>
+        <input type="text"
+               class="form-control"
+               name="city"
+               id="city"
+               ng-model="user.address.city"
+               disabled
+               required>
+      </div>    
+      <div class="form-group col-md-6 col-sm-6">
+        <label for="state">Estado</label>
+        <input type="text"
+               class="form-control"
+               name="state"
+               id="state"
+               ng-model="user.address.state"
+               disabled
+               required>
+      </div>
+    </div>  
+    <div class="text-center my-5 ml-5 row">
+      <button type="submit" class="btn btn-primary col-md-5 col-sm-5 mr-2" ng-disabled="formaddress.$invalid">Cadastrar</button>
+      <button class="btn btn-danger col-md-5 col-sm-5" ng-click="keepup()">Voltar</button>
+    </div>
+  </form>
+</div>
 
 <style>
-    option{
-        text-transform: capitalize;
-    }
+.strength-meter {
+    position: relative;
+    height: 3px;
+    background: #DDD;
+    margin: 10px auto 20px;
+    border-radius: 3px;
+}
+
+.strength-meter-fill {
+    background: transparent;
+    height: inherit;
+    position: absolute;
+    width: 0;
+    border-radius: inherit;
+    transition: width 0.5s ease-in-out, background 0.25s;
+}
+
+.strength-meter-fill[data-strength='0'] {
+    background: darkred;
+    width: 20%;
+}
+
+.strength-meter-fill[data-strength='1'] {
+    background: orangered;
+    width: 40%;
+}
+
+.strength-meter-fill[data-strength='2'] {
+    background: orange;
+    width: 60%;
+}
+
+.strength-meter-fill[data-strength='3'] {
+    background: yellowgreen;
+    width: 80%;
+}
+
+.strength-meter-fill[data-strength='4'] {
+    background: green;
+    width: 100%;
+}
 </style>
