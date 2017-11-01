@@ -8,6 +8,7 @@ package com.bmb.dao;
 import com.bmb.model.Tipo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,42 +37,74 @@ public class DaoTipo {
     public static void alterarTipo(Tipo tipo){
     	try{
             Connection conn = SQLConnection.getConexao();
-            String sql = "Inserir query";
+            String sql = "UPDATE tipo_produto SET tipo = ? WHERE id_tipo_produto = ?" ;
             PreparedStatement stmt = conn.prepareStatement(sql);
-
+            stmt.setString(1, tipo.getTipo());
+            stmt.setInt(2, tipo.getIdTipo());
+            stmt.execute();
+            stmt.close();
+            conn.close();
     	}catch(Exception e){
     		System.out.println("Não foi possível alterar o tipo");
     	}
     }
     
-//    public static Tipo obter(int idTipo){
-//    	try{
-//        
-//    	} catch(Exception e){
-//    		System.out.println("Não foi possível obter o tipo");
-//    	}
-//    }
-//    
-//    public static List<Tipo> obter(){
-//    	List<Tipo> tiposCadastrados = new ArrayList<>();
-//    	try{
-//    		tiposCadastrados = tipos;
-//    	}catch(Exception e){
-//    		System.out.println("Não foi possível obter os tipos");
-//    	}
-//    	return tiposCadastrados;
-//    }
-//    
-//    public static void deletarTipo(int idTipo){
-//    	try{
-//    		for(int i = 0; i < tipos.size(); i++){
-//    			if(tipos.get(i).getIdTipo() == idTipo){
-//    				tipos.remove(i);
-//    				break;
-//    			} 
-//    		}
-//    	} catch(Exception e){
-//    		System.out.println("Não foi possível remover o tipo");
-//    	}
-//    }
+    public static Tipo obter(int idTipo) throws Exception{
+    	try{
+            Tipo tipoProduto = new Tipo();
+            Connection conn = SQLConnection.getConexao();
+            String sql = "SELECT * FROM tipo_produto WHERE id_tipo_produto = ?" ;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idTipo);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                tipoProduto = new Tipo(
+                        rs.getInt("id_tipo_produto"),
+                        rs.getString("tipo"));
+            }
+            stmt.close();
+            conn.close();
+            
+            return tipoProduto;
+    	} catch(Exception e){
+    		throw e;
+    	}
+    }
+    
+    public static List<Tipo> obter() throws Exception{
+        try{
+        ArrayList<Tipo> tipos = new ArrayList<Tipo>();
+            Connection conn = SQLConnection.getConexao();
+            String sql = "SELECT * FROM tipo_produto";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                tipos.add(new Tipo(
+                        rs.getInt("id_tipo_produto"),
+                        rs.getString("tipo")));
+            }
+            stmt.close();
+            conn.close();
+
+            return tipos;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    public static void deletarTipo(int idTipo){
+        try{
+            Tipo tipoProduto = new Tipo();
+            Connection conn = SQLConnection.getConexao();
+            String sql = "DELETE FROM tipo_produto WHERE id_tipo_produto = ?" ;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idTipo);
+            stmt.close();
+            conn.close();
+        }catch(Exception e){
+            
+        }
+    }
 }

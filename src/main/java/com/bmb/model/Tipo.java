@@ -7,6 +7,9 @@ public class Tipo {
     public Tipo() {
     }
 
+    public Tipo(int idTipo, String tipo) {
+    }
+
     public int getIdTipo() {
         return idTipo;
     }
