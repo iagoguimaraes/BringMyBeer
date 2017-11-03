@@ -96,7 +96,6 @@ public class DaoTipo {
     
     public static void deletarTipo(int idTipo){
         try{
-            Tipo tipoProduto = new Tipo();
             Connection conn = SQLConnection.getConexao();
             String sql = "DELETE FROM tipo_produto WHERE id_tipo_produto = ?" ;
             PreparedStatement stmt = conn.prepareStatement(sql);
