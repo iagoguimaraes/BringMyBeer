@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CadastrarTipo extends HttpServlet {
 
+    ControllerTipo ctrlTipo = new ControllerTipo();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,7 +37,7 @@ public class CadastrarTipo extends HttpServlet {
         try{
             Tipo tipo = new Tipo();
             tipo.setTipo(request.getParameter("tipo"));
-            ControllerTipo.cadastrarTipo(tipo);
+            ctrlTipo.cadastrarTipo(tipo);
             request.getRequestDispatcher("./ListarTipo").forward(request, response);
         }catch(Exception e){
             System.err.println("ERROR-----> " + e);

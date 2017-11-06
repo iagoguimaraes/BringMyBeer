@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ListarTipo extends HttpServlet {
 
+    ControllerTipo ctrlTipo = new ControllerTipo();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,7 +32,7 @@ public class ListarTipo extends HttpServlet {
             throws ServletException, IOException {
         
         try{
-            request.setAttribute("ListTipo", ControllerTipo.obter());
+            request.setAttribute("ListTipo", ctrlTipo.obter());
             request.getRequestDispatcher("WEB-INF\tipo.jsp").forward(request, response);
         }catch(Exception e){
             System.err.println("ERROR-----> " + e);

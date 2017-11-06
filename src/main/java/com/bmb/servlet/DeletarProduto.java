@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DeletarProduto extends HttpServlet {
     
+    ControllerProduto ctrlProd = new ControllerProduto();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,7 +32,7 @@ public class DeletarProduto extends HttpServlet {
             throws ServletException, IOException {
             
         try{
-            ControllerProduto.deletarProduto(Integer.parseInt(request.getParameter("id")));
+            ctrlProd.deletarProduto(Integer.parseInt(request.getParameter("id")));
             request.getRequestDispatcher("./ListarProduto").forward(request, response);
         }catch(Exception e){
             System.out.println("ERROR --->   " + e);

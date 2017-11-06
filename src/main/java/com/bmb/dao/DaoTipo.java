@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class DaoTipo {
     
-    public static void cadastrarTipo(Tipo tipo){
+    public void cadastrarTipo(Tipo tipo) throws Exception{
         try{
             Connection conn = SQLConnection.getConexao();
             String sql = "INSERT INTO tipo_produto(tipo) VALUES (?)";
@@ -30,11 +30,11 @@ public class DaoTipo {
             conn.close();
             
         }catch(Exception e){
-            System.out.println("Não foi possível cadastrar o tipo");
+            throw e;
         }
     }
     
-    public static void alterarTipo(Tipo tipo){
+    public void alterarTipo(Tipo tipo) throws Exception{
     	try{
             Connection conn = SQLConnection.getConexao();
             String sql = "UPDATE tipo_produto SET tipo = ? WHERE id_tipo_produto = ?" ;
@@ -45,11 +45,11 @@ public class DaoTipo {
             stmt.close();
             conn.close();
     	}catch(Exception e){
-    		System.out.println("Não foi possível alterar o tipo");
+            throw e;
     	}
     }
     
-    public static Tipo obter(int idTipo) throws Exception{
+    public Tipo obter(int idTipo) throws Exception{
     	try{
             Tipo tipoProduto = new Tipo();
             Connection conn = SQLConnection.getConexao();
@@ -72,7 +72,7 @@ public class DaoTipo {
     	}
     }
     
-    public static List<Tipo> obter() throws Exception{
+    public List<Tipo> obter() throws Exception{
         try{
         ArrayList<Tipo> tipos = new ArrayList<Tipo>();
             Connection conn = SQLConnection.getConexao();
@@ -94,7 +94,7 @@ public class DaoTipo {
         }
     }
     
-    public static void deletarTipo(int idTipo){
+    public void deletarTipo(int idTipo) throws Exception{
         try{
             Connection conn = SQLConnection.getConexao();
             String sql = "DELETE FROM tipo_produto WHERE id_tipo_produto = ?" ;
@@ -103,7 +103,7 @@ public class DaoTipo {
             stmt.close();
             conn.close();
         }catch(Exception e){
-            
+            throw e;
         }
     }
 }

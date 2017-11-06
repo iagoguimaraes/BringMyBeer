@@ -18,7 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author luis.hlsousa
  */
 public class EditarProduto extends HttpServlet{
-
+ 
+    ControllerProduto ctrlProd = new ControllerProduto();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,7 +36,7 @@ public class EditarProduto extends HttpServlet{
             Produto produto = new Produto();
             produto.setIdProduto(Integer.parseInt(request.getParameter("id")));
             produto.setProduto(request.getParameter("produto"));
-            ControllerProduto.alterarProduto(produto);
+            ctrlProd.alterarProduto(produto);
             request.getRequestDispatcher("./ListarProduto").forward(request, response);
         }catch(Exception e){
             System.out.println("ERROR --->   " + e);

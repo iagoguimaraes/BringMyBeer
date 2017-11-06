@@ -7,7 +7,6 @@ package com.bmb.servlet;
 
 import com.bmb.controller.ControllerTipo;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DeletarTipo extends HttpServlet {
 
+    ControllerTipo ctrlTipo = new ControllerTipo();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,7 +33,7 @@ public class DeletarTipo extends HttpServlet {
             
         
         try{
-            ControllerTipo.deletarTipo(Integer.parseInt(request.getParameter("id")));
+            ctrlTipo.deletarTipo(Integer.parseInt(request.getParameter("id")));
             request.getRequestDispatcher("./ListarTipo").forward(request, response);
         }catch(Exception e){
             System.out.println("ERROR --->   " + e);

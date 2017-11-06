@@ -6,8 +6,8 @@
 package com.bmb.dao;
 
 import com.bmb.model.Produto;
-import com.bmb.model.Tipo;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -19,37 +19,50 @@ import java.util.List;
  */
 public class DaoProduto {
 
-    public static void cadastrarProduto(Produto produto) {
+    public void cadastrarProduto(Produto produto) throws Exception {
         try {
             Connection conn = SQLConnection.getConexao();
             String sql = "INSERT INTO produto(produto) VALUES (?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, produto.getProduto());
+            stmt.setString(2, produto.getProduto());
+            stmt.setDouble(3, produto.getPreco());
+            stmt.setString(4, produto.getDescricao());
+            stmt.setString(5, "now()");
+            stmt.setInt(6, produto.isAtivo() ? 1 : 0);
+            stmt.setInt(7, produto.getMarca().getIdMarca());
+            stmt.setInt(8, produto.getFoto().getIdFoto());
+            stmt.setInt(9, produto.getTipo().getIdTipo());
             stmt.execute();
             stmt.close();
             conn.close();
 
         } catch (Exception e) {
-            System.out.println("Não foi possível cadastrar o produto");
+            throw e;
         }
     }
 
-    public static void alterarProduto(Produto produto) {
+    public void alterarProduto(Produto produto) throws Exception {
         try {
             Connection conn = SQLConnection.getConexao();
             String sql = "UPDATE produto SET produto = ? WHERE id_produto = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, produto.getProduto());
-            stmt.setInt(2, produto.getIdProduto());
+            stmt.setString(2, produto.getProduto());
+            stmt.setDouble(3, produto.getPreco());
+            stmt.setString(4, produto.getDescricao());
+            stmt.setDate(5, (Date) produto.getDataCadastro());
+            stmt.setInt(6, produto.isAtivo() ? 1 : 0);
+            stmt.setInt(7, produto.getMarca().getIdMarca());
+            stmt.setInt(8, produto.getFoto().getIdFoto());
+            stmt.setInt(9, produto.getTipo().getIdTipo());
             stmt.execute();
             stmt.close();
             conn.close();
         } catch (Exception e) {
-            System.out.println("Não foi possível alterar o produto");
+            throw e;
         }
     }
 
-    public static Produto obter(int idProduto) throws Exception {
+    public Produto obter(int idProduto) throws Exception {
         try {
             Produto produto = new Produto();
             Connection conn = SQLConnection.getConexao();
@@ -72,7 +85,7 @@ public class DaoProduto {
         }
     }
 
-    public static List<Produto> obter() throws Exception {
+    public List<Produto> obter() throws Exception {
         try {
             ArrayList<Produto> produtos = new ArrayList<Produto>();
             Connection conn = SQLConnection.getConexao();
@@ -94,7 +107,7 @@ public class DaoProduto {
         }
     }
 
-    public static void deletarProduto(int idProduto){
+    public void deletarProduto(int idProduto) throws Exception{
         try{
             Connection conn = SQLConnection.getConexao();
             String sql = "DELETE FROM produto WHERE id_produto = ?" ;
@@ -103,7 +116,7 @@ public class DaoProduto {
             stmt.close();
             conn.close();
         }catch(Exception e){
-            
+            throw e;
         }
     }
 }

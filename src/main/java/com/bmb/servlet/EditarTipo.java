@@ -8,7 +8,6 @@ package com.bmb.servlet;
 import com.bmb.controller.ControllerTipo;
 import com.bmb.model.Tipo;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EditarTipo extends HttpServlet {
 
+    ControllerTipo ctrlTipo = new ControllerTipo();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,7 +36,7 @@ public class EditarTipo extends HttpServlet {
             Tipo tipo = new Tipo();
             tipo.setIdTipo(Integer.parseInt(request.getParameter("id")));
             tipo.setTipo(request.getParameter("tipo"));
-            ControllerTipo.alterarTipo(tipo);
+            ctrlTipo.alterarTipo(tipo);
             request.getRequestDispatcher("./ListarTipo").forward(request, response);
         }catch(Exception e){
             System.out.println("ERROR --->   " + e);

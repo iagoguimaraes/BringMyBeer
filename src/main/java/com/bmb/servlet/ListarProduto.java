@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author luis.hlsousa
  */
 public class ListarProduto extends HttpServlet {
-        /**
+    
+    ControllerProduto ctrlProd = new ControllerProduto();
+    
+   /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -30,7 +33,7 @@ public class ListarProduto extends HttpServlet {
             throws ServletException, IOException {
         
         try{
-            request.setAttribute("ListProduto", ControllerProduto.obter());
+            request.setAttribute("ListProduto", ctrlProd.obter());
             request.getRequestDispatcher("WEB-INF/produto.jsp").forward(request, response);
         }catch(Exception e){
             System.err.println("ERROR-----> " + e);

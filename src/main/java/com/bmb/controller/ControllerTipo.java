@@ -14,41 +14,44 @@ import java.util.List;
  * @author Luis Henrique Lima
  */
 public class ControllerTipo {
-    public static void cadastrarTipo(Tipo tipo){
+    
+    DaoTipo daoTipo = new DaoTipo();
+    
+    public void cadastrarTipo(Tipo tipo){
     	try{
-    		DaoTipo.cadastrarTipo(tipo);
+    		daoTipo.cadastrarTipo(tipo);
     	}catch(Exception e){
     		System.out.println("Não foi possível fazer a chamada do método 'cadastrar'" + "/n"+ e);
     	}
     }
     
-    public static void alterarTipo(Tipo tipo){
+    public void alterarTipo(Tipo tipo){
     	try{
-    		DaoTipo.alterarTipo(tipo);
+    		daoTipo.alterarTipo(tipo);
     	}catch(Exception e){
     		System.out.println("Não foi possível fazer a chamada do método 'alterar'" + "/n"+ e);
     	}
     }
     
-    public static void deletarTipo(int idTipo){
+    public void deletarTipo(int idTipo){
     	try{
-    		DaoTipo.deletarTipo(idTipo);
+    		daoTipo.deletarTipo(idTipo);
     	}catch(Exception e){
     		System.out.println("Não foi possível deletar o tipo com ID: "+ idTipo + "/n" + e);
     	}
     }
     
-    public static void obter(int idTipo){
+    public void obter(int idTipo){
     	try{
-    		DaoTipo.obter(idTipo);
+    		daoTipo.obter(idTipo);
     	}catch(Exception e){
     		System.out.println("Não foi possível fazer a chamada do método 'obter' através do ID: "+ idTipo  + "/n"+ e);
     	}
     }
     
-    public static List<Tipo> obter(){
+    public List<Tipo> obter(){
     	try{
-    		return DaoTipo.obter();
+    		return daoTipo.obter();
     	}catch(Exception e){
     		System.out.println("Não foi possível fazer a chamada dod método 'obter lista de Tipos'" + "/n"+ e);
                 return null;
