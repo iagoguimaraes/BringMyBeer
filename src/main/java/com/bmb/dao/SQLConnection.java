@@ -8,8 +8,8 @@ import java.sql.SQLException;
 public class SQLConnection {
 
     private static String user = "root";
-    private static String senha = "";
-    private static String database = "jdbc:mysql://localhost/bringmybeer";
+    private static String senha = "root";
+    private static String database = "jdbc:mysql://localhost/bringmybeer?useTimezone=true&serverTimezone=UTC";
     private static String driver = "com.mysql.jdbc.Driver";
 
     public static Connection getConexao() throws Exception {

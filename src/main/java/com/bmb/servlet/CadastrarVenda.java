@@ -5,8 +5,8 @@
  */
 package com.bmb.servlet;
 
-import com.bmb.model.Produto;
-import com.bmb.model.Tipo;
+import com.bmb.controller.ControllerVenda;
+import com.bmb.model.Venda;
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -22,27 +22,18 @@ public class CadastrarVenda extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-
-//            Produto produto = new Produto();            
-//            Tipo tipo = new Tipo();
-//            tipo.setIdTipo(5);
-//            tipo.setTipo("tipo de produto");
-//            produto.setTipo(tipo);            
-//            produto.setAtivo(true);
-//            produto.setDescricao("descricao");
-//            produto.setPreco(15.00);          
-            Gson gson = new Gson();
-//            String json = gson.toJson(produto);
-
-            String json = request.getParameter("produto");
-            Produto produto = gson.fromJson(json, Produto.class);
-
-            String id = Integer.toString(produto.getIdProduto()) + ", " + produto.getProduto();
+        try {        
+            Gson gson = new Gson();          
+            String json = request.getParameter("venda");
+            Venda venda = gson.fromJson(json, Venda.class);
             
+            ControllerVenda ctrlVenda = new ControllerVenda();
+            venda = ctrlVenda.cadastrarVenda(venda);
+            json = gson.toJson(venda);
+
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(id);
+            response.getWriter().write(json);
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
