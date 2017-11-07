@@ -4,7 +4,7 @@ package com.bmb.model;
 import java.util.Date;
 
 public class Produto {
-    private int idProduto;
+    public int idProduto;
 
     public Produto() {
     }

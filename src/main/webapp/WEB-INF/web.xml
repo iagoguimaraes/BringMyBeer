@@ -32,6 +32,10 @@
         <servlet-name>EditarProduto</servlet-name>
         <servlet-class>com.bmb.servlet.EditarProduto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CadastrarVenda</servlet-name>
+        <servlet-class>com.bmb.servlet.CadastrarVenda</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>EditarProduto</servlet-name>
         <url-pattern>/EditarProduto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CadastrarVenda</servlet-name>
+        <url-pattern>/CadastrarVenda</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
