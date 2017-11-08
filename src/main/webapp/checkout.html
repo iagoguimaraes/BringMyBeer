@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>CHECKOUT</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="jumbotron text-center">
+                <h3>Finalize sua compra</h3>
+                <p class="pull-right">Fulano Da Silva</p>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Valor Un</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Cerveja</td>
+                                <td><input id="qt_cerveja" type="number" value="2" min="1" max="15"/></td>
+                                <td>R$ 3.50</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Vinho</td>
+                                <td><input id="qt_vinho" type="number" value="1" min="1" max="15"/></td>
+                                <td>R$ 10.90</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Cachaça Artesanal</td>
+                                <td><input id="qt_cachaca" type="number" value="1" min="1" max="15"/></td>
+                                <td>R$ 9.80</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td></td>
+                                <td><strong><span id="qt_total">4</span></strong></td>
+                                <td><strong>R$ <span id="vl_total">27.70</span></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-xs-12 pull-right">
+                    <div class="form-inline pull-right">
+                        <label>Forma de Pagamento:</label>
+                        <select id="forma_pagamento" class="form-control">
+                            <option value="1">Dinheiro</option>
+                            <option value="2">Cartão</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group pull-right">
+                        <button id="finalizar" class="btn btn-primary" type="submit">Finalizar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+
+            var venda = {
+                cliente: {
+                    idCliente: 1
+                },
+                formaPagamento: {
+                    idFormaPagamento: 1
+                },
+                endereco: {
+                    idEndereco: 1
+                },
+                items: [
+                    {
+                        produto: {
+                            idProduto: 1,
+                            preco: 3.50
+                        },
+                        quantidade: 2
+                    },
+                    {
+                        produto: {
+                            idProduto: 2,
+                            preco: 10.50
+                        },
+                        quantidade: 1
+                    },
+                    {
+                        produto: {
+                            idProduto: 3,
+                            preco: 9.80
+                        },
+                        quantidade: 1
+                    }
+                ]
+            }
+
+            $('input[type=number]').change(function () {
+                let qt_cerveja = parseInt($('#qt_cerveja').val());
+                let qt_vinho = parseInt($('#qt_vinho').val());
+                let qt_cachaca = parseInt($('#qt_cachaca').val());
+
+                let vl_total = (qt_cerveja * 3.5) + (qt_vinho * 10.5) + (qt_cachaca * 9.8);
+
+                $('#qt_total').text(qt_cerveja + qt_vinho + qt_cachaca);
+                $('#vl_total').text(vl_total.toFixed(2));
+            });
+
+            $('#finalizar').click(function () {
+
+                let forma_pagamento = $('#forma_pagamento').val();
+                venda.formaPagamento.idFormaPagamento = forma_pagamento;
+
+                let qt_cerveja = parseInt($('#qt_cerveja').val());
+                let qt_vinho = parseInt($('#qt_vinho').val());
+                let qt_cachaca = parseInt($('#qt_cachaca').val());
+
+                venda.items[0].quantidade = qt_cerveja;
+                venda.items[1].quantidade = qt_vinho;
+                venda.items[2].quantidade = qt_cachaca;
+
+                $.ajax({
+                    type: "POST",
+                    url: "CadastrarVenda",
+                    data: $.param({venda: JSON.stringify(venda)}),
+                    success: function (response) {
+                        console.log(response);
+                        window.location.href = 'compraOK.html'
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Erro ao cadastrar a compra');
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+
+            });
+        </script>
+
+    </body>
+</html>

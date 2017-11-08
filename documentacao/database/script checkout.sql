@@ -1,22 +1,15 @@
 
 insert into produto(produto,preco,descricao,data_cadastro,ativo) values
 ('cerveja',3.50,'puro malte',now(),1),
-('vinho',10.50,'tinto seco',now(),1);
-
-select * from produto;
-
+('vinho',10.50,'tinto seco',now(),1),
+('cachaça artesanal',9.80,'tinto seco',now(),1);
 
 insert into forma_pagamento(forma_pagamento) values
 ('dinheiro'),('cartao');
 
-select * from forma_pagamento;
-
-
 insert into cliente(nome, sobrenome, data_cadastro) values
 ('Fulano','Da Silva', now()),
 ('Beltrano','Santos', now());
-
-select * from cliente;
 
 
 insert into endereco(logradouro,numero,id_cliente) values
@@ -24,44 +17,23 @@ insert into endereco(logradouro,numero,id_cliente) values
 ('Rua Y', '206', 2);
 
 
-select * from endereco;
 
 
+select 
+     v.id_venda
+    ,v.data
+    ,f.forma_pagamento
+    ,p.produto
+    ,i.quantidade
+    ,i.preco
+from 
+	venda v
+    inner join forma_pagamento f
+		on f.id_forma_pagamento = v.id_forma_pagamento
+	inner join item_venda i
+		on i.id_venda = v.id_venda
+	inner join produto p
+		on p.id_produto = i.id_produto
+where
+    id_venda = 1
 
-
-http://localhost:8080/BringMyBeer/CadastrarVenda
-
-venda
-{
-	cliente:{
-		idCliente: 1
-    },
-    formaPagamento:{
-		idFormaPagamento: 1
-    },
-    endereco:{
-		idEndereco: 1
-    },
-    items:[
-		{
-			produto:{
-				idProduto: 1,
-                preco: 3.50
-            },
-            quantidade: 2
-        },
-        {
-			produto:{
-				idProduto: 2,
-                preco: 10.50
-            },
-            quantidade: 3
-        }
-    ]
-}
-
-
-
-select * from venda;
-
-select * from item_venda;
