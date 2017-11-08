@@ -20,17 +20,17 @@ public class DaoItemVenda {
     public ItemVenda cadastrarItemVenda(ItemVenda itemVenda, int idVenda) throws Exception {
         try {
             Connection conn = SQLConnection.getConexao();
-            String sql = "INSERT INTO item_venda(quantidade,preco,id_venda,id_produto) VALUES (?,?,?,?)";
-            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            String sql = "call cadastrar_item_venda(?,?,?,?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, itemVenda.getQuantidade());
             stmt.setDouble(2, itemVenda.getProduto().getPreco());
             stmt.setInt(3, idVenda);
             stmt.setInt(4, itemVenda.getProduto().getIdProduto());
 
-            int id = stmt.executeUpdate();
-
-            itemVenda.setIdItemVenda(id);
+            ResultSet rs = stmt.executeQuery();
+            rs.last();
+            itemVenda.setIdItemVenda(rs.getInt(1));
 
             stmt.close();
             conn.close();

@@ -8,7 +8,7 @@ package com.bmb.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import com.bmb.model.Venda;
-import java.sql.Statement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -19,16 +19,16 @@ public class DaoVenda {
     public Venda cadastrarVenda(Venda venda) throws Exception {
         try {
             Connection conn = SQLConnection.getConexao();
-            String sql = "INSERT INTO venda(data,confirmado,cancelado,id_cliente,id_forma_pagamento,id_endereco) VALUES (now(),0,0,?,?,?)";
-            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            String sql = "call cadastrar_venda(?,?,?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, venda.getCliente().getIdCliente());
             stmt.setInt(2, venda.getFormaPagamento().getIdFormaPagamento());
             stmt.setInt(3, venda.getEndereco().getIdEndereco());
 
-            int id = stmt.executeUpdate();
-
-            venda.setIdVenda(id);
+            ResultSet rs = stmt.executeQuery();
+            rs.last();
+            venda.setIdVenda(rs.getInt(1));
 
             stmt.close();
             conn.close();
