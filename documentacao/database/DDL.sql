@@ -25,6 +25,32 @@ create table foto(
 ,ordem int
 );
 
+drop table if exists forma_pagamento;
+create table forma_pagamento(
+ id_forma_pagamento int primary key auto_increment
+,forma_pagamento varchar(150)
+);
+
+drop table if exists cliente;
+create table cliente(
+ id_cliente int primary key auto_increment
+,nome varchar(150)
+,sobrenome varchar(150)
+,data_nasc datetime
+,data_cadastro datetime
+,cpf varchar(50)
+,email varchar(500)
+,senha varchar(50)
+,telefone bigint
+,celular bigint
+);
+
+drop table if exists tipo_produto;
+create table tipo_produto(
+ id_tipo_produto int primary key auto_increment
+,tipo varchar(150)
+);
+
 drop table if exists produto;
 create table produto(
  id_produto int primary key auto_increment
@@ -60,10 +86,19 @@ create table desconto(
 ,constraint fk_desconto_produto foreign key (id_produto) references produto(id_produto)
 );
 
-drop table if exists tipo_produto;
-create table tipo_produto(
- id_tipo_produto int primary key auto_increment
-,tipo varchar(150)
+drop table if exists endereco;
+create table endereco(
+ id_endereco int primary key auto_increment
+,logradouro varchar(500)
+,complemento varchar(150)
+,numero int
+,bairro varchar(150)
+,cidade varchar(150)
+,estado varchar(2)
+,cep int
+,principal int
+,id_cliente int 
+,constraint fk_endereco_cliente foreign key (id_cliente) references cliente(id_cliente)
 );
 
 drop table if exists venda;
@@ -80,12 +115,6 @@ create table venda(
 ,constraint fk_venda_endereco foreign key (id_endereco) references endereco(id_endereco)
 );
 
-drop table if exists forma_pagamento;
-create table forma_pagamento(
- id_forma_pagamento int primary key auto_increment
-,forma_pagamento varchar(150)
-);
-
 drop table if exists item_venda;
 create table item_venda(
  id_item_venda int primary key auto_increment
@@ -97,31 +126,3 @@ create table item_venda(
 ,constraint fk_item_venda_produto foreign key (id_produto) references produto(id_produto)
 );
 
-drop table if exists cliente;
-create table cliente(
- id_cliente int primary key auto_increment
-,nome varchar(150)
-,sobrenome varchar(150)
-,data_nasc datetime
-,data_cadastro datetime
-,cpf varchar(50)
-,email varchar(500)
-,senha varchar(50)
-,telefone bigint
-,celular bigint
-);
-
-drop table if exists endereco;
-create table endereco(
- id_endereco int primary key auto_increment
-,logradouro varchar(500)
-,complemento varchar(150)
-,numero int
-,bairro varchar(150)
-,cidade varchar(150)
-,estado varchar(2)
-,cep int
-,principal int
-,id_cliente int 
-,constraint fk_endereco_cliente foreign key (id_cliente) references cliente(id_cliente)
-);
