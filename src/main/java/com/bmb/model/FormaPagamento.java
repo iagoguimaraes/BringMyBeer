@@ -7,6 +7,11 @@ public class FormaPagamento {
     public FormaPagamento() {
     }
 
+    public FormaPagamento(int idFormaPagamento, String formaPagamento) {
+        this.idFormaPagamento = idFormaPagamento;
+        this.formaPagamento = formaPagamento;
+    }
+    
     public int getIdFormaPagamento() {
         return idFormaPagamento;
     }

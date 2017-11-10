@@ -2,7 +2,7 @@
 package com.bmb.model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 public class Cliente {
     private int idCliente;
@@ -10,6 +10,20 @@ public class Cliente {
     public Cliente() {
     }
 
+    public Cliente(int idCliente, String nome, String sobrenome, Date dataNascimento, Date dataCadastro, String cpf, String email, String senha, long telefone, long celular, ArrayList<Endereco> enderecos) {
+        this.idCliente = idCliente;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.dataNascimento = dataNascimento;
+        this.dataCadastro = dataCadastro;
+        this.cpf = cpf;
+        this.email = email;
+        this.senha = senha;
+        this.telefone = telefone;
+        this.celular = celular;
+        this.enderecos = enderecos;
+    }
+       
     public int getIdCliente() {
         return idCliente;
     }
@@ -39,7 +53,7 @@ public class Cliente {
     }
 
     public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+        this.dataNascimento = new java.sql.Date(dataNascimento.getTime());
     }
 
     public Date getDataCadastro() {
@@ -47,7 +61,7 @@ public class Cliente {
     }
 
     public void setDataCadastro(Date dataCadastro) {
-        this.dataCadastro = dataCadastro;
+        this.dataCadastro = new java.sql.Date(dataCadastro.getTime());
     }
 
     public String getCpf() {

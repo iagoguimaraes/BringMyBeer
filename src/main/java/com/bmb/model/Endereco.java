@@ -7,6 +7,18 @@ public class Endereco {
     public Endereco() {
     }
 
+    public Endereco(int idEndereco, String logradouro, String complemento, int numero, String bairro, String cidade, String estado, int cep, boolean principal) {
+        this.idEndereco = idEndereco;
+        this.logradouro = logradouro;
+        this.complemento = complemento;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
+        this.principal = principal;
+    }
+     
     public int getIdEndereco() {
         return idEndereco;
     }

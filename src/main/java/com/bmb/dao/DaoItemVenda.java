@@ -9,7 +9,7 @@ import com.bmb.model.ItemVenda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,7 +17,9 @@ import java.sql.Statement;
  */
 public class DaoItemVenda {
 
-    public ItemVenda cadastrarItemVenda(ItemVenda itemVenda, int idVenda) throws Exception {
+    private DaoProduto daoProduto = new DaoProduto();
+    
+    public ItemVenda cadastrar(ItemVenda itemVenda, int idVenda) throws Exception {
         try {
             Connection conn = SQLConnection.getConexao();
             String sql = "call cadastrar_item_venda(?,?,?,?)";
@@ -41,4 +43,32 @@ public class DaoItemVenda {
             throw e;
         }
     }
+    
+    
+    public ArrayList<ItemVenda> obter(int idVenda) throws Exception {
+        try {
+            ArrayList<ItemVenda> itemsVenda = new ArrayList<ItemVenda>();
+            Connection conn = SQLConnection.getConexao();
+            String sql = "call obter_item_venda_by_venda(?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idVenda);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                itemsVenda.add(new ItemVenda(
+                        rs.getInt("id_venda"),
+                        rs.getInt("quantidade"),
+                        rs.getDouble("preco"),
+                        daoProduto.obter(rs.getInt("id_produto"))));
+            }
+            stmt.close();
+            conn.close();
+
+            return itemsVenda;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
 }

@@ -38,10 +38,10 @@ public class ControllerVenda {
                 throw new Exception("venda sem itens");
             }
 
-            venda = daoVenda.cadastrarVenda(venda);
+            venda = daoVenda.cadastrar(venda);
             for (int i = 0; i < venda.getItems().size(); i++) {
                 ItemVenda itemVenda = venda.getItems().get(i);
-                itemVenda = daoItemVenda.cadastrarItemVenda(itemVenda, venda.getIdVenda());
+                itemVenda = daoItemVenda.cadastrar(itemVenda, venda.getIdVenda());
                 venda.getItems().set(i, itemVenda);
             }
             return venda;

@@ -2,7 +2,7 @@
 package com.bmb.model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 public class Venda {
     
@@ -18,6 +18,17 @@ public class Venda {
     public Venda() {
     }
 
+    public Venda(int idVenda, Date data, boolean confirmado, boolean cancelado, ArrayList<ItemVenda> items, FormaPagamento formaPagamento, Cliente cliente, Endereco endereco) {
+        this.idVenda = idVenda;
+        this.data = data;
+        this.confirmado = confirmado;
+        this.cancelado = cancelado;
+        this.items = items;
+        this.formaPagamento = formaPagamento;
+        this.cliente = cliente;
+        this.endereco = endereco;
+    }
+       
     public int getIdVenda() {
         return idVenda;
     }
@@ -31,7 +42,7 @@ public class Venda {
     }
 
     public void setData(Date data) {
-        this.data = data;
+        this.data = new java.sql.Date(data.getTime());
     }
 
     public boolean isConfirmado() {
