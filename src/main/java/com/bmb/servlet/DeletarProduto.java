@@ -32,7 +32,7 @@ public class DeletarProduto extends HttpServlet {
             throws ServletException, IOException {
             
         try{
-            ctrlProd.deletarProduto(Integer.parseInt(request.getParameter("id")));
+            //ctrlProd.deletarProduto(Integer.parseInt(request.getParameter("id")));
             request.getRequestDispatcher("./ListarProduto").forward(request, response);
         }catch(Exception e){
             System.out.println("ERROR --->   " + e);

@@ -31,8 +31,8 @@ public class DaoCliente {
             stmt.setString(5, cliente.getCpf());
             stmt.setString(6, cliente.getEmail());
             stmt.setString(7, cliente.getSenha());
-            stmt.setLong(8, cliente.getTelefone());
-            stmt.setLong(9, cliente.getCelular());
+            stmt.setString(8, cliente.getTelefone());
+            stmt.setString(9, cliente.getCelular());
 
             ResultSet rs = stmt.executeQuery();
             rs.last();
@@ -62,8 +62,8 @@ public class DaoCliente {
             stmt.setString(6, cliente.getCpf());
             stmt.setString(7, cliente.getEmail());
             stmt.setString(8, cliente.getSenha());
-            stmt.setLong(9, cliente.getTelefone());
-            stmt.setLong(10, cliente.getCelular());
+            stmt.setString(9, cliente.getTelefone());
+            stmt.setString(10, cliente.getCelular());
 
             stmt.execute();
             stmt.close();
@@ -93,8 +93,8 @@ public class DaoCliente {
                         rs.getString("cpf"),
                         rs.getString("email"),
                         rs.getString("senha"),
-                        rs.getLong("telefone"),
-                        rs.getLong("celular"),
+                        rs.getString("telefone"),
+                        rs.getString("celular"),
                         daoEndereco.obterPorCliente(rs.getInt("id_cliente")));
             }
             stmt.close();
@@ -106,4 +106,39 @@ public class DaoCliente {
         }
     }
 
+    public Cliente obter(String email, String senha) throws Exception {
+        try {
+            Cliente cliente = new Cliente();
+            Connection conn = SQLConnection.getConexao();
+            String sql = "call obter_cliente_by_senha(?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, email);
+            stmt.setString(2, senha);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                cliente = new Cliente(
+                        rs.getInt("id_cliente"),
+                        rs.getString("nome"),
+                        rs.getString("sobrenome"),
+                        rs.getDate("data_nasc"),
+                        rs.getDate("data_cadastro"),
+                        rs.getString("cpf"),
+                        rs.getString("email"),
+                        rs.getString("senha"),
+                        rs.getString("telefone"),
+                        rs.getString("celular"),
+                        daoEndereco.obterPorCliente(rs.getInt("id_cliente")));
+            }
+            stmt.close();
+            conn.close();
+
+            return cliente;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    
 }

@@ -9,8 +9,16 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(int aInt, String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Produto(int idProduto, String produto, double preco, String descricao, Date dataCadastro, boolean ativo, Tipo tipo, Marca marca, Foto foto) {
+        this.idProduto = idProduto;
+        this.produto = produto;
+        this.preco = preco;
+        this.descricao = descricao;
+        this.dataCadastro = dataCadastro;
+        this.ativo = ativo;
+        this.tipo = tipo;
+        this.marca = marca;
+        this.foto = foto;
     }
 
     public int getIdProduto() {

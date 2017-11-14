@@ -10,7 +10,7 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(int idCliente, String nome, String sobrenome, Date dataNascimento, Date dataCadastro, String cpf, String email, String senha, long telefone, long celular, ArrayList<Endereco> enderecos) {
+    public Cliente(int idCliente, String nome, String sobrenome, Date dataNascimento, Date dataCadastro, String cpf, String email, String senha, String telefone, String celular, ArrayList<Endereco> enderecos) {
         this.idCliente = idCliente;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -88,19 +88,19 @@ public class Cliente {
         this.senha = senha;
     }
 
-    public long getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(long telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
-    public long getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(long celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
 
@@ -118,7 +118,7 @@ public class Cliente {
     private String cpf;
     private String email;
     private String senha;
-    private long telefone;
-    private long celular;  
+    private String telefone;
+    private String celular;  
     ArrayList<Endereco> enderecos;
 }

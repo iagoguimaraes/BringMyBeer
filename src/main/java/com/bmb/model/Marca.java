@@ -6,6 +6,11 @@ public class Marca {
     public Marca() {
     }
 
+    public Marca(int idMarca, String marca) {
+        this.idMarca = idMarca;
+        this.marca = marca;
+    }
+       
     public int getIdMarca() {
         return idMarca;
     }

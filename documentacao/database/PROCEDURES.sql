@@ -129,7 +129,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `alterar_endereco`(
 ,in _estado varchar(2)
 ,in _cep int
 ,in _principal int
-,in _id_cliente int 
 )
 begin
 
@@ -354,6 +353,34 @@ in _id_cliente
 begin
 
 select * from endereco where id_cliente = _id_cliente;	
+
+end$$
+DELIMITER ;
+
+-------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_endereco_by_cliente`(
+in _id_cliente
+)
+begin
+
+select * from endereco where id_cliente = _id_cliente;	
+
+end$$
+DELIMITER ;
+
+-------------------------------------------------------------------------
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_cliente_by_senha`(
+in _email varchar(500),
+in _senha varchar(50)
+)
+begin
+
+select * from cliente where email = _email and senha = _senha;	
 
 end$$
 DELIMITER ;

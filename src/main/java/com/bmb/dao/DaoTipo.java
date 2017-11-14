@@ -50,26 +50,27 @@ public class DaoTipo {
     }
     
     public Tipo obter(int idTipo) throws Exception{
-    	try{
-            Tipo tipoProduto = new Tipo();
+    	       try {
+            Tipo tipo = new Tipo();
             Connection conn = SQLConnection.getConexao();
-            String sql = "SELECT * FROM tipo_produto WHERE id_tipo_produto = ?" ;
+            String sql = "call obter_tipo_by_id(?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
+
             stmt.setInt(1, idTipo);
-            
+
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                tipoProduto = new Tipo(
-                        rs.getInt("id_tipo_produto"),
+                tipo = new Tipo(
+                        rs.getInt("id_tipo"),
                         rs.getString("tipo"));
             }
             stmt.close();
             conn.close();
-            
-            return tipoProduto;
-    	} catch(Exception e){
-    		throw e;
-    	}
+
+            return tipo;
+        } catch (Exception e) {
+            throw e;
+        }
     }
     
     public List<Tipo> obter() throws Exception{

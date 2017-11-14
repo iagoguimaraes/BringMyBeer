@@ -7,8 +7,10 @@ package com.bmb.controller;
 
 import com.bmb.dao.DaoItemVenda;
 import com.bmb.dao.DaoVenda;
+import com.bmb.model.Cliente;
 import com.bmb.model.ItemVenda;
 import com.bmb.model.Venda;
+import java.util.ArrayList;
 
 /**
  *
@@ -49,4 +51,14 @@ public class ControllerVenda {
             throw e;
         }
     }
+    
+    public ArrayList<Venda> obter(Cliente cliente) throws Exception{
+        try{
+            return daoVenda.obterPorCliente(cliente.getIdCliente());
+        }
+        catch(Exception e){
+            throw e;
+        }
+    }
+    
 }

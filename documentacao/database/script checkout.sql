@@ -35,5 +35,5 @@ from
 	inner join produto p
 		on p.id_produto = i.id_produto
 where
-    id_venda = 1
+    v.id_venda = 1
 

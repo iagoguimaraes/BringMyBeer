@@ -19,6 +19,10 @@ import java.util.List;
  */
 public class DaoProduto {
 
+    DaoTipo daoTipo = new DaoTipo();
+    DaoMarca daoMarca = new DaoMarca();
+    DaoFoto daoFoto = new DaoFoto();
+    
     public void cadastrarProduto(Produto produto) throws Exception {
         try {
             Connection conn = SQLConnection.getConexao();
@@ -74,7 +78,14 @@ public class DaoProduto {
             while (rs.next()) {
                 produto = new Produto(
                         rs.getInt("id_produto"),
-                        rs.getString("produto"));
+                        rs.getString("produto"),
+                        rs.getDouble("preco"),
+                        rs.getString("descricao"),
+                        rs.getDate("data_cadastro"),
+                        rs.getBoolean("ativo"),
+                        daoTipo.obter(rs.getInt("id_tipo")),
+                        daoMarca.obter(rs.getInt("id_marca")),
+                        daoFoto.obter(rs.getInt("id_foto")));
             }
             stmt.close();
             conn.close();
@@ -85,18 +96,26 @@ public class DaoProduto {
         }
     }
 
-    public List<Produto> obter() throws Exception {
+    public ArrayList<Produto> obter() throws Exception {
         try {
             ArrayList<Produto> produtos = new ArrayList<Produto>();
             Connection conn = SQLConnection.getConexao();
-            String sql = "SELECT * FROM produto";
+            String sql = "call obter_produto()";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 produtos.add(new Produto(
                         rs.getInt("id_produto"),
-                        rs.getString("produto")));
+                        rs.getString("produto"),
+                        rs.getDouble("preco"),
+                        rs.getString("descricao"),
+                        rs.getDate("data_cadastro"),
+                        rs.getBoolean("ativo"),
+                        daoTipo.obter(rs.getInt("id_tipo")),
+                        daoMarca.obter(rs.getInt("id_marca")),
+                        daoFoto.obter(rs.getInt("id_foto"))
+                ));
             }
             stmt.close();
             conn.close();

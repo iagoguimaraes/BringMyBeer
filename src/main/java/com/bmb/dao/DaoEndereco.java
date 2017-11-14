@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class DaoEndereco {
 
     DaoCliente daoCliente = new DaoCliente();
-    
+
     public Endereco cadastrar(Endereco endereco, int idCliente) throws Exception {
         try {
             Connection conn = SQLConnection.getConexao();
@@ -31,7 +31,7 @@ public class DaoEndereco {
             stmt.setString(4, endereco.getBairro());
             stmt.setString(5, endereco.getCidade());
             stmt.setString(6, endereco.getEstado());
-            stmt.setLong(7, endereco.getCep());
+            stmt.setString(7, endereco.getCep());
             stmt.setBoolean(8, endereco.isPrincipal());
             stmt.setInt(9, idCliente);
 
@@ -49,7 +49,7 @@ public class DaoEndereco {
         }
     }
 
-    public static void alterar(Endereco endereco, int idCliente) throws Exception {
+    public void alterar(Endereco endereco) throws Exception {
         try {
             Connection conn = SQLConnection.getConexao();
             String sql = "call alterar_endereco(?,?,?,?,?,?,?,?,?,?)";
@@ -62,9 +62,8 @@ public class DaoEndereco {
             stmt.setString(5, endereco.getBairro());
             stmt.setString(6, endereco.getCidade());
             stmt.setString(7, endereco.getEstado());
-            stmt.setLong(8, endereco.getCep());
+            stmt.setString(8, endereco.getCep());
             stmt.setBoolean(9, endereco.isPrincipal());
-            stmt.setInt(10, idCliente);
 
             stmt.execute();
             stmt.close();
@@ -74,7 +73,7 @@ public class DaoEndereco {
         }
     }
 
-    public static void remover(int id) throws Exception {
+    public void remover(int id) throws Exception {
         try {
             Connection conn = SQLConnection.getConexao();
             String sql = "call remover_endereco(?)";
@@ -87,8 +86,8 @@ public class DaoEndereco {
             throw e;
         }
     }
-    
-        public Endereco obter(int idEndereco) throws Exception {
+
+    public Endereco obter(int idEndereco) throws Exception {
         try {
             Endereco endereco = new Endereco();
             Connection conn = SQLConnection.getConexao();
@@ -107,7 +106,7 @@ public class DaoEndereco {
                         rs.getString("bairro"),
                         rs.getString("cidade"),
                         rs.getString("estado"),
-                        rs.getInt("cep"),
+                        rs.getString("cep"),
                         rs.getBoolean("principal"));
             }
             stmt.close();
@@ -118,8 +117,8 @@ public class DaoEndereco {
             throw e;
         }
     }
-    
-       public ArrayList<Endereco> obterPorCliente(int idCliente) throws Exception {
+
+    public ArrayList<Endereco> obterPorCliente(int idCliente) throws Exception {
         try {
             ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
             Connection conn = SQLConnection.getConexao();
@@ -138,7 +137,7 @@ public class DaoEndereco {
                         rs.getString("bairro"),
                         rs.getString("cidade"),
                         rs.getString("estado"),
-                        rs.getInt("cep"),
+                        rs.getString("cep"),
                         rs.getBoolean("principal")));
             }
             stmt.close();

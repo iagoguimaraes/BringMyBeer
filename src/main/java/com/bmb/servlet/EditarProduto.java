@@ -36,7 +36,7 @@ public class EditarProduto extends HttpServlet{
             Produto produto = new Produto();
             produto.setIdProduto(Integer.parseInt(request.getParameter("id")));
             produto.setProduto(request.getParameter("produto"));
-            ctrlProd.alterarProduto(produto);
+            //ctrlProd.alterarProduto(produto);
             request.getRequestDispatcher("./ListarProduto").forward(request, response);
         }catch(Exception e){
             System.out.println("ERROR --->   " + e);

@@ -7,6 +7,12 @@ public class Foto {
     public Foto() {
     }
 
+    public Foto(int idFoto, String path, int ordem) {
+        this.idFoto = idFoto;
+        this.path = path;
+        this.ordem = ordem;
+    }  
+
     public int getIdFoto() {
         return idFoto;
     }

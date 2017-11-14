@@ -7,54 +7,30 @@ package com.bmb.controller;
 
 import com.bmb.dao.DaoProduto;
 import com.bmb.model.Produto;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
  * @author luis.hlsousa
  */
 public class ControllerProduto {
-    
-    DaoProduto daoProd = new DaoProduto();
-    
-    public void cadastrarProduto(Produto produto){
-    	try{
-    		daoProd.cadastrarProduto(produto);
-    	}catch(Exception e){
-    		System.out.println("Não foi possível fazer a chamada do método 'cadastrar'" + "/n"+ e);
-    	}
+
+    DaoProduto daoProduto = new DaoProduto();
+
+    public ArrayList<Produto> obter() throws Exception{
+        try {
+            return daoProduto.obter();
+        } catch (Exception e) {
+            throw e;
+        }
     }
-    
-    public void alterarProduto(Produto produto){
-    	try{
-    		daoProd.alterarProduto(produto);
-    	}catch(Exception e){
-    		System.out.println("Não foi possível fazer a chamada do método 'alterar'" + "/n"+ e);
-    	}
+
+    public ArrayList<Produto> pesquisar() throws Exception{
+        try {
+            return null;
+        } catch (Exception e) {
+            throw e;
+        }
     }
-    
-    public void deletarProduto(int idProduto){
-    	try{
-    		daoProd.deletarProduto(idProduto);
-    	}catch(Exception e){
-    		System.out.println("Não foi possível deletar o tipo com ID: "+ idProduto + "/n" + e);
-    	}
-    }
-    
-    public void obter(int idProduto){
-    	try{
-    		daoProd.obter(idProduto);
-    	}catch(Exception e){
-    		System.out.println("Não foi possível fazer a chamada do método 'obter' através do ID: "+ idProduto  + "/n"+ e);
-    	}
-    }
-    
-    public List<Produto> obter(){
-    	try{
-    		return daoProd.obter();
-    	}catch(Exception e){
-    		System.out.println("Não foi possível fazer a chamada dod método 'obter lista de Produtos'" + "/n"+ e);
-                return null;
-    	}
-    }
+
 }
