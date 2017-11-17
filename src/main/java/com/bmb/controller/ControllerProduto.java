@@ -32,5 +32,13 @@ public class ControllerProduto {
             throw e;
         }
     }
+    
+    public Produto obter(int id)throws Exception{
+        try {
+            return daoProduto.obter(id);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 
 }

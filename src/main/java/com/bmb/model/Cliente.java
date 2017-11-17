@@ -111,6 +111,15 @@ public class Cliente {
     public void setEnderecos(ArrayList<Endereco> enderecos) {
         this.enderecos = enderecos;
     }
+    
+    public void setToken(String token){
+        this.token = token;
+    }
+    
+    public String getToken(){
+        return this.token;
+    }
+    
     private String nome;
     private String sobrenome;
     private Date dataNascimento;
@@ -121,4 +130,5 @@ public class Cliente {
     private String telefone;
     private String celular;  
     ArrayList<Endereco> enderecos;
+    private String token;
 }

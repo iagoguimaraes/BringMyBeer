@@ -50,39 +50,9 @@ public class ProductResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson() {
-        List<Produto> ps = new ArrayList<>();
-        Produto p = new Produto();
-        Foto f = new Foto();
-        Marca m = new Marca();
-        Tipo t = new Tipo();
-        
-        t.setIdTipo(1);
-        t.setTipo("alimentos");
-        
-        m.setIdMarca(1);
-        m.setMarca("Batata");
-        
-        f.setIdFoto(1);
-        f.setOrdem(1);
-        f.setPath("https://yt3.ggpht.com/-cHFMZ-sad-E/AAAAAAAAAAI/AAAAAAAAAAA/dTSVHSra930/s900-c-k-no-mo-rj-c0xffffff/photo.jpg");
-        
-        p.setIdProduto(1);
-        p.setAtivo(true);
-        p.setDataCadastro(new Date());
-        p.setDescricao("Teste 1aaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaa");
-        p.setProduto("name");
-        p.setFoto(f);
-        p.setMarca(m);
-        p.setTipo(t);
-        p.setPreco(100);
-        p.setIdProduto(1);
-        
-        ps.add(p);
-        
-        
+    public Response getJson() {        
         try {
-            return Response.ok().entity(ps).build();
+            return Response.ok().entity(ctrlProduto.obter()).build();
         }catch (Exception e){
             System.out.print(e);
             return Response.status(Response.Status.NOT_MODIFIED).build();
@@ -96,33 +66,8 @@ public class ProductResource {
     @Path("{id}")
     @Consumes("application/json")
     public Response putJson(@PathParam("id") int id) {
-        Produto p = new Produto();
-        Foto f = new Foto();
-        Marca m = new Marca();
-        Tipo t = new Tipo();
-        
-        t.setIdTipo(1);
-        t.setTipo("alimentos");
-        
-        m.setIdMarca(1);
-        m.setMarca("Batata");
-        
-        f.setIdFoto(1);
-        f.setOrdem(id);
-        f.setPath("https://yt3.ggpht.com/-cHFMZ-sad-E/AAAAAAAAAAI/AAAAAAAAAAA/dTSVHSra930/s900-c-k-no-mo-rj-c0xffffff/photo.jpg");
-        
-        p.setAtivo(true);
-        p.setDataCadastro(new Date());
-        p.setDescricao("Teste 1");
-        p.setFoto(f);
-        p.setMarca(m);
-        p.setTipo(t);
-        p.setPreco(100);
-        p.setProduto("name");
-        p.setIdProduto(1);
-        
         try {
-            return Response.ok().entity(p).build();
+            return Response.ok().entity(ctrlProduto.obter(id)).build();
         }catch (Exception e){
             System.out.print(e);
             return Response.status(Response.Status.NOT_MODIFIED).build();

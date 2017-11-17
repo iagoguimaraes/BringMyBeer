@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.bmb.model.Venda;
 import com.bmb.controller.ControllerVenda;
+import com.bmb.model.Cliente;
 import java.util.Properties;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
@@ -35,11 +36,10 @@ public class VendaResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response buyProduct(Venda venda) {
-        //System.out.println(content);;
-        //TODO return proper representation object
         Properties p = new Properties();
         p.setProperty("message", "venda realizada com sucesso");
         try {
+            ctrlVenda.cadastrarVenda(venda);
             return Response.ok().entity(p).build();
         } catch (Exception e) {
             return Response.ok().entity(null).build();
@@ -53,13 +53,11 @@ public class VendaResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response getSales(int idCliente) {
+    //@Consumes(MediaType.APPLICATION_JSON)
+    public Response getSales(Cliente idCliente) {
         //TODO return proper representation object
-        Properties p = new Properties();
-        p.setProperty("message", "venda consultada com sucesso " + idCliente);
         try {
-            return Response.ok().entity(p).build();
+            return Response.ok().entity(ctrlVenda.obter(idCliente)).build();
         } catch (Exception e) {
             return Response.ok().entity(null).build();
         }
