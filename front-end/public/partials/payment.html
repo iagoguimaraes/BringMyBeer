@@ -104,13 +104,14 @@
 			    </div>
 			</div>
 			<div class="pb-3 py-2 mx-auto" ng-if="type!='Boleto'">
-			  		Boleto Bnacário
+			  		Boleto Bancário
 			</div>
 			<a class="btn btn-success col-md-12 rounded-0" 
 	  		     data-toggle="collapse" 
 	  		     href="#" 
 	  		     aria-expanded="false" 
-	  		     aria-controls="collapseExample">
+	  		     aria-controls="collapseExample"
+	  		     ng-click="buy();">
 			     Confirmar
 			</a>
 		</div>
@@ -143,24 +144,13 @@
 		      <td>
 		      	{{(product.price * product.quantity * (1-(product.off/100))) | currency : 'R$' : 2}}
 		      </td>
-		    <!--   <td>
-		      	<div class="input-group bg-white">
-					<span class="input-group-addon bg-white border-0">
-						<button class="btn btn-outline-success" ng-click="increment(product)">+</button>
-					</span>
-				  	<input style="min-width: 40px"
-				  		   ng-model="product.quantity" 
-				  		   ng-change="getTotal(product)"
-				  		   type="text" 
-				  		   class="form-control text-white text-center bg-dark" 
-				  		   aria-label="Amount (to the nearest dollar)">
-				  	<span class="input-group-addon bg-white border-0">
-				  		<button class="btn btn-outline-danger" ng-click="decrement(product)">-</button>
-				  	</span>
-				</div>
-		      </td> -->
 		    </tr>
 		  </tbody>
 		</table>
 	</div>
 </div>
+<style>
+	.meu-carrinho{
+		display: none;
+	}
+</style>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="bringmybeer">
 <head>
-	<base href="\">
+	<base href="/">
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
@@ -11,15 +11,17 @@
 	<script src="js/bootstrap/bootstrap.bundle.min.js"></script>
 	<script src="js/bootstrap/bootstrap.min.js"></script>
 	<script src="js/lib/pace.js"></script>
-	<script src="js/lib/angular.min.js"></script>
+	<script src="js/lib/angular.js"></script>
 	<script src="js/lib/angular-resource.min.js"></script>
 	<script src="js/lib/angular-animate.min.js"></script>
 	<script src="js/lib/angular-route.min.js"></script>
 	<script src="js/lib/angular-cookies.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angular-ui-router/1.0.0-rc.1/angular-ui-router.min.js"></script>
+	<!-- <script src="js/lib/angular-ui-router.min.js"></script> -->
 	<script src="js/lib/inputmask.js"></script>
-<!-- 	<script src="js/lib/inputmask.extensions.js"></script>
+	<script src="js/lib/inputmask.extensions.js"></script>
 	<script src="js/lib/inputmask.numeric.extensions.js"></script>
-	<script src="js/lib/inputmask.phone.extensions.js"></script> -->
+	<script src="js/lib/inputmask.phone.extensions.js"></script>
 	<script src="js/lib/inputmask.date.extensions.js"></script>
 	<script src="js/lib/jquery.inputmask.js"></script>
 	<script src="js/lib/dirPagination.js"></script>
@@ -35,17 +37,24 @@
 	<script src="js/controller/register-controller.js"></script>
 	<script src="js/controller/home-user-controller.js"></script>
 	<script src="js/controller/payment-controller.js"></script>
-	<script src="js/directives/menu-top.js"></script>
-	<script src="js/services/bringmybeer-service.js"></script>
+	<script src="js/controller/address-controller.js"></script>
+	<script src="js/directives/directives.js"></script>
+	<script src="js/component/components.js"></script>
+	<script src="js/services/bringmybeer-factory.js"></script>
+	<script src="js/services/cart-service.js"></script>
+	<script src="js/services/alert-service.js"></script>
+	<script src="js/services/product-service.js"></script>
+	<script src="js/services/session-service.js"></script>
+	<script src="js/services/user-service.js"></script>
+	<script src="js/services/address-service.js"></script>
 	<script src="https://use.fontawesome.com/f58eb132fb.js"></script>
 	<!-- <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	  <!-- Angular Material Library -->
 	<title>Bring My Beer</title>
 </head>
 <body>
-	<loader style="display: none;"></loader>
 	<menu-top class="fixed-top"></menu-top>
+	<loader style="display: none"></loader>
 			<!-- <div class=""></div> -->
 			<!-- <div id="carouselExampleControls" class="carousel slide " data-ride="carousel">
 			  <div class="carousel-inner">
@@ -69,8 +78,15 @@
 			  </a>
 			</div> -->
 	<div class="container-fluid main-container py-5">
-		<ng-view></ng-view>
+		<ui-view></ui-view>
 	</div>
+	<alert style="display: none"></alert>
 	<menu-bottom></menu-bottom>
 </body>
 </html>
+<script>
+	$(".main-container, menu-top").click(function(){
+		$("#navbarToggleExternalContent").collapse("hide");
+	});
+	
+</script>

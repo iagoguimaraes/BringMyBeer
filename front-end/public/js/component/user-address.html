@@ -1,0 +1,93 @@
+<table class="table bg-light mt-3 mx-auto animated bounceIn" style="max-width: 500px;">
+  <thead>
+    <tr class="thead-dark" ng-repeat="title in titles">
+      <th scope="col">{{title}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">
+      	<div class="row">
+      		<div class="col-md-7">
+  				<div class="form-group">
+  					<label for="address">Endereço</label>
+		  			<input  ng-model="model.logradouro" 
+		  				    class="form-control"
+		  				    name="address"
+		  				    ng-disabled="true"
+			  			   />
+			  	</div>
+      		</div>
+      		<div class="col-md-5">
+      			<div class="form-group">
+      				<label for="botherhood">bairro</label>
+					<input ng-model="model.bairro" 
+						   class="form-control"
+						   name="botherhood"
+						   ng-disabled="true"
+		  			   />
+			  	</div>
+      		</div>
+      	</div>
+      	<div class="row">
+      		<div class="col-md-3">
+		  		<div class="form-group">
+		  			<label for="number">Número</label>
+						<input ng-model="model.numero" 
+							   class="form-control"
+							   name="number"
+							   ng-disabled="disabled.state"
+			  			   />
+		  		</div>
+      		</div>
+      		<div class="col-md-7">
+      			<div class="form-group">
+		  			<label for="city">Cidade</label>
+						<input ng-model="model.cidade" 
+							   class="form-control"
+							   name="city"
+							   ng-disabled="true"
+			  			   />
+		  		</div>
+      		</div>
+      		<div class="col-md-2">
+		  		<div class="form-group">
+		  			<label for="state">Estado</label>
+						<input ng-model="model.estado" 
+							   class="form-control"
+							   name="state"
+							   ng-disabled="true"
+			  			   />
+		  		</div>
+      		</div>      		
+      	</div>
+      	<div class="row">
+      		<div class="col-md-6">
+      			<div class="form-group">
+      				<label for="complement">Complemento</label>
+					<input ng-model="model.complemento" 
+						   class="form-control"
+						   name="complement"
+						   ng-disabled="false"
+		  			   />
+			  	</div>
+      		</div>
+      		<div class="col-md-6">
+  				<div class="input-group mt-4 mb-3 pt-2">
+				    <input type="text"
+			               class="form-control"
+			               name="cep"
+			               id="cep"
+			               ng-model="model.cep"
+			               required
+			               input-mask="{mask: '99999-999'}">
+				    <span class="input-group-btn">
+				       	<button class="btn btn-primary border-0 rounded-0" type="button" ng-click="edit()">Buscar CEP</button>
+				    </span>
+			  	</div>
+      		</div>
+      	</div>
+      </th>
+    </tr>
+  </tbody>
+</table>

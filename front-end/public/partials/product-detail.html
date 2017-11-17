@@ -1,8 +1,8 @@
 <nav aria-label="breadcrumb" role="navigation">
   <ol class="breadcrumb rounded-0">
     <li class="breadcrumb-item"><a href="/home">Home</a></li>
-    <li class="breadcrumb-item"><a href="/products/category/{{product.category}}">{{product.category}}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{product.name}}</li>
+    <li class="breadcrumb-item"><a href="/products/category/{{product.category}}">{{product.tipo.tipo}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{product.produto}}</li>
   </ol>
 </nav>
 <div class="row">
@@ -10,10 +10,10 @@
 		<div id="carouselExampleControls2" class="carousel slide" data-keyboard="true" data-pause="true">
 		  	<div class="carousel-inner">
 		  		<div class="carousel-item active">
-				      <img class="d-block w-100" src="{{product.images[0]}}" alt="First slide">
+				      <img class="d-block w-100" src="{{product.foto[0].path}}" alt="First slide">
 				</div>
-	  			<div class="carousel-item" ng-repeat="image in product.images track by $index" ng-if="$index > 0">
-			      <img class="d-block w-100" src="{{image}}" alt="First slide">
+	  			<div class="carousel-item" ng-repeat="image in product.foto track by $index" ng-if="$index > 0">
+			      <img class="d-block w-100" src="{{image.path}}" alt="First slide">
 			    </div>
 			</div>
 			<a ng-if="product.images.length > 1" class="carousel-control-prev" href="#carouselExampleControls2" ng-click="prevent();" role="button" data-slide="prev">
@@ -27,12 +27,12 @@
 		</div>
 	</div>
 	<div class="col-md-6 product-desc">
-		<h2>{{product.name}}</h2>
+		<h2>{{product.produto}}</h2>
 		<hr>
-		<p>{{product.desc}}</p>
+		<p>{{product.descricao}}</p>
 		<h5 class="text-secondary text-center py-4" >
-	        <span ng-class="{'valid-off mr-1': product.off > 0}">{{product.price | currency : 'R$' : 2}}</span> 
-	        <span ng-if="product.off > 0" class="text-success"> por apenas {{product.price * (1-(product.off/100)) | currency: 'R$' : 2}}</span> 
+	        <span ng-class="{'valid-off mr-1': product.off > 0}">{{product.preco | currency : 'R$' : 2}}</span> 
+	        <span ng-if="product.off > 0" class="text-success"> por apenas {{product.preco * (1-(product.desconto/100)) | currency: 'R$' : 2}}</span> 
       	</h5>
 		<div class="btn-group" style="width: 100%">
 			<button ng-click="buy(product)" style="width: 50%" class="btn btn-success">
@@ -63,13 +63,9 @@
 	</div>
 	<card dir-paginate="item in product.productList | orderBy: orderByCustom | itemsPerPage: itemPerPage" 
 		  class="col-md-2 col-sm-6 card-animation"
-		  title="{{item.name}}" 
-		  url="{{item.images[0]}}"
-		  desc="{{item.desc | limitTo: 60}}"
-		  price="{{item.price}}"
+		  product="item"
 		  action="addProduct(item)"
-		  detail="goToDetail(item._id)"
-		  off="{{item.off}}">
+		  detail="goToDetail(item.idProduto)">
 	</card>
 	<div class="col-md-12 py-0 rounded-0 text-center text-white" ng-if="productList.length > itemPerPage">
 		<dir-pagination-controls class="mx-auto" ></dir-pagination-controls>

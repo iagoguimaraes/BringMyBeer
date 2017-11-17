@@ -1,5 +1,6 @@
-angular.module('bringmybeer').controller('LoginController', ['$scope', 'SessionService', '$location', '$rootScope', function($scope, SessionService, $location, $rootScope){
-
+angular.module('bringmybeer').controller('LoginController', ['$scope', 'alertService', '$rootScope', '$state', 'cartService', 'userService', 
+	function($scope, alertService, $rootScope, $state, cartService, userService){
+	$scope.user = {};
 	$scope.show = false;
 
 	$scope.showPassword = function(){
@@ -7,11 +8,11 @@ angular.module('bringmybeer').controller('LoginController', ['$scope', 'SessionS
 	}
 
 	$scope.login = function(){
-		SessionService.setUserAuthenticated();
-		var r = $rootScope.lastRoute.toString().split("/");
-		if(SessionService.getSession()){
-			r[r.length-1].length ? $location.path(r[r.length-1]) : $location.path('/user-home');
-			// $location.path('/checkout');
-		}
+		userService.getUser($scope.user)
+			.then(function(currentUser){
+				$state.go($rootScope.lastRoute || "home");
+			}).catch(function(error){
+				alertService.setMessage(4000, error.message, error.title);
+			});
 	}
 }]);

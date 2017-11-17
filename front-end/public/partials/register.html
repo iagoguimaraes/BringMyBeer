@@ -6,8 +6,8 @@
   </ol>
 </nav>
 <div class="row">
-    <div class="col-md-4 mx-auto">
-      <img src="img/logo.png" class="img-fluid " alt="logo">
+    <div class="col-md-2 mx-auto">
+      <img src="img/logo.png" class="img-fluid w-100" alt="logo">
     </div>
 </div>
 <div class="row">
@@ -21,7 +21,7 @@
              class="form-control"
              name="name"
              id="name"
-             ng-model="user.name"
+             ng-model="user.nome"
              required>
       <div ng-show="form.name.$error.required && !form.name.$pristine" class="alert alert-warning rounded-0 mt-1">
         Este campo é obrigatorio*
@@ -33,7 +33,7 @@
              class="form-control"
              name="lastname"
              id="lastname"
-             ng-model="user.lastname"
+             ng-model="user.sobrenome"
              required/>
       <div ng-show="form.lastname.$error.required && !form.lastname.$pristine" class="alert alert-warning rounded-0 mt-1">
         Este campo é obrigatorio*
@@ -62,7 +62,7 @@
                  type="text" 
                  class="form-control" 
                  input-mask="{'mask': '99/99/9999' }" 
-                 ng-model="user.dt" 
+                 ng-model="user.dataNascimento" 
                  required/>
           <div ng-show="form.date.$error.required && !form.date.$pristine" class="alert alert-warning rounded-0 mt-1">
             Este campo é obrigatorio*
@@ -90,7 +90,7 @@
                  class="form-control"
                  name="tel"
                  id="tel"
-                 ng-model="user.tel"
+                 ng-model="user.telefone"
                  required
                  input-mask="{mask: '(99) - 9999 9999'}">
           <div ng-show="form.tel.$error.required && !form.tel.$pristine" class="alert alert-warning rounded-0 mt-1">
@@ -104,7 +104,7 @@
           <input type="text"
                  class="form-control"
                  name="cellphone"
-                 ng-model="user.cellphone"
+                 ng-model="user.celular"
                  required
                  input-mask="{mask: '(99) - 99999 9999'}">
           <div ng-show="form.cellphone.$error.required && !form.cellphone.$pristine" class="alert alert-warning rounded-0 mt-1">
@@ -117,7 +117,7 @@
       <div class="col-md-6 col-sm-6">
         <div class="form-group">
           <label for="password">Senha</label>
-          <input type="password" ng-model="user.password" name="password" class="form-control ok-password" required/>
+          <input type="password" ng-model="user.senha" name="password" class="form-control ok-password" required/>
         </div>
         <div ng-show="form.password.$error.required && !form.password.$pristine" class="alert alert-warning rounded-0 mt-1">
           Este campo é obrigatorio*
@@ -136,7 +136,7 @@
         <div class="strength-meter py-0 my-0">
             <div class="strength-meter-fill" data-strength="{{passwordStrength}}"></div>
         </div>
-      <div ng-show="user.password != confirm && !form.confirm.$pristine" class="alert alert-danger rounded-0 mt-1">
+      <div ng-show="user.senha != confirm && !form.confirm.$pristine" class="alert alert-danger rounded-0 mt-1">
           As senhas não conferem.
       </div> 
       <div class="alert alert-danger" ng-if="passwordStrength <= 0 ">
@@ -145,7 +145,7 @@
       </div>
     </div>
     <div class="text-center my-5">
-      <button  class="btn btn-primary login" ng-disabled="form.$invalid || user.password != confirm" ng-click="keepup()">Prosseguir</button>
+      <button  class="btn btn-primary login" ng-disabled="form.$invalid || user.senha != confirm" ng-click="keepup()">Prosseguir</button>
     </div>
   </form>
   <form name="formaddress" class="col-md-6 mx-auto" ng-submit="submit()" ng-if="show">
@@ -157,7 +157,7 @@
              class="form-control col-md-3 col-sm-4"
              name="cep"
              id="cep"
-             ng-model="user.address.cep"
+             ng-model="enderecos.cep"
              required
              input-mask="{mask: '99999-999'}">
       <span class="input-group-btn">
@@ -173,7 +173,7 @@
              class="form-control"
              name="address"
              id="address"
-             ng-model="user.address.street"
+             ng-model="enderecos.logradouro"
              disabled
              required>
     </div>
@@ -185,7 +185,7 @@
                  class="form-control"
                  name="neighborhood"
                  id="neighborhood"
-                 ng-model="user.address.neighborhood"
+                 ng-model="enderecos.bairro"
                  disabled
                  required>
         </div>    
@@ -197,7 +197,7 @@
                  class="form-control"
                  name="complement"
                  id="complement"
-                 ng-model="user.address.complement">
+                 ng-model="enderecos.complemento">
         </div>
       </div>
     </div>
@@ -208,7 +208,7 @@
                class="form-control"
                name="city"
                id="city"
-               ng-model="user.address.city"
+               ng-model="enderecos.cidade"
                disabled
                required>
       </div>    
@@ -218,13 +218,16 @@
                class="form-control"
                name="state"
                id="state"
-               ng-model="user.address.state"
+               ng-model="enderecos.estado"
                disabled
                required>
       </div>
     </div>  
     <div class="text-center my-5 ml-5 row">
-      <button type="submit" class="btn btn-primary col-md-5 col-sm-5 mr-2" ng-disabled="formaddress.$invalid">Cadastrar</button>
+      <button type="submit" 
+              class="btn btn-primary col-md-5 col-sm-5 mr-2" 
+              ng-disabled="formaddress.$invalid"
+              >Cadastrar</button>
       <button class="btn btn-danger col-md-5 col-sm-5" ng-click="keepup()">Voltar</button>
     </div>
   </form>

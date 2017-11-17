@@ -1,85 +1,145 @@
-angular.module('bringmybeer', ['ngCookies', 'ngAnimate', 'mybeerService', 'ngRoute', 'bringmybeerDirectives', 'angularUtils.directives.dirPagination'])
-	.config(function($routeProvider, $locationProvider) {
-
-		$locationProvider.html5Mode(true);
-
-		// $routeProvider.when('/home', {
-	 //        templateUrl: 'partials/home.html',
-	 //        controller: 'HomeController'
-		// }).when('/product/detail/:id', {
-		// 	templateUrl: 'partials/product-detail.html',
-		// 	controller: 'ProductController'
-		// }).when('/products/category/:list', {
-		// 	templateUrl: 'partials/home.html',
-		// 	controller: 'HomeController'
-		// }).when('/checkout', {
-		// 	templateUrl: 'partials/checkout.html',
-		// 	controller: 'CheckoutController'
-		// }).when('/login', {
-		// 	templateUrl: 'partials/login.html',
-		// 	controller: 'LoginController'
-		// }).when('/register', {
-		// 	templateUrl: 'partials/register.html',
-		// 	controller: 'RegisterController'
-		// }).when('/payment', {
-		// 	templateUrl: 'partials/payment.html',
-		// 	// controller: 'PaymentController'
-		// }).otherwise({
-		// 	redirectTo: '/home'
-		// });
-
-		window.routes =
+angular.module('bringmybeer', ['bringmybeerFactory','components','ngCookies', 'ngAnimate', 'ui.router', 'bringmybeerDirectives', 'angularUtils.directives.dirPagination'])
+	.config(function($stateProvider, $urlRouterProvider,$locationProvider, $qProvider) {
+		$qProvider.errorOnUnhandledRejections(false); // mask error
+		$locationProvider.html5Mode(true); // base ref
+		window.states =
 		{
-		    "/home": {
+		    "home": {
+		    	url: '/home',
 		        templateUrl: 'partials/home.html',
 		        controller: 'HomeController',
-		        requireLogin: false
+		        data: { 
+		        	requireLogin: false
+		        }
 			},
-		    "/product/detail/:id": {
+		    "product-detail": {
+		    	url: '/product/detail/:id',
 				templateUrl: 'partials/product-detail.html',
 				controller: 'ProductController',
-		        requireLogin: false
+		        data: { 
+		        	requireLogin: false
+		        }
 			},
-			"/products/category/:list": {
+			"category": {
+				url: '/products/category/:list',
 				templateUrl: 'partials/home.html',
 				controller: 'HomeController',
-				requireLogin: false
+				data: { 
+					requireLogin: false
+				}
 			},
-			"/checkout": {
+			"checkout": {
+				url: '/checkout',
 				templateUrl: 'partials/checkout.html',
 				controller: 'CheckoutController',
-				requireLogin: false
+				data: { 
+					requireLogin: false
+				}
 			},
-			"/login": {
+			"login": {
+				url: '/login',
 				templateUrl: 'partials/login.html',
 				controller: 'LoginController',
-				requireLogin: false
+				data: { 
+					requireLogin: false
+				}
 			},
-			"/register": {
+			"register": {
+				url: '/register',
 				templateUrl: 'partials/register.html',
 				controller: 'RegisterController',
-				requireLogin: false
+				data: { 
+					requireLogin: false
+				}
 			},
-			"/payment": {
+			"payment": {
+				url: '/payment',
 				templateUrl: 'partials/payment.html',
 				controller: 'PaymentController',
-				requireLogin: true
+				data: { 
+					requireLogin: true
+				}
 			},
-			"/user-home": {
+			"user-home": {
+				url: '/user',
 				templateUrl: 'partials/user-home.html',
 				controller: 'HomeUserController',
-				requireLogin: true
+				data: { 
+					requireLogin: true
+				}
+			},
+			"user-data":{
+				url: '/detail/data',
+				templateUrl: 'partials/user-data.html',
+				controller: 'HomeUserController',
+				parent: 'user-home'
+			},
+			"user-address":{
+				url: '/detail/address',
+				templateUrl: 'partials/user-address.html',
+				controller: 'AddressController',
+				parent: 'user-home'
+			},
+			"user-cart":{
+				url: '/cart',
+				templateUrl: 'partials/user-cart.html',
+				controller: 'HomeUserController',
+				parent: 'user-home'
+			},
+			"user-orders":{
+				url: '/orders',
+				templateUrl: 'partials/user-orders.html',
+				controller: 'HomeUserController',
+				parent: 'user-home'
 			}
 		};
 
-		for(var path in window.routes) {
-			$routeProvider.when(path, window.routes[path]);
+		for(var path in window.states) {
+			$stateProvider.state(path, window.states[path]);
 		}
-		$routeProvider.otherwise({ redirectTo: '/home'});
-
 		
+	    $urlRouterProvider.otherwise('/home');
+
+}).run(function($transitions, $trace, $state, $rootScope){
+	$trace.disable('TRANSITION');
+	$state.defaultErrorHandler(function() { /* do nothing */});
+	var views = []; // base ref
+
+	for(path in window.states){
+		if(window.states[path].data.requireLogin){
+			views.push(path)
+		}
+	}
+	var alertService = {};
+    var MyAuthService = {};
+    var $state = {};
+
+	$transitions.onStart({ to: views, from: "**" }, function(trans) {
+		alertService = trans.injector().get('alertService');
+    	MyAuthService = trans.injector().get('SessionService');
+    	$state = trans.router.stateService;
+		MyAuthService.getUserAuthenticated().then(function (user) {
+			    }).catch(function(error) {
+			        alertService.setMessage(7000, error.message, error.title);
+			        $rootScope.lastRoute =  trans.to().name;
+			        return $state.go('login');
+			    });
+	});
+	$transitions.onSuccess({to: 'login'}, function(trans){
+		alertService = trans.injector().get('alertService');
+    	MyAuthService = trans.injector().get('SessionService');
+    	$state = trans.router.stateService;
+		MyAuthService.getUserAuthenticated().then(function (user) {
+					if(trans.to().name === 'login'){
+						$state.go('user-home');
+					}
+			    }).catch(function(error) {
+			        alertService.setMessage(7000, error.message, error.title);
+			        return $state.go('login');
+			    });
+	})
 }).config(function(paginationTemplateProvider) {
-    paginationTemplateProvider.setPath('js/directives/dirPagination.html');
+    paginationTemplateProvider.setPath('js/directives/pagination.html');
 }).filter('passwordCount', [function() {
     return function(value, peak) {
         var value = angular.isString(value) ? value : '',
@@ -87,27 +147,4 @@ angular.module('bringmybeer', ['ngCookies', 'ngAnimate', 'mybeerService', 'ngRou
 
         return value && (value.length > peak ? peak + '+' : value.length);
     };
-}]).run(function($rootScope, SessionService, $location){
-	$rootScope.$on("$locationChangeStart", function(event, next, current){
-		var aux = (next.split("/")[next.split("/").length-1]);
-		for(var i in window.routes){
-			if(next.indexOf(i) != -1){
-				!SessionService.getUserAuthenticated();
-				if(window.routes[i].requireLogin && !SessionService.getUserAuthenticated()){
-					alert("Usuário não autenticado");
-					// aux != 'undefined' ? $rootScope.lastRoute = aux : 0;
-					// SessionService.saveRoute(aux);
-					$rootScope.lastRoute = current;
-					console.log(next, current);
-					event.preventDefault();
-					$location.path('/login');
-				} else if (SessionService.getUserAuthenticated() && window.routes[i].templateUrl.includes('/login')){
-					$location.path('/user-home');
-				}
-				// else if(SessionService.getUserAuthenticated() && window.routes[i].requireLogin){
-				// 	$location.path('/home');
-				// }
-			}
-		}
-	});
-});
+}]);

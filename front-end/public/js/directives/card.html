@@ -1,29 +1,11 @@
-<div class="card product rounded-0 ">
-  <div class="off bg-dark" ng-if="off > 0">
-  	<div class="text-center text-white">
-      Desc <br>
-      {{off}}%
-    </div>
-  </div>
+<div class="card product rounded-0">
   <img class="card-img-top" ng-click="detail()" src="{{url}}" alt="Card image cap">
-  <div class="card-title px-3">
-    <h6  ng-click="detail()">{{title}}</h6>
-  </div>
-  <div class="card-body bg-white">
-    <div class="body-bottom">
-      <p class="text-secondary" >
-        <p class="card-text" ng-click="detail()">{{desc}}</p>
-        <span ng-class="{'valid-off mr-1': off > 0}">{{price | currency : 'R$' : 2}}</span> 
-        <span ng-if="off > 0" class="text-success"> por apenas {{price * (1-(off/100)) | currency: 'R$' : 2}}</span> 
-      </p>
-    	<button type="button" ng-click="action()" class="btn btn-warning">Adicionar</button>
+  <div class="card-body">
+    <h6 class="card-title" ng-click="detail()">{{title}}</h6>
+    <p class="card-text" ng-click="detail()">{{desc}}</p>
+   	<div class="body-bottom">
+   		<p class="text-secondary">{{price | currency : 'R$' : 2}}</p>
+    	<button type="button" ng-click="action()" class="btn btn-primary">Add ao carrinho</button>
    	</div>
   </div>
 </div>
-<style>
-  @media screen and (max-width: 768px){
-    .card-text{
-      display: none;
-    }
-  }
-</style>

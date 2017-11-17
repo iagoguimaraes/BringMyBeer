@@ -1,4 +1,4 @@
-angular.module('bringmybeer').controller('CheckoutController', function($scope, cartService, $rootScope, $window){
+angular.module('bringmybeer').controller('CheckoutController', function($scope, cartService, $rootScope, $window, $state){
 	$scope.increment = function(p){
 		p.quantity++;
 		cartService.getTotal();
@@ -10,6 +10,10 @@ angular.module('bringmybeer').controller('CheckoutController', function($scope, 
 		cartService.getTotal();
 	}
 
+	$scope.removeProduct = function(product) {
+		cartService.removeProduct(product);
+	}
+
 	$scope.getTotal = function(product){
 		if(product.quantity < 0 ) { product.quantity = 0; }
 		cartService.getTotal();
@@ -18,6 +22,9 @@ angular.module('bringmybeer').controller('CheckoutController', function($scope, 
 	$scope.back = function(){
 		$window.history.back();
 	}
-
+	
+	$scope.goTo = function(path){
+		$state.go(path);
+	}	
 
 })

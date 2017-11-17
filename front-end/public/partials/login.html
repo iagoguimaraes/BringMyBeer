@@ -1,12 +1,14 @@
 <a href="../" class="btn-lg btn btn-outline-warning rounded-0 back" >Voltar</a>
 <div class="row">
-  <div class="col-md-3 col-sm-3 mx-auto">
-    <img src="img/logo.png" class="img-fluid login-logo" alt="">
+  <div class="col-md-2 col-sm-3 mx-auto">
+    <img src="img/logo.png" class="img-fluid w-100 login-logo" alt="">
   </div>
 </div>
 <video-background></video-background>
 <div class="row">
-  <form name="formLogin" class="ml-auto mr-auto  px-5 col-md-4 col-sm-6 form-container bg-light box-shadow mt-5 animated bounceIn">
+  <form name="formLogin" 
+        class="ml-auto mr-auto  px-5 col-md-4 col-sm-6 form-container bg-light box-shadow mt-5 animated bounceIn"
+        ng-submit="login()">
     <div class="form-header pt-3 pb-2 ">
         <h4 class="text-center"><a href="/register" class="badge text-secondary badge-light">Cadastre-se Agora! </a></h4>
     </div>
@@ -26,14 +28,17 @@
       <input type="password"
              class="form-control"
              name="password"
-             ng-model="user.password"
+             ng-model="user.senha"
              required>
             <div ng-if="formLogin.password.$error.required && !formLogin.password.$pristine" class="alert alert-warning rounded-0">
                Este campo é obrigatório
             </div>
     </div>
     <div class="text-center my-5">
-      <button ng-click="login()" class="btn btn-warning login" ng-disabled="formLogin.$invalid">ENTRAR</button>
+      <button type="submit" 
+              class="btn btn-warning login" 
+              ng-disabled="formLogin.$invalid">ENTRAR
+      </button>
       <a href="#" ng-click="showPassword()" class="btn btn-outline-secondary mt-2 login">Esqueceu a senha</a>
     </div>
   </form>
@@ -63,7 +68,6 @@
     position: relative;
     z-index: 2001;
   }
-
 
   @media (min-width: 767px) {
     body{

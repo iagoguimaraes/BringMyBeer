@@ -1,35 +1,27 @@
-angular.module('bringmybeer').controller('ProductController', function($scope, $routeParams, productService, cartService, $rootScope, $location, cartService){
+angular.module('bringmybeer').controller('ProductController', 
+	function($scope, productService, cartService, $rootScope, cartService, $stateParams, $state, alertService){
 	$scope.product = {};
 	$scope.itemPerPage = 6;
-	$scope.orderByCustom = ['category', 'name'];
+	$scope.orderByCustom = ['tipo', 'produto'];
 	$rootScope.productList = [];
 
-	productService.getProducts()
+	productService.getProduct(1)
 				  .then(function(data){
-				  	$scope.product = data.filter(function(product){
-				  		if(product._id===$routeParams.id){
-				  			return product;
-				  		}
-				  	})[0];
+				  	$scope.product = data;
 				  	$scope.loadFamily();
 				  }).catch(function(error){
-				  	console.log(error.message);
-				  	$location.path('/home');
+				  	alertService.setMessage(7000, error.message, error.title)
+				  	// $location.path('/home');
 				  })
 
 	$scope.loadFamily = function(){
-		if($scope.product.category){
-			productService.getProducts()
-				  .then(function(productList){
-				  	var ps = productList.filter(function(p){
-				  		if(p.category===$scope.product.category && p._id!=$scope.product._id)
-				  			return p;
-				  	});
-				  	$scope.orderByCategory(ps);
-				  }).catch(function(errors){
-				  	console.log(errors);
-				  });
-		}
+		productService.getCategory($scope.product.tipo.tipo)
+			  .then(function(productList){
+			  	productList.splice(productList.indexOf($scope.product, 1));
+			  	$scope.orderByCategory(productList);
+			  }).catch(function(error){
+			  	alertService.setMessage(7000, error.message, error.title)
+			  });
 	}
 
 	$scope.prevent = function(e){
@@ -41,28 +33,25 @@ angular.module('bringmybeer').controller('ProductController', function($scope, $
 	}
 
 	$scope.buy = function(product) {
-		cartService.addProduct(product);
-		$location.path( '/checkout' );
+		var insert = true;
+		$rootScope.products.forEach(function(p, i){
+			if(p.idProduto===product.idProduto){
+				insert = false;
+			}
+		});
+		if(insert){
+			cartService.addProduct(product);
+		}
+		$state.go('checkout');
 	}
 
 
-	$scope.goToDetail = function ( path ) {
-	  $location.path( '/product/detail/'+path );
-	};
+	// $scope.goToDetail = function ( path ) {
+	//   $state.go( 'product-detail', {id: path});
+	// };
 
 
 	$scope.orderByCategory = function(productList) {
-		var test = [];
-  		test.push({ category: $scope.product.category, productList: [] });
-	  	productList.forEach(function(p){
-	  		for(var i in test){
-	  			if(p.category===test[i].category){
-	  				test[i].productList.push(p);
-	  			}
-	  		}
-	  	});
-	  	$rootScope.productList = test;
+	  	$rootScope.productList.push({ category: $scope.product.tipo['tipo'], productList: productList });
 	}
-
-
 })

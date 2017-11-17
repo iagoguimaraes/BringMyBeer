@@ -1,0 +1,104 @@
+<div class="background-loader">
+	<div class="container-loader">
+	  <div class="circle"></div>
+	  <div class="circle"></div>
+	  <div class="circle"></div>
+	  <div class="circle"></div>
+	  <div class="circle"></div>
+	</div>
+</div>
+<style>
+	
+div.background-loader{
+	
+	position: fixed;
+	top:0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	opacity: 0.7;
+	animation: background-colors 5s ease alternate infinite;
+	z-index: 1500;
+}
+@keyframes background-colors {
+	0%   { background-color: #BFAB6A; }
+	50%  { background-color: #006BFF; }
+	75% { background-color: #E83835; }
+	100%   { background-color: #BFAB6A; }
+}
+.container-loader{
+	width: 38px;
+	height: 120px;
+	margin: 25% auto;
+}
+
+.container-loader .circle::after{
+	content: '';
+	height: 6px;
+	width: 6px;
+	border-radius: 50%;
+	background: #fff;
+	position: absolute;
+	animation-delay: 1s;
+}
+
+
+.container-loader .circle:nth-child(2){
+	animation-delay: .3s;
+}
+.container-loader .circle:nth-child(3){
+	animation-delay: .6s;
+}
+.container-loader .circle:nth-child(4){
+	animation-delay: .9s;
+}
+.container-loader .circle:nth-child(5){
+	animation-delay: 1.2s;
+}
+
+.container-loader .circle{
+	width: 38px;
+	height: 38px;
+	transform: rotate(225deg);
+	margin: 5px 0;
+	animation: rotate 6s infinite linear;
+	position: absolute;
+} 
+
+@keyframes rotate {
+0% {
+	transform: rotate(225deg);
+	opacity: 1;
+	animation-timing-function: ease-out;
+}
+7% {
+	transform: rotate(345deg);
+	animation-timing-function: linear;
+}
+30% {
+	transform: rotate(455deg);
+	animation-timing-function: ease-in-out;
+}
+39% {
+	transform: rotate(690deg);
+	animation-timing-function: linear;
+}
+70% {
+	transform: rotate(815deg);
+	opacity: 1;
+	animation-timing-function: ease-out;
+}
+75% {
+	transform: rotate(945deg);
+	animation-timing-function: ease-out;
+}
+76% {
+	transform: rotate(945deg);
+	opacity: 0;
+}
+100% {
+	transform: rotate(945deg);
+	opacity: 0;
+}
+
+</style>

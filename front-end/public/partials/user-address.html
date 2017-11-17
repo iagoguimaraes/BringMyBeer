@@ -1,0 +1,49 @@
+<div class="row">
+	<div class="col-md-5 mx-auto">
+		<img src="img/logo.png" alt="" class="img-fluid">
+	</div>
+</div>
+<div class="row">
+	<div ng-repeat="endereco in user.enderecos" class="col-md-6">
+		<user-address titles="['Meus endereços']" 
+					  model="endereco"
+					  disabled="!endereco.disabled"
+					  edit="getAddress(endereco, $index)">
+	    </user-address>
+		<div class="row bg-dark">
+			<button type="button" class="btn mx-auto col-md-3 col-sm-3 rounded-0 button-edit btn-warning" 
+		  		ng-click="updateAddress(endereco);">Alterar</button>
+		</div>
+	</div>
+	<div class="col-md-6 text-center">
+		<button type="button" 
+			class="btn btn-warning px-5 py-5 mx-5 my-5  box-shadow"
+			data-toggle="modal" data-target="#exampleModal">
+			Inserir Endereço
+		</button>
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Novo Endereço</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<user-address titles="['Preencha o dados']" 
+					  model="newAddress"
+					  disabled="true"
+					  edit="getAddress(newAddress, -1)">
+	    </user-address>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button class="btn btn-primary" ng-click="insertAddress(newAddress)">Concluir</button>
+      </div>
+    </div>
+  </div>
+</div>

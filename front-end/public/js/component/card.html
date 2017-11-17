@@ -1,0 +1,29 @@
+<div class="card product rounded-0 ">
+  <div class="off bg-dark" ng-if="product.desconto > 0">
+  	<div class="text-center text-white">
+      Desc <br>
+      {{product.desconto}}%
+    </div>
+  </div>
+  <img class="card-img-top" ng-click="detail()" src="{{product.foto.path}}" alt="Card image cap">
+  <div class="card-title px-3">
+    <h6  ng-click="detail()">{{product.produto}}</h6>
+  </div>
+  <div class="card-body bg-white">
+    <div class="body-bottom">
+      <p class="text-secondary" >
+        <p class="card-text" ng-click="detail()">{{product.descricao | limitTo: 70}}</p>
+        <span ng-class="{'valid-off mr-1': off > 0}">{{product.preco | currency : 'R$' : 2}}</span> 
+        <span ng-if="off > 0" class="text-success"> por apenas {{product.preco * (1-(off/100)) | currency: 'R$' : 2}}</span> 
+      </p>
+    	<button type="button" ng-click="action()" class="btn btn-warning">Adicionar</button>
+   	</div>
+  </div>
+</div>
+<style>
+  @media screen and (max-width: 768px){
+    .card-text{
+      display: none;
+    }
+  }
+</style>

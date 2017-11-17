@@ -1,0 +1,17 @@
+<div class="position-fixed animated bounceInUp alert-main alert bg-dark rounded-0 col-md-6 col-sm-6 box-shadow text-center text-white">
+	<h6>
+		{{alertMessage.title}}
+		<small class="text-secondary">{{alertMessage.message}}</small>
+	</h6>
+	<!-- {{alertMessage | limitTo: 60}} -->
+</div>
+<style>
+	.alert-main{
+		z-index: 10000;
+		bottom: -15px;
+		left: 26%;
+		height: 57px;
+		animation-duration: 1s;
+		/*transition: all .5s linear;*/
+	}
+</style>

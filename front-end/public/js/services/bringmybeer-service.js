@@ -26,42 +26,20 @@ angular.module('mybeerService', ['ngResource'])
             method: 'PUT'
         }
     });
+}).factory('userResource', function($resource){
+    // { params: { category: '@category', price: '@price', sale: '@sale', off: '@off'} }
+    return $resource('/user/:id', null, {
+        'update': {
+            method: 'PUT'
+        },
+        'save': {
+            method: 'POST',
+            isArray: false
+        }
+    });
 }).service('productService', function(photoResource, categoryResource, $q, $rootScope, cartService, searchResource, $http){
     var service = {};
     const event = 'focused';
-    // servicos.register = function(foto){
-    //     return $q(function(resolve, reject){
-    //         if(foto._id){
-    //             $rootScope.$broadcast(event);
-    //             photoResource.update({id: foto._id}, foto, function(){
-    //                 resolve({
-    //                     message: 'Photo update with success',
-    //                     inclusion: false
-    //                 });
-    //             }, function(error){
-    //                 console.log(error);
-    //                 reject({
-    //                     message: 'Error occured while update Photo ' + foto.title,
-    //                     inclusion: true
-    //                 });
-    //             });
-    //         } else {
-    //             photoResource.save(foto, function(){
-    //                 $rootScope.$broadcast(event);
-    //                 resolve({
-    //                     message: 'Photo included with success',
-    //                     inclusion: true
-    //                 })
-    //             }, function(error){
-    //                 console.log(error);
-    //                 reject({
-    //                     message: 'Error occured while included Photo ' + foto.title,
-    //                     inclusion: true
-    //                 });
-    //             })
-    //         }
-    //     });
-    // }
 
     service.getAddres = function(cep){
         return $q(function(resolve, reject){
@@ -73,7 +51,8 @@ angular.module('mybeerService', ['ngResource'])
                         $rootScope.$broadcast('hide');
                     }, 500);
                  }).catch(function(error){
-                    reject({message: error})
+                    $rootScope.$broadcast('hide');
+                    reject({message: 'Erro ao tentar localizar o CEP', title: 'CEP', error: error})
                  });
         });
     }
@@ -135,6 +114,45 @@ angular.module('mybeerService', ['ngResource'])
     }
 
     return service;
+}).service('userService', function(userResource, $q, $cookies, $rootScope){
+    var service = {};
+    $rootScope.orders = [];
+    service.getUser = function(credentials){
+        var d = $q.defer();
+        userResource.save(credentials, function(user){
+            if(user && user.token){
+                delete user['orders'];
+                $cookies.putObject('user', user);
+                $rootScope.user = user;
+                d.resolve(user);
+            } else{
+                d.reject({message: 'invalid user', title: 'Authentication'});
+            }
+        }, function(error){
+            d.reject({message: 'Error while try to Authenticate', title: 'Authentication', error: error});
+        });
+        return d.promise;
+    }
+
+    service.getOrders = function(){
+        var credentials = {
+            email: $cookies.getObject('user').email,
+            password: $cookies.getObject('user').password
+        };
+        var d = $q.defer();
+        userResource.save(credentials, function(orders){
+            if(orders.orders.length){
+                d.resolve(orders.orders);
+            } else {
+                d.reject({message: 'Any orders was found', title: 'User orders'});
+            }
+        }, function(error){
+            d.reject({message: 'Error while consulting orders data', title: 'Orders', error: error});
+        });
+        return d.promise;
+    }
+
+    return service;
 }).service('cartService', function($rootScope, $cookies){
     $rootScope.products = [];
     $rootScope.subTotal = 0;
@@ -147,8 +165,6 @@ angular.module('mybeerService', ['ngResource'])
             $rootScope.subTotal += parseFloat((json.price * (1-(json.off/100)))  * (json.quantity || 1));
         }
     }
-
-
 
     service.addProduct = function(product){
         var isAlredy = $rootScope.products.filter(function(p){ if(p._id===product._id){ return p;} });
@@ -192,76 +208,56 @@ angular.module('mybeerService', ['ngResource'])
 
     return service;
 
-}).service('SessionService', function($cookies, $rootScope, $location){
-    $rootScope.user = $cookies.getObject('user') || null;
+}).service('SessionService', function($cookies, $rootScope, $q, $state){
+    var user = { token: false, user: false};
+    if($cookies.getObject('user')){
+        user = $cookies.getObject('user');
+        $rootScope.user = user;
+    }
+    console.log($rootScope.user)
     var service = {};
     $rootScope.lastRoute = [];
-
-    service.setUserAuthenticated = function(){
-        $rootScope.user = {
-                name: 'Miqueas',
-                lastname: "Batista do santos",
-                birthday: "21/04/96",
-                cpf: "999.999.999.44",
-                email: "miqueas.bsantos@gmail.com",
-                tel: "99-9999-9999",
-                cellphone: "99-9999-9999",
-                token: "ASDKJSAKLDJKLASJD547",
-                address: [
-                    {
-                        address: "Rua Atonio Simão da Costa",
-                        number: "701",
-                        complement: "casa",
-                        zipcode: "04844150",
-                        botherhood: "Jardim Manáca",
-                        city: "São Paulo",
-                        state: "SP" 
-                    },
-                    {
-                        address: "Rua Atonio Simão da Costa 2",
-                        number: "701 2",
-                        complement: "casa 2",
-                        zipcode: "04844150 2",
-                        botherhood: "Jardim Manáca 2",
-                        city: "São Paulo 2",
-                        state: "SP 2" 
-                    }
-                ]
-        };
-        $cookies.putObject('user', $rootScope.user);
-    };
 
     service.getSession = function() {
         $rootScope.user = $cookies.getObject('user');
         return $rootScope.user;
     }
 
-    // service.login = function(){
-    //     // var r = $rootScope.lastRoute.toString().split("/");
-    //     if(service.getUserAuthenticated()){
-    //         // r[r.length-1].length ? $location.path(r[r.length-1]) : $location.path('/user-home');
-    //         // $rootScope.lastRoute = [];
-    //     }
-    // }
-
     service.logout = function(){
         $cookies.remove('user');
-        $location.path('/home');
+        $state.go('home');
         $rootScope.user = null;
     }
 
-    // service.saveRoute = function(route){
-    //     if(route && $rootScope.save){
-    //         $rootScope.save = false;
-    //         $rootScope.lastRoute.push(route);
-    //         console.log(route, $rootScope.lastRoute);
-    //     }
-    // }
-
     service.getUserAuthenticated = function(){
-        service.getSession();
-        return $rootScope.user && $rootScope.user.token;
+        var q = $q.defer();
+        user = $cookies.getObject('user');
+        if(user && user.token){
+            q.resolve(user);
+        } else{
+            q.reject({message: 'Usuário não autenticado', title: "Login"});
+        }
+
+        return q.promise; 
     }
 
     return service;
-});
+}).service('alertService', function($rootScope){
+    $rootScope.alertMessage = {};
+    var service = {};
+
+    service.setMessage = function(time, message, title, f){
+        $rootScope.alertMessage = {
+            title: title,
+            message: message,
+            time: time || 5000
+        }
+        $rootScope.$broadcast('showMessage');
+    }
+
+    service.getMessage = function(){
+        return  $rootScope.alertMessage;
+    }
+
+    return service;
+})

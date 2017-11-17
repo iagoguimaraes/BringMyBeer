@@ -1,0 +1,26 @@
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center" style="margin: 0">
+        <li class="page-item" ng-if="boundaryLinks" ng-class="{ disabled : pagination.current == 1 }">
+            <a href="" class="page-link" ng-click="setCurrent(1)">&laquo;</a>
+        </li>
+
+        <li class="page-item" ng-if="directionLinks" ng-class="{ disabled : pagination.current == 1 }">
+            <a href="" class="page-link" ng-click="setCurrent(pagination.current - 1)">&lsaquo;</a>
+        </li>
+
+
+        <li class="page-item" ng-repeat="pageNumber in pages track by tracker(pageNumber, $index)" >
+            <a href="" class="page-link" ng-click="setCurrent(pageNumber)">{{ pageNumber }}</a>
+        </li>
+
+        <li class="page-item" ng-if="directionLinks" ng-class="{ disabled : pagination.current == pagination.last }">
+            <a href="" class="page-link" ng-click="setCurrent(pagination.current + 1)">&rsaquo;</a>
+        </li>
+
+
+        <li class="page-item" ng-if="boundaryLinks"  ng-class="{ disabled : pagination.current == pagination.last }">
+            <a href="" class="page-link" ng-click="setCurrent(pagination.last)">&raquo;</a>
+        </li>
+    </ul>
+</nav>
+

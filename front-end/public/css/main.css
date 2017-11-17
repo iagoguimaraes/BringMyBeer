@@ -19,6 +19,7 @@ menu-top .fa-search{
     top: 22px;
     font-size: 27px;
     color: #0c6e79;
+    z-index: 1335;
 }
 
 
@@ -189,40 +190,6 @@ button.login{
 }
 
 
-.table-header-desc{
-	position: relative;
-}
-.table-header-desc span{
-	position: absolute;
-    right: 0;
-    font-weight: 200;
-    letter-spacing: -1px;
-}
-
-#table-container {
-  background: white;
-  min-width: 400px;
-}
-
-
-.lines {
-  border-bottom: thin solid #e1e3e3;
-  position: relative;
-}
-
-.lines:last-child {
-	border: none;
-}
-
-
-.lines .cols {
-  width: 200px;
-  padding: 16px 0;
-  display: table-cell;
-  vertical-align:top;
-  text-align: center;
-}
-
 
 @keyframes expanded {
   from { left: 50%; width: 0}
@@ -235,18 +202,34 @@ button.login{
 }
 
 
-#table-container input{
-	border: none;
-    border-bottom: thin solid #2196f3;
-    background: rgba(0, 0, 0, 0.71);
-    color: white;
-}
-
 /*main body colors*/
 body{
-  background: linear-gradient(325deg, #fcd89d, #4abbc7);
+  	/*background: #4abbc7;*/
+  	background: linear-gradient(325deg, #75c5c5, #afccb0);
+	background-size: 100%;
+/*
+	-webkit-animation: AnimationName 11s ease infinite;
+	-moz-animation: AnimationName 11s ease infinite;
+	animation: AnimationName 11s ease infinite;*/
 }
 
+/*
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 13%}
+    50%{background-position:100% 88%}
+    100%{background-position:0% 13%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 13%}
+    50%{background-position:100% 88%}
+    100%{background-position:0% 13%}
+}
+@keyframes AnimationName { 
+    0%{background-position:0% 13%}
+    50%{background-position:100% 88%}
+    100%{background-position:0% 13%}
+}
+*/
 .box-shadow{
 	-webkit-box-shadow: 1px 1px 7px rgba(0,0,0, 0.5);
 	-moz-box-shadow: 1px 1px 7px rgba(0,0,0, 0.5);

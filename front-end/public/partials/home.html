@@ -10,10 +10,10 @@
 			<button ng-click="categoryF('outros')" type="button" style="width: 50%" class="btn border-top-0 border-left-0 border-right-0 btn-outline-secondary rounded-0">Outros</button>
 		</div>
 		<div class="form-group pt-1 px-1 text-center">
-			<label for="price">Preço: R{{price | currency}}</label>
+			<label for="price">Preço: {{preco | currency : "R$" : 2}}</label>
 			<input ng-change="searchByPrice()" 
 				   ng-model-options="{debounce: 500}" 
-				   ng-model="price" class="form-control" 
+				   ng-model="preco" class="form-control" 
 				   type="range" name="price" max="999" 
 				   style="width: 100%;"
 				   id="range">
@@ -22,11 +22,11 @@
 		<div class="form-group text-center">
 			<hr>
 			<label for="off" class="form-check-label">
-				<input ng-model="off" ng-change="offChange()" type="checkbox" class="form-check-input" name="off">
+				<input ng-model="desconto" ng-change="offChange()" type="checkbox" class="form-check-input" name="off">
 				Descontos
 			</label>
 			<label for="sale" class="form-check-label">
-				<input ng-model="sale" ng-change="saleChange()" type="checkbox" class="form-check-input" name="sale">
+				<input ng-model="maisComprados" ng-change="saleChange()" type="checkbox" class="form-check-input" name="sale">
 				Mais comprados
 			</label>
 			<hr>
@@ -51,18 +51,14 @@
 		<!-- 	<div class="breadcrumb-home col-md-12 rounded-0 text-center text-white" ng-if="product.productList.length">
 				{{product.category}}
 			</div> -->
-			<card dir-paginate="item in product.productList | orderBy: orderByCustom | itemsPerPage: itemPerPage " pagination-id="product.category"
+			<card dir-paginate="item in product.productList | orderBy: orderByCustom | itemsPerPage: itemPerPage " pagination-id="product.tipo.tipo"
 				  class="col-md-3 col-sm-6 card-animation"
-				  title="{{item.name}}" 
-				  url="{{item.images[0]}}"
-				  desc="{{item.desc | limitTo: 40}}..."
-				  price="{{item.price}}"
-				  action="addProduct(item)"
-				  detail="goToDetail(item._id)"
-				  off="{{item.off}}">
+				  product="item"
+				  detail="goToDetail(item.idProduto)"
+				  action="addProduct(item)">
 			</card>
 			<div class="col-md-12 py-0 rounded-0 text-center text-white" ng-if="product.productList.length > itemPerPage">
-				<dir-pagination-controls class="mx-auto" pagination-id="product.category"></dir-pagination-controls>
+				<dir-paginations-controls class="mx-auto" pagination-id="product.tipo.tipo"></dir-pagination-controls>
 			</div>
 		</div>
 	</div>

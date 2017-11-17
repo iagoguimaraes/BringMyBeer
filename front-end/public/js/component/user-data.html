@@ -1,0 +1,100 @@
+<table class="table bg-light mt-3 mx-auto animated bounceIn" style="max-width: 500px;">
+  <thead>
+    <tr class="thead-dark" ng-repeat="title in titles">
+      <th scope="col">{{title}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">
+<!--       	<p>Nome: {{name}}</p>
+      	<p>Sobrenome: {{lastname}}</p>
+      	<p>Nascimento: {{birthday}}</p>
+      	<p>CPF: {{cpf}}</p>
+      	<p>E-mail: {{email}}</p>
+      	<p>TEL: {{tel}} / CEL: {{tellphone}}</p> -->
+<!--       	<div class="form-group">
+      		<input ng-model="model" class="form-control" value="user.name"
+      			   />
+      			   {{model}}
+      	</div> -->
+      	<div class="row">
+      		<div class="col-md-5">
+  				<div class="form-group">
+  					<label for="name">Nome</label>
+		  			<input  ng-model="model.nome" 
+		  				    class="form-control"
+		  				    name="name"
+		  				    ng-disabled="disabled"
+			  			   />
+			  	</div>
+      		</div>
+      		<div class="col-md-7">
+      			<div class="form-group">
+      				<label for="lastname">Sobrenome</label>
+					<input ng-model="model.sobrenome" 
+						   class="form-control"
+						   name="lastname"
+						   ng-disabled="disabled"
+		  			   />
+			  	</div>
+      		</div>
+      	</div>
+      	<div class="row">
+      		<div class="col-md-7">
+      			<div class="form-group">
+		  			<label for="email">E-mail</label>
+						<input ng-model="model.email" 
+							   class="form-control"
+							   name="email"
+							   ng-disabled="disabled"
+			  			   />
+		  		</div>
+      		</div>
+      		<div class="col-md-5">
+		  		<div class="form-group">
+		  			<label for="email">CPF</label>
+						<input ng-model="model.cpf" 
+							   class="form-control"
+							   name="email"
+							   input-mask="{mask: '999.999.999-99'}"
+							   ng-disabled="disabled"
+			  			   />
+		  		</div>
+      		</div>
+      	</div>
+      	<div class="row">
+      		<div class="col-md-4">
+  				<div class="form-group">
+  					<label for="tel">Telefone</label>
+		  			<input  ng-model="model.telefone" 
+		  				    class="form-control"
+		  				    name="tel"
+		  				    input-mask="{mask: '(99)99999 9999'}"
+		  				    ng-disabled="disabled"
+			  			   />
+			  	</div>
+      		</div>
+      		<div class="col-md-4">
+      			<div class="form-group">
+      				<label for="cel">Celular</label>
+					<input ng-model="model.celular" 
+						   class="form-control"
+						   name="cel"
+						   input-mask="{mask: '(99)9999 9999'}"
+						   ng-disabled="disabled"
+		  			   />
+			  	</div>
+      		</div>
+      	</div>
+	  	<button type="button" class="btn col-md-12 col-sm-12 rounded-0 button-edit btn-warning" 
+	  			ng-if="disabled" 
+	  			ng-click="edit()">Alterar</button>
+	  	<button type="button" 
+	  			class="btn col-md-12 col-sm-12 rounded-0 button-edit btn-success" 
+	  			ng-if="!disabled"
+	  			ng-click="edit(model);">Confirmar</button>
+      </th>
+    </tr>
+  </tbody>
+</table>

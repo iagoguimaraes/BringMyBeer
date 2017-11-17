@@ -1,0 +1,60 @@
+<div class="alert alert-info" ng-if="!products.length && message.length">
+	{{message}}
+	<div class="text-right">
+		<a href="/home" class="btn btn-success rounded-0">Veja ofertas</a>
+	</div>
+</div>
+<table class="table table-responsive position-relative" ng-if="products.length">
+  	<thead >
+	    <tr class="thead-dark">
+	      <th scope="col">Minhas Beers</th>
+	      <th scope="col"></th>
+	      <th scope="col"></th>
+	      <!-- <th scope="col"></th> -->
+	      <th scope="col" class="text-right">
+	      	<span ng-if="subTotal">
+	      		SubTotal {{subTotal | currency : 'R$' : 2}}
+	      	</span>
+	      </th>
+	    </tr>
+  	</thead>
+  	<tbody class="border bg-white">
+	    <tr  ng-repeat="product in products">
+		    <td>
+		      	<img src="{{product.foto[0].path}}" width=60 class="img-circle" />
+		      	{{product.product}}
+		    </td>
+			<td>
+		      	{{product.descricao}}
+		    </td>
+		    <td>
+		      	{{(product.preco * product.quantidade * (1-(product.desconto/100))) | currency : 'R$' : 2}}
+		    </td>
+		    <td>
+		      	<div class="input-group bg-white">
+					<span class="input-group-addon bg-white border-0" ng-show="controls">
+						<button class="btn btn-outline-success" ng-click="increment(product)">+</button>
+					</span>
+				  	<input style="min-width: 40px"
+				  		   ng-model="product.quantidade" 
+				  		   ng-change="getTotal(product)"
+				  		   type="text" 
+				  		   class="form-control text-white text-center bg-dark" 
+				  		   aria-label="Amount (to the nearest dollar)"
+				  		   ng-disabled="!controls">
+
+				  	<span class="input-group-addon bg-white border-0" ng-show="controls">
+				  		<button class="btn btn-outline-danger" ng-click="decrement(product)">-</button>
+				  	</span>
+				  	<button type="button" class="btn btn-danger" ng-click="removeProduct(product)" ng-show="remove">
+				  		<i class="fa fa-trash" aria-hidden="true"></i>
+				  	</button>
+				</div>
+		    </td>
+		</tr>
+  	</tbody>
+</table>
+<div class="w-50 mx-auto" ng-if="products.length">
+	<a href="#" ng-click="action()"
+	   class="btn btn-success rounded-0 col-md-12">{{buttonText}}</a>
+</div>

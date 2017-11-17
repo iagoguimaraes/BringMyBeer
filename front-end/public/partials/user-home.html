@@ -1,5 +1,160 @@
-<h1>Home User</h1>
+<nav class="side-navbar side-open bg-dark position-fixed" ng-click="open()">
+  	<div class="side-navbar-wrapper">
+	    <div class="sidenav-header-inner text-center justify-content-center py-5">
+	      	<img src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg" 
+	           alt="user"
+	           class="rounded-circle"/>
+	      	<h5 class="text-light user-name text-capitalize font-weight-light">{{user.name}}</h5>
+	      	<p class="text-secondary user-area">{{user.email}}</p>
+	    </div>
+  	</div>
+  	<div class="side-navbar-wrapper main-container-side">
+	    <ul class="list-group text-white">
+	      	<li class="list-group-item bg-dark nav-link rounded-0 d-flex justify-content-between" 
+	      		ui-sref="user-cart" 
+	      		ui-sref-active="active">
+		        <span class="user-op">Meu carrinho</span>
+		        <span class="badge badge-danger badge-pill">
+		          {{products.length}}
+		          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+		        </span>
+	      	</li>
+	      	<li class="list-group-item bg-dark d-flex justify-content-between"
+	      		ui-sref-active="active" 
+	      		ui-sref="user-data">
+		        <span class="user-op">Dados Pessoais</span>
+		        <span class="badge badge-dark badge-pill rounded-0">
+		          <i class="fa fa-user-o" aria-hidden="true"></i>
+		        </span>
+		    </li>
+	     	<li class="list-group-item bg-dark d-flex justify-content-between"
+	     	 	ui-sref-active="active" 
+	      		ui-sref="user-address">
+		        <span class="user-op">Endereços</span>
+		        <span class="badge badge-dark badge-pill rounded-0">
+		          <i class="fa fa-map-marker" aria-hidden="true"></i>
+		        </span>
+	      	</li>
+	      	<li class="list-group-item bg-dark d-flex justify-content-between">
+		        <span class="user-op">Cartões</span>
+		        <span class="badge badge-dark badge-pill rounded-0">
+		          <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+		        </span>
+	      	</li>
+	      	<li class="list-group-item bg-dark badge-dark d-flex justify-content-between"
+	      		ui-sref-active="active" 
+	      		ui-sref="user-orders">
+		        <span class="user-op">Meus Pedidos</span>
+		        <span class="badge badge-dark badge-pill rounded-0">
+		          <i class="fa fa-list-ul" aria-hidden="true"></i>
+		        </span>
+	      	</li>
+	      	<li class="list-group-item bg-dark badge-dark d-flex justify-content-between"
+	      		ui-sref-active="active" ui-sref="home">
+		        <span class="user-op">Voltar</span>
+		        <span class="badge badge-dark badge-pill rounded-0">
+		          <i class="fa fa-reply" aria-hidden="true"></i>
+		        </span>
+	      	</li>
+	      	<li class="list-group-item bg-dark badge-dark d-flex justify-content-between">	
+	      		<button type="button" class="btn btn-outline-primary rounded-0 col-md-12 button-logout" ng-click="logout()">
+	      			<i class="fa fa-sign-out" aria-hidden="true"></i>
+	      			<span class="desc">Logout</span>
+				</button>
+	      	</li>	
+	    </ul>
+  	</div>
+</nav>
 
-<button type="button" ng-click="logout()">
-	Logout
-</button>
+<div class="row" style="overflow: hidden;" ng-click="close()">
+	<div class="col-md-2 col-sm-2 "></div>
+	<div class="col-md-8 col-sm-8 ml-5 pl-5">
+	 <ui-view></ui-view>
+	</div>
+</div>
+
+
+<style>
+.main-container{
+	margin-top: 0;
+}
+
+menu-top, menu-bottom{
+	display: none;
+}
+
+body{
+	background: linear-gradient(90deg, #75c5c5, #afccb0);
+}
+
+.side-navbar{
+  left: 0;
+  top:0;
+  bottom: 0;
+  width: 250px;
+  height: 100%;
+  z-index: 1000;
+}
+nav.side-open.open.side-navbar{
+  left: 0;
+  top:0;
+  bottom: 0;
+  width: 250px;
+  height: 100%;
+}
+
+nav.side-open.open span, h5, h5 + p{
+  display: block;
+  
+}
+nav.side-open.open li {
+  justify-content: space-between !important;
+}
+nav.side-open li {
+	cursor: pointer;
+}
+
+nav.side-open li:hover {
+	background: #007bff !important;
+}
+
+nav.side-open li:hover > span{
+	background: #007bff !important;
+}
+
+.button-logout > span{
+	display: inline-block !important;
+}
+
+
+@media screen  and (max-width: 792px){
+  .user-op, .user-area, .user-name{
+    display: none;
+  }
+  .button-logout > span{
+  	display: none !important;
+  }
+  .button-logout{
+	border: 0;
+  } 
+  .open .user-area, .open .user-name{
+    font-size: 15px;
+    display: unset;
+  }
+  .open .button-logout > span{
+	display: inline-block !important;
+  }
+  nav.side-open img{
+    width: 60px;
+  }
+  nav.side-open.side-navbar{
+     width: 70px;
+  }
+  nav.side-open.justify-content-between  {
+    justify-content: center!important;
+  }
+  nav.side-open, span, h5, h5 + p{
+    transition: all .1s linear;
+  }
+}
+</style>
