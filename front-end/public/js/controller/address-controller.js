@@ -13,7 +13,6 @@ angular.module('bringmybeer')
 		}
 		addressService.insertAddress(user)
 					  .then(function(message){
-					  	$rootScope.user.enderecos.push(message.address);
 					  	alertService.setMessage(7000, message.message, message.title);
 					  	$scope.newAddress = {};
 					  }).catch(function(error){
@@ -29,6 +28,15 @@ angular.module('bringmybeer')
 			  }).catch(function(error){
 			  	alertService.setMessage(7000, error.message, error.title);
 			  });
+	}
+
+	$scope.removeAddrees = function(address){
+		addressService.removeAddrees(address)
+					  .then(function(message){
+					  	alertService.setMessage(7000, message.message, message.title);
+					  }).catch(function(message){
+					  	alertService.setMessage(7000, message.message, message.title);
+					  });
 	}
 
 	$scope.getAddress = function(ad, index){

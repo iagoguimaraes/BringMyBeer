@@ -6,6 +6,7 @@
 package com.bmb.resources;
 
 
+import com.bmb.controller.ControllerEndereco;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.POST;
@@ -41,6 +42,7 @@ public class EnderecoResource {
     public EnderecoResource() {
     }
     
+    ControllerEndereco ctrlEnderecos = new ControllerEndereco();
     
     /**
      * Retrieves representation of an instance of com.bmb.resources.user
@@ -51,10 +53,8 @@ public class EnderecoResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response insertAddress(Cliente c) {
         //TODO return proper representation object
-        Properties p = new Properties();
-        p.setProperty("mensagem", "endreço incluido com sucesso");
         try {
-            return Response.ok().entity(p).build();
+            return Response.ok().entity(ctrlEnderecos.cadastrar(c, c.getEnderecos().get(0))).build();
         }catch (Exception ex){
             System.out.print(ex);
             return Response.status(Response.Status.NOT_MODIFIED).build();
@@ -63,10 +63,13 @@ public class EnderecoResource {
     
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteAddress(Endereco end){
+    public Response deleteAddress(@QueryParam("idEndereco") int id){
         Properties p = new Properties();
+        Endereco end = new Endereco();
+        end.setIdEndereco(id);
         p.setProperty("mensagem", "removido com sucesso");
         try {
+            ctrlEnderecos.remover(end);
             return Response.ok().entity(p).build();
         }catch (Exception e){
             System.out.print(e);
@@ -75,12 +78,13 @@ public class EnderecoResource {
     }
     
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateAddress(Endereco c){
         Properties p = new Properties();
+        
         p.setProperty("mensagem", "alterado com sucesso");
         try {
+            ctrlEnderecos.alterar(c);
             return Response.ok().entity(p).build();
         }catch (Exception e){
             System.out.print(e);

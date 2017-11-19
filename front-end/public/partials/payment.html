@@ -9,7 +9,7 @@
 <div class="row">
    	<div class="col-md-4 text-center" ng-if="user">
    		<!-- address datas -->
-	   	<table class="table bg-light mt-3">
+	   	<table class="table bg-light mt-3" ng-hide="editAddress">
 		  <thead>
 		    <tr class="thead-dark">
 		      <th scope="col">Meus Endereços</th>
@@ -17,41 +17,56 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr ng-repeat="address in user.address">
+		    <tr ng-repeat="endereco in user.enderecos track by endereco.idEndereco">
 		      <td>
-		      	<p>{{address.address}}, {{address.city}}, {{address.state}}, {{address.zipcode}}.</p>
+		      	<p>{{endereco.logradouro}}, {{endereco.cidade}}, {{endereco.estado}}, {{endereco.cep}}, {{endereco.numero}}</p>
 		      </td>
 		      <td>
-		      	<button type="button" class="btn col-md-12 rounded-0 button-edit btn-warning">Alterar</button>
-		      	<button type="button" class="btn col-md-12 rounded-0 button-edit btn-success">Selecionar</button>
+		      	<button type="button" class="btn col-md-12 rounded-0 button-edit" 
+		      			ng-class="!endereco.principal ? 'btn-success' : 'btn-danger'"
+		      			ng-click="selectecAddress(endereco)">
+		      		{{!endereco.principal ? 'Selecionar' : 'Endereço de entrega'}}
+		      	</button>
 		      </td>
 		    </tr>
 		  </tbody>
 		</table>
-		<div class="my-2">
-			<button type="button" class="btn col-md-12 rounded-0 button-edit btn-warning">Inserir novo endereço</button>
+		<div class="row" ng-hide="!editAddress">
+			<div ng-repeat="endereco in user.enderecos track by endereco.idEndereco" ng-controller="AddressController" class="px-2 mx-auto">
+				<user-address titles="['Meus endereços']" 
+							  model="endereco"
+							  disabled="!endereco.disabled"
+							  edit="getAddress(endereco, $index)">
+			    </user-address>
+				<div class="row px-2">
+					<button type="button" 
+							class="btn w-50 mx-auto rounded-0 button-edit btn-success" 
+				  			ng-click="updateAddress(endereco);edit();">
+				  			Salvar
+				  	</button>			
+				</div>
+			</div>
+		</div>
+		<div class="btn-group w-100 my-2">
+			<button type="button" 
+					class="btn col-md-12 rounded-0 button-edit btn-dark w-50"
+					data-toggle="modal" data-target="#exampleModal">Inserir novo endereço</button>
+			<button type="button" 
+					class="btn col-md-12 rounded-0 button-edit w-50" 
+					ng-class="!editAddress ? 'btn-warning' : 'btn-danger'" 
+					ng-click="edit()">
+				{{!editAddress ? 'Editar': 'Cancelar'}}
+			</button>
 		</div>
 		<!-- persona datas -->
-		<table class="table bg-light mt-3 col-md-12 ">
-		  <thead>
-		    <tr class="thead-dark">
-		      <th scope="col">Meu Dados</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <tr>
-		      <th scope="row">
-		      	<p>Nome: {{user.name}}</p>
-		      	<p>Sobrenome: {{user.lastname}}</p>
-		      	<p>Nascimento: {{user.birthday}}</p>
-		      	<p>CPF: {{user.cpf}}</p>
-		      	<p>E-mail: {{user.email}}</p>
-		      	<p>TEL: {{user.tel}} / CEL: {{user.tellphone}}</p>
-		      	<button type="button" class="btn col-md-12 col-sm-12 rounded-0 button-edit btn-warning">Alterar</button>
-		      </th>
-		    </tr>
-		  </tbody>
-		</table>
+		<div ng-controller="HomeUserController">
+			<user-data  titles="['Meus Dados']" 
+				model="user" 
+				action="alterar" 
+				disabled="disable" 
+				edit="updateUser(user)">
+			</user-data>
+		</div>
    	</div>
 
 	<div class="col-md-4">
@@ -59,7 +74,8 @@
 			<div class="card-header rounded-0 text-white" style="background: #212529">
 				<h5>Forma de Pagamento</h5>
 			</div>
-	  		<a class="btn btn-warning col-md-12 rounded-0 mb-2" 
+
+	  		<!-- <a class="btn btn-warning col-md-12 rounded-0 mb-2" 
 	  		     data-toggle="collapse" 
 	  		     href="#" 
 	  		     aria-expanded="false" 
@@ -105,14 +121,61 @@
 			</div>
 			<div class="pb-3 py-2 mx-auto" ng-if="type!='Boleto'">
 			  		Boleto Bancário
+			</div> -->
+			<nav class="nav nav-pills text-center w-100" id="myTab" role="tablist">
+			  <a class="nav-item nav-link active rounded-0 w-50" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Boleto</a>
+			  <a class="nav-item nav-link rounded-0 w-50" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Cartão</a>
+			</nav>
+			<div class="tab-content" id="nav-tabContent">
+			  <div class="tab-pane fade show active px-5 py-5 text-center" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+			  	<div class="text-center">
+			  	 	<img src="img/boleto.png" alt="">
+			  	</div>
+			  	Forma escolhida Boleto Bancário
+			  </div>
+			  <div class="tab-pane fade px-5 py-5" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+			  	 	<div class="content">
+			  	 		<div class="text-center">
+			  	 			<img src="img/payments-card.png" alt="">
+			  	 		</div>
+				    	<div class="form-group">
+				    		<label for="card">Número do cartão</label>
+				    		<input type="text" 
+				    		       name="card"
+				    		       ng-model="number"
+				    		       input-mask="{mask: '9999 9999 9999 9999 999'}"
+				    			   class="form-control col-md-10" />
+				    	</div>
+				    	<div class="form-group">
+				    		<label for="card">Nome impresso no cartão </label>
+				    		<input type="text" name="card" class="form-control" />
+				    	</div>
+				    	<div class="row">
+					    	<div class="col-md-4 col-sm-4">
+						    		<label>Vencimento</label>
+							    	<input class="form-control text-center col-md-12"
+							    		   ng-model="deadline"
+							    		   placeholder="M/A" 
+							    		   input-mask="{mask: '99/99'}" />
+					    	</div>
+					    	<div class="col-md-4">
+					    		<label for="parc">
+						    		Parcelas
+					    		</label>
+						    		<select class="form-control text-center col-md-12">
+						    			<option value="">1</option>
+						    			<option value="">2</option>
+						    			<option value="">3</option>
+						    			<option value="">4</option>
+						    		</select>
+					    	</div>
+				    	</div>
+				    </div>
+			  </div>
 			</div>
-			<a class="btn btn-success col-md-12 rounded-0" 
-	  		     data-toggle="collapse" 
-	  		     href="#" 
-	  		     aria-expanded="false" 
-	  		     aria-controls="collapseExample"
-	  		     ng-click="buy();">
-			     Confirmar
+			<a class="btn btn-success text-white col-md-12 rounded-0" 
+	  		    ng-click="buy();">
+			    Confirmar
 			</a>
 		</div>
 
@@ -129,25 +192,49 @@
 		  </thead>
 		  <tbody>
 		    <tr  ng-repeat="product in products">
-		      <td>
-		      	<img src="{{product.images[0]}}" width=60 class="img-circle" />
+		      <td class="text-center">
+		      	<img src="{{product.foto.path}}" width=60 class="img-circle" />
 		      </td>
-		      <td>
-		      	{{product.name}}
+		      <td class="text-center">
+		      	{{product.produto}}
 		      	<p>
-		      		<span class="secondary">Quantidae: {{product.quantity}}</span>
+		      		<span class="secondary">Quantidae: {{product.quantidade}}</span>
 		      	</p>
 		      </td>
 <!-- 		      <td>
 		      	{{product.desc}}
 		      </td> -->
-		      <td>
-		      	{{(product.price * product.quantity * (1-(product.off/100))) | currency : 'R$' : 2}}
+		      <td class="text-center">
+		      	{{(product.preco * product.quantidade * (1-(product.desconto/100) || 1)) | currency : 'R$' : 2}}
 		      </td>
 		    </tr>
 		  </tbody>
 		</table>
 	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-controller="AddressController">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Novo Endereço</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<user-address titles="['Preencha o dados']" 
+					  model="newAddress"
+					  disabled="true"
+					  edit="getAddress(newAddress, -1)">
+	    </user-address>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button class="btn btn-primary" data-dismiss="modal" ng-click="insertAddress(newAddress)">Concluir</button>
+      </div>
+    </div>
+  </div>
 </div>
 <style>
 	.meu-carrinho{

@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class DaoEndereco {
 
-    DaoCliente daoCliente = new DaoCliente();
+  
 
     public Endereco cadastrar(Endereco endereco, int idCliente) throws Exception {
         try {
@@ -52,7 +52,7 @@ public class DaoEndereco {
     public void alterar(Endereco endereco) throws Exception {
         try {
             Connection conn = SQLConnection.getConexao();
-            String sql = "call alterar_endereco(?,?,?,?,?,?,?,?,?,?)";
+            String sql = "call alterar_endereco(?,?,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, endereco.getIdEndereco());

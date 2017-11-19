@@ -1,20 +1,26 @@
-<table class="table table-responsive beers table-hover">
+<div class="alert alert-info" ng-if="!orders.length">
+	Você não possui nenhum registro de pedidos no momento.
+	<div class="text-right">
+		<a href="/home" class="btn btn-success rounded-0">Veja ofertas</a>
+	</div>
+</div>
+<table class="table table-responsive beers table-hover" ng-if="orders.length">
 	<thead class="thead-dark">
 		<tr>
-			<th scope="col">Cartões</th>
-			<th scope="col">Número</th>
+			<th scope="col">Código</th>
+			<th scope="col">Forma de Pagamento</th>
 			<th scope="col">Datas</th>
 			<th scope="col">Estatus</th>
 			<th scope="col">Total</th>
 		</tr>
 	</thead>
 	<tbody class="bg-white">
-		<tr ng-repeat="order in orders" ng-click="openList(order.list, $event)" style="cursor: pointer;" class="{{'lines lines'+$index}}"> 
-			<td>{{order.card.brand}}</td>
-			<td>{{order.card.number}}</td>
-			<td>{{order.date}}</td>
-			<td>{{order.state}}</td>
-			<td>{{totalList(order.list) | currency : 'R$' : 2}}</td>
+		<tr ng-repeat="order in orders" ng-click="openList(order.items, $event)" style="cursor: pointer;" class="{{'lines lines'+$index}}"> 
+			<td>{{order.idVenda}}</td>
+			<td>{{order.formaPagamento.formaPagamento}}</td>
+			<td>{{order.data}}</td>
+			<td>{{order.confirmado ? 'Entregue' : 'Em andamento'}}</td>
+			<td>{{totalList(order.items) | currency : 'R$' : 2}}</td>
 		</tr>
 	</tbody>
 </table>

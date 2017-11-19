@@ -4,15 +4,23 @@
 	</div>
 </div>
 <div class="row">
-	<div ng-repeat="endereco in user.enderecos" class="col-md-6">
+	<div ng-repeat="endereco in user.enderecos track by endereco.idEndereco" class="col-md-6">
 		<user-address titles="['Meus endereços']" 
 					  model="endereco"
 					  disabled="!endereco.disabled"
 					  edit="getAddress(endereco, $index)">
 	    </user-address>
-		<div class="row bg-dark">
-			<button type="button" class="btn mx-auto col-md-3 col-sm-3 rounded-0 button-edit btn-warning" 
-		  		ng-click="updateAddress(endereco);">Alterar</button>
+		<div class="row px-2">
+			<button type="button" 
+					class="btn w-50 rounded-0 button-edit btn-warning" 
+		  			ng-click="updateAddress(endereco);">
+		  			Alterar
+		  	</button>			
+		  	<button type="button" 
+		  			class="btn w-50 rounded-0 button-edit btn-danger" 
+		  			ng-click="removeAddrees(endereco);">
+		  			Remover
+		  	</button>
 		</div>
 	</div>
 	<div class="col-md-6 text-center">
@@ -42,7 +50,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button class="btn btn-primary" ng-click="insertAddress(newAddress)">Concluir</button>
+        <button class="btn btn-primary" data-dismiss="modal" ng-click="insertAddress(newAddress)">Concluir</button>
       </div>
     </div>
   </div>

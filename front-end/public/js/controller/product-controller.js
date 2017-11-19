@@ -5,7 +5,7 @@ angular.module('bringmybeer').controller('ProductController',
 	$scope.orderByCustom = ['tipo', 'produto'];
 	$rootScope.productList = [];
 
-	productService.getProduct(1)
+	productService.getProduct($state.params.id)
 				  .then(function(data){
 				  	$scope.product = data;
 				  	$scope.loadFamily();

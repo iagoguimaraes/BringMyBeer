@@ -49,9 +49,10 @@ angular.module('bringmybeer')
     service.updateUser = function(user){
         return $q(function(resolve, reject){
             $rootScope.$broadcast('show');
-            userResource.update(user, function(user){
+            userResource.update(user, function(message){
+                $cookies.putObject('user', user);
                 $rootScope.$broadcast('hide');
-                resolve({message: user.mensagem, title: "Dados pessoais"});
+                resolve({message: message.mensagem, title: "Dados pessoais"});
             }, function(error){
                 $rootScope.$broadcast('hide');
                 reject(error);

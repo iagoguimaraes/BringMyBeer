@@ -44,8 +44,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `cadastrar_cliente`(
 ,in _cpf varchar(50)
 ,in _email varchar(500)
 ,in _senha varchar(50)
-,in _telefone bigint
-,in _celular bigint
+,in _telefone varchar(20)
+,in _celular varchar(20)
 )
 begin
 
@@ -69,8 +69,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `alterar_cliente`(
 ,in _cpf varchar(50)
 ,in _email varchar(500)
 ,in _senha varchar(50)
-,in _telefone bigint
-,in _celular bigint
+,in _telefone varchar(20)
+,in _celular varchar(20)
 )
 begin
 
@@ -158,13 +158,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `remover_endereco`(
 )
 begin
 
-update endereco
-set
-	ativo = 0
-where
-	id_endereco = _id_endereco;
-	
-select LAST_INSERT_ID();
+SET foreign_key_checks = 0;
+
+DELETE FROM endereco WHERE id_endereco = _id_endereco;
+
+SET foreign_key_checks = 1;
 
 end$$
 DELIMITER ;
@@ -257,11 +255,11 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_tipo_by_id`(
-in _id_tipo
+in _id_tipo int
 )
 begin
 
-select * from tipo where id_tipo = _id_tipo;	
+select * from tipo where id_tipo_produto = _id_tipo;	
 
 end$$
 DELIMITER ;
@@ -270,7 +268,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_forma_pagamento_by_id`(
-in _id_forma_pagamento
+in _id_forma_pagamento int
 )
 begin
 
@@ -283,11 +281,11 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_marca_by_id`(
-in _id_marca
+in _id_marca int
 )
 begin
 
-select * from marca where id_tipo = _id_marca;	
+select * from marca where _id_marca = _id_marca;	
 
 end$$
 DELIMITER ;
@@ -296,11 +294,11 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_foto_by_id`(
-in _id_foto
+in _id_foto int
 )
 begin
 
-select * from foto where id_tipo = _id_foto;	
+select * from foto where id_foto = _id_foto;	
 
 end$$
 DELIMITER ;
@@ -309,7 +307,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_desconto_by_produto`(
-in _id_produto
+in _id_produto int
 )
 begin
 
@@ -322,7 +320,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_endereco_by_id`(
-in _id_endereco
+in _id_endereco int
 )
 begin
 
@@ -335,7 +333,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_cliente_by_id`(
-in _id_cliente
+in _id_cliente int
 )
 begin
 
@@ -348,7 +346,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_endereco_by_cliente`(
-in _id_cliente
+in _id_cliente int
 )
 begin
 
@@ -361,7 +359,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_endereco_by_cliente`(
-in _id_cliente
+in _id_cliente int
 )
 begin
 

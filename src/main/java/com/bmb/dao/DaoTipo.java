@@ -61,7 +61,7 @@ public class DaoTipo {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 tipo = new Tipo(
-                        rs.getInt("id_tipo"),
+                        rs.getInt("id_tipo_produto"),
                         rs.getString("tipo"));
             }
             stmt.close();

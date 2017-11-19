@@ -22,13 +22,13 @@
 	    <tr  ng-repeat="product in products">
 		    <td>
 		      	<img src="{{product.foto[0].path}}" width=60 class="img-circle" />
-		      	{{product.product}}
+		      	{{product.produto}}
 		    </td>
 			<td>
 		      	{{product.descricao}}
 		    </td>
 		    <td>
-		      	{{(product.preco * product.quantidade * (1-(product.desconto/100))) | currency : 'R$' : 2}}
+		      	{{(product.preco * product.quantidade * (1-(product.desconto/100) || 1)) | currency : 'R$' : 2}}
 		    </td>
 		    <td>
 		      	<div class="input-group bg-white">

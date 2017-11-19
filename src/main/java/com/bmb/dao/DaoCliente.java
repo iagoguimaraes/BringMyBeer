@@ -9,6 +9,7 @@ import com.bmb.model.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Iterator;
 
 /**
  *
@@ -37,7 +38,9 @@ public class DaoCliente {
             ResultSet rs = stmt.executeQuery();
             rs.last();
             cliente.setIdCliente(rs.getInt(1));
-
+            for (int i = 0; i < cliente.getEnderecos().size(); i++) {
+                daoEndereco.cadastrar(cliente.getEnderecos().get(i), cliente.getIdCliente());
+            }
             stmt.close();
             conn.close();
 
@@ -77,7 +80,7 @@ public class DaoCliente {
         try {
             Cliente cliente = new Cliente();
             Connection conn = SQLConnection.getConexao();
-            String sql = "call obter_cliente_id(?)";
+            String sql = "call obter_cliente_by_id(?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, idCliente);

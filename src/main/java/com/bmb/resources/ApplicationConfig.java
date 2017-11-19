@@ -44,6 +44,7 @@ public class ApplicationConfig extends Application  {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.bmb.resources.EnderecoResource.class);
         resources.add(com.bmb.resources.ProductResource.class);
+        resources.add(com.bmb.resources.TipoResource.class);
         resources.add(com.bmb.resources.UserResource.class);
         resources.add(com.bmb.resources.VendaResource.class);
     }

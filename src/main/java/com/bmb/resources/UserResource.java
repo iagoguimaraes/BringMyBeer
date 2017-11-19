@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
 @Path("usuario")
 public class UserResource {
     
-    ControllerCliente ctrlCliente = new ControllerCliente();
+
             
     @Context
     private UriInfo context;
@@ -42,6 +42,7 @@ public class UserResource {
     public UserResource() {
     }
     
+    ControllerCliente ctrlCliente = new ControllerCliente();
     
     /**
      * Retrieves representation of an instance of com.bmb.resources.user
@@ -51,29 +52,10 @@ public class UserResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(Cliente c) {
-        //TODO return proper representation object
-        /*
-        Endereco e = new Endereco();
-        e.setBairro("jardim Teste");
-        e.setCep("04844-150");
-        e.setComplemento("casa");
-        e.setLogradouro("Rua do joãozinho");
-        e.setNumero(123);
-        e.setCidade("São Paulo");
-        e.setEstado("SP");
-        ArrayList<Endereco> ends = new ArrayList<Endereco>();
-        ends.add(e);
-        
-        c.setIdCliente(1);
-        c.setCpf("12345678911");
-       
-        c.setCpf("99999999999");
-        c.setNome("fulano");
-        c.setSobrenome("Beltrano");
-        c.setToken("ADASKLJDAKSJD");
-        c.setEnderecos(ends);*/
         try {
-            return Response.ok().entity(ctrlCliente.logar(c.getEmail(), c.getSenha())).build();
+            c = ctrlCliente.logar(c.getEmail(), c.getSenha());
+            c.setToken("A5S4D54AS65D465454SA4D");
+            return Response.ok().entity(c).build();
         }catch (Exception a){
             System.out.print(a);
             return Response.status(Response.Status.NOT_MODIFIED).build();

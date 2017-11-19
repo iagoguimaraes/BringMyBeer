@@ -8,7 +8,7 @@ angular.module('bringmybeerFactory', ['ngResource'])
     };
 }])
 .factory('vendaResource', function($resource){
-    return $resource('http://localhost:8080/BringMyBeer/webresources/venda/:id', null, {
+    return $resource('http://localhost:8080/BringMyBeer/webresources/venda/:id', {idCliente: '@idCliente'}, {
         'update': {
             method: 'PUT'
         }
@@ -50,6 +50,18 @@ angular.module('bringmybeerFactory', ['ngResource'])
     });
 }).factory('addressResource', function($resource){
     return $resource('http://localhost:8080/BringMyBeer/webresources/enderecos', null, {
+        'update': {
+            method: 'PUT'
+        },
+        'delete': {
+            method: 'DELETE',
+            params: {
+                idEndereco: '@idEndereco'
+            }
+        }
+    });
+}).factory('typeResource', function($resource){
+    return $resource('http://localhost:8080/BringMyBeer/webresources/tipo', null, {
         'update': {
             method: 'PUT'
         }

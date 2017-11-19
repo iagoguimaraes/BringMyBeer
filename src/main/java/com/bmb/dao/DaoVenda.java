@@ -89,12 +89,13 @@ public class DaoVenda {
             while (rs.next()) {
                 vendas.add(new Venda(
                         rs.getInt("id_venda"),
-                        rs.getDate("data_venda"),
+                        rs.getDate("data"),
                         rs.getBoolean("confirmado"),
                         rs.getBoolean("cancelado"),
                         daoItemVenda.obter(rs.getInt("id_venda")),
                         daoFormaPagamento.obter(rs.getInt("id_forma_pagamento")),
-                        daoCliente.obter(rs.getInt("id_cliente")),
+                        //daoCliente.obter(rs.getInt("id_cliente")),
+                        null,
                         daoEndereco.obter(rs.getInt("id_endereco"))));
             }
             stmt.close();

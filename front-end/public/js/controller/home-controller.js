@@ -1,5 +1,5 @@
 angular.module('bringmybeer').controller('HomeController', 
-	function(productService, $scope, cartService, $rootScope, $stateParams, $state, alertService){
+	function(productService, $scope, cartService, $rootScope, $stateParams, $state, alertService, categoryService){
 	$rootScope.productList = []
 	$scope.preco = 500;
 	$scope.desconto = 0;
@@ -58,7 +58,7 @@ angular.module('bringmybeer').controller('HomeController',
 	}
 
 	if($stateParams.list){
-		params.category = $stateParams.list;
+		params.tipo = $stateParams.list;
 		$scope.searchFilter();
 	} else {
 		productService.getProducts()
@@ -80,20 +80,25 @@ angular.module('bringmybeer').controller('HomeController',
 
 	$scope.orderByCategory = function(productList) {
 		var test = [];
-		['cerveja', 'vinho', 'outros', 'alimentos'].some(function(key){
-  			//e.hasOwnProperty(test) && e['category'].test(e[key])
-  				test.push({ category: key, productList: [] });
-  		});
+		categoryService.getCategorys()
+					   .then(function(types){
+					   		test = types.map(function(type){
+					   			return{
+					   				category: type.tipo,
+					   				productList: []
+					   			}
+					   		});
+					  		productList.forEach(function(p){
+						  		for(var i in test){
+						  			if(p.tipo.tipo===test[i].category){
+						  				test[i].productList.push(p);
+						  			}
+						  		}
+						  		return;
+						  	});
 
-	  	productList.forEach(function(p){
-	  		for(var i in test){
-	  			if(p.tipo.tipo===test[i].category){
-	  				test[i].productList.push(p);
-	  			}
-	  		}
-	  		return;
-	  	});
-	  	$rootScope.productList = test;
+						  	$rootScope.productList = test;
+					   })
 	}
 
 	$scope.test = function(){

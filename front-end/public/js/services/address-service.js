@@ -1,5 +1,5 @@
 angular.module('bringmybeer')
-.service('addressService', ['$q', '$rootScope', 'addressResource', '$http', function ($q, $rootScope, addressResource, $http) {
+.service('addressService', ['$q', '$rootScope', 'addressResource', '$http', '$cookies', function ($q, $rootScope, addressResource, $http, $cookies) {
 	var service = {};
 
 	service.getAddres = function(cep){
@@ -23,8 +23,10 @@ angular.module('bringmybeer')
     		$rootScope.$broadcast('show');
     		addressResource.update(address, function(message){
     			$rootScope.$broadcast('hide');
+                $cookies.putObject('user', $rootScope.user);
     			resolve({message: message.mensagem, title: "Endereço"});
     		}, function(error){
+                console.log(error);
     			$rootScope.$broadcast('hide');
     			reject({message: "Erro ao tentar atualizar endereço", title: "Endereço"});
     		});
@@ -34,9 +36,11 @@ angular.module('bringmybeer')
     service.insertAddress = function(address){
     	return $q(function(resolve, reject){
     		$rootScope.$broadcast('show');
-    		addressResource.save(address, function(message){
+    		addressResource.save(address, function(address){
     			$rootScope.$broadcast('hide');
-    			resolve({message: message.mensagem, title: "Endereço"});
+                $rootScope.user.enderecos.push(address);
+                $cookies.putObject('user', $rootScope.user);
+    			resolve({message: "Cadastrado com sucesso", title: "Endereço"});
     		}, function(error){
     			$rootScope.$broadcast('hide');
     			reject({message: "Erro ao tentar inserir endereço", title: "Endereço"});
@@ -44,15 +48,17 @@ angular.module('bringmybeer')
     	});
     }
 
-    service.removeAddrees = function(id){
+    service.removeAddrees = function(address){
     	return $q(function(resolve, reject){
     		$rootScope.$broadcast('show');
-    		addressResource.delete(id, function(message){
+    		addressResource.delete({idEndereco: address.idEndereco}, function(message){
+                $rootScope.user.enderecos.splice($rootScope.user.enderecos.indexOf(address), 1);
     			$rootScope.$broadcast('hide');
+                $cookies.putObject('user', $rootScope.user);
     			resolve({message: message.mensagem, title: "Endereço"});
     		}, function(error){
     			$rootScope.$broadcast('hide');
-    			reject({message: "Erro ao tentar inserir endereço", title: "Endereço"});
+    			reject({message: "Erro ao tentar remover endereço", title: "Endereço"});
     		});
     	});
     }

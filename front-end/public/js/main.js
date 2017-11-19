@@ -89,7 +89,7 @@ angular.module('bringmybeer', ['bringmybeerFactory','components','ngCookies', 'n
 			"user-orders":{
 				url: '/orders',
 				templateUrl: 'partials/user-orders.html',
-				controller: 'HomeUserController',
+				controller: 'SalesUserController',
 				parent: 'user-home'
 			}
 		};

@@ -16,6 +16,7 @@ import com.bmb.controller.ControllerVenda;
 import com.bmb.model.Cliente;
 import java.util.Properties;
 import javax.ws.rs.PUT;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 /**
@@ -34,7 +35,6 @@ public class VendaResource {
      */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response buyProduct(Venda venda) {
         Properties p = new Properties();
         p.setProperty("message", "venda realizada com sucesso");
@@ -42,6 +42,7 @@ public class VendaResource {
             ctrlVenda.cadastrarVenda(venda);
             return Response.ok().entity(p).build();
         } catch (Exception e) {
+            System.out.println(e);
             return Response.ok().entity(null).build();
         }
         //System.out.println("consultou");
@@ -54,18 +55,20 @@ public class VendaResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     //@Consumes(MediaType.APPLICATION_JSON)
-    public Response getSales(Cliente idCliente) {
+    public Response getSales(@QueryParam("idCliente") int idClient) {
         //TODO return proper representation object
+        Cliente idCliente = new Cliente();
+        idCliente.setIdCliente(idClient);
         try {
             return Response.ok().entity(ctrlVenda.obter(idCliente)).build();
         } catch (Exception e) {
+            System.out.println(e);
             return Response.ok().entity(null).build();
         }
     }
     
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateSales(Venda venda){
         //TODO return proper representation object
         Properties p = new Properties();
@@ -73,6 +76,7 @@ public class VendaResource {
         try {
             return Response.ok().entity(p).build();
         } catch (Exception e) {
+            System.out.println(e);
             return Response.ok().entity(null).build();
         }
     }

@@ -26,6 +26,7 @@ angular.module('bringmybeer').controller('RegisterController', ['$scope', 'userS
 				   .then(function(user){
 				   		$rootScope.lastRoute.length ? $rootScope.lastRoute : $rootScope.lastRoute = "user-cart";
 				   		$state.go($rootScope.lastRoute);
+				   		alertService.setMessage(7000, "Usuário cadastrado com sucesso", "Cadastro");
 				   },function(error){
 				   		alertService.setMessage(7000, error.message, error.title);
 				   })

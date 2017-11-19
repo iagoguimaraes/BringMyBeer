@@ -1,6 +1,6 @@
 angular.module('bringmybeer')
-.controller('HomeUserController', ['$scope', 'SessionService', '$state', '$rootScope', 'productService', 'alertService','userService', '$rootScope', 'addressService',
-	function($scope, SessionService, $state, $rootScope, productService, alertService, userService, $rootScope, addressService){
+.controller('HomeUserController', ['$scope', '$state', '$rootScope', 'productService', 'alertService','userService', 'SessionService',
+	function($scope, $state, $rootScope, productService, alertService, userService, SessionService){
 	$scope.disable = true;
 	
 	$scope.logout = function(){
@@ -34,32 +34,5 @@ angular.module('bringmybeer')
 		$scope.disable = !$scope.disable;
 	}
 
-	$scope.searchOrders = function(){
-		
-	}
-
-	$scope.openList = function(list, event){
-		$scope.list = list;
-		var _class = (event.currentTarget.className).replace(" ", " .").split(" ");
-		$('.lines').removeClass("bg-dark");
-		$(_class[1]).addClass("bg-dark");
-	}
-
-	if($rootScope.orders.length === 0){
-		$scope.searchOrders();
-	}
-
-	$scope.totalList = function(list){
-		var total = 0;
-		list.forEach(function(product){
-			total += product.price * product.quantity;
-		});
-
-		return total;
-	}
-
-	$scope.cleanList = function(){
-		$scope.list = [];
-		$('.lines').removeClass("bg-dark");
-	}
+	
 }])

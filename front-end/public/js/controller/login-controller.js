@@ -10,7 +10,8 @@ angular.module('bringmybeer').controller('LoginController', ['$scope', 'alertSer
 	$scope.login = function(){
 		userService.getUser($scope.user)
 			.then(function(currentUser){
-				$state.go($rootScope.lastRoute || "home");
+				if(!$rootScope.lastRoute.length) {  $rootScope.lastRoute = "home" };
+				$state.go($rootScope.lastRoute);
 			}).catch(function(error){
 				alertService.setMessage(4000, error.message, error.title);
 			});

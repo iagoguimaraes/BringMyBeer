@@ -8,7 +8,7 @@ angular.module('bringmybeer')
         var json = JSON.parse(a[key]);
         if(json.hasOwnProperty('idProduto')){
             $rootScope.products.push(json);
-            $rootScope.subTotal += parseFloat((json.preco * (1-(json.desconto/100)))  * (json.quantidade || 1));
+            $rootScope.subTotal += parseFloat((json.preco * (1-(json.desconto/100) || 1))  * (json.quantidade || 1));
         }
     }
 
@@ -48,6 +48,15 @@ angular.module('bringmybeer')
             $rootScope.subTotal += parseFloat((product.preco * (1-(product.preco/100)))  * (product.quantidade || 0));
             $cookies.putObject(product.idProduto, product);
         })
+    }
+
+    service.clearAll = function() {
+        $rootScope.subTotal = 0;
+        $rootScope.products.forEach(function(p){
+            $cookies.remove(p.idProduto);
+        });
+
+        $rootScope.products = []
     }
 
     return service;

@@ -83,7 +83,7 @@ public class DaoProduto {
                         rs.getString("descricao"),
                         rs.getDate("data_cadastro"),
                         rs.getBoolean("ativo"),
-                        daoTipo.obter(rs.getInt("id_tipo")),
+                        daoTipo.obter(rs.getInt("id_tipo_produto")),
                         daoMarca.obter(rs.getInt("id_marca")),
                         daoFoto.obter(rs.getInt("id_foto")));
             }
@@ -112,7 +112,7 @@ public class DaoProduto {
                         rs.getString("descricao"),
                         rs.getDate("data_cadastro"),
                         rs.getBoolean("ativo"),
-                        daoTipo.obter(rs.getInt("id_tipo")),
+                        daoTipo.obter(rs.getInt("id_tipo_produto")),
                         daoMarca.obter(rs.getInt("id_marca")),
                         daoFoto.obter(rs.getInt("id_foto"))
                 ));

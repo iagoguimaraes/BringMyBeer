@@ -41,8 +41,8 @@ create table cliente(
 ,cpf varchar(50)
 ,email varchar(500)
 ,senha varchar(50)
-,telefone bigint
-,celular bigint
+,telefone varchar(20)
+,celular varchar(20)
 );
 
 drop table if exists tipo_produto;
