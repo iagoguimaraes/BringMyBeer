@@ -5,7 +5,7 @@ angular.module('bringmybeer')
         user = $cookies.getObject('user');
         $rootScope.user = user;
     }
-    // console.log($rootScope.user)
+    // console.log($rootScope.user);
     var service = {};
     $rootScope.lastRoute = [];
 

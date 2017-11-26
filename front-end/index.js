@@ -8,7 +8,7 @@ var Correios = require('node-correios'), correios = new Correios();
 serve the static index.html from the public folder
 ============================================================ */
 // app.use(cors());	
-
+ 
 //some other code
 app.use(bodyParser.json());
 var allowCrossDomain = function(req, res, next) {

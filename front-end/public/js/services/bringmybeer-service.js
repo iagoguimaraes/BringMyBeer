@@ -27,7 +27,6 @@ angular.module('mybeerService', ['ngResource'])
         }
     });
 }).factory('userResource', function($resource){
-    // { params: { category: '@category', price: '@price', sale: '@sale', off: '@off'} }
     return $resource('/user/:id', null, {
         'update': {
             method: 'PUT'

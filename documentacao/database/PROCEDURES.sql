@@ -1,3 +1,4 @@
+
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `cadastrar_venda`(
  in _id_cliente int

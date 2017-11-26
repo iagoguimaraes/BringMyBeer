@@ -29,7 +29,5 @@ angular.module('bringmybeer')
 				});
 			});
 		}
-
 		return service;
-	
 }])

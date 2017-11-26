@@ -14,7 +14,7 @@ angular.module('bringmybeer')
 
     service.addProduct = function(product){
         var isAlredy = $rootScope.products.filter(function(p){ if(p.idProduto===product.idProduto){ return p;} });
-        if(isAlredy.length) { alertService.setMessage(7000, "Produto" + product.produto + " já foi adicionado", "Carrinho"); return; };
+        if(isAlredy.length) { alertService.setMessage(7000, "Produto " + product.produto + "já foi adicionado", "Carrinho"); return; };
         if($rootScope.productList){
             $rootScope.productList.forEach(function(p){
                 var i = p.productList.indexOf(product);

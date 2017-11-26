@@ -16,7 +16,6 @@ angular.module('bringmybeer')
         });
     }
 
-
     service.updateAddress = function(address){
     	return $q(function(resolve, reject){
     		delete address['$$hashKey'];

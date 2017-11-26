@@ -1,7 +1,6 @@
 angular.module('bringmybeer')
 .service('categoryService', [ 'typeResource', '$q',
 	function (typeResource, $q) {
-
 		var service = {};
 
 		service.getCategorys = function(){

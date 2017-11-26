@@ -1,3 +1,4 @@
+
 drop schema if exists bringmybeer;
 create schema bringmybeer;
 use bringmybeer;

@@ -11,7 +11,7 @@ angular.module('bringmybeerDirectives', [])
     };
 }).directive('okPassword', ['zxcvbn', function(zxcvbn) {
     return {
-        // restrict to only attribute and class
+        // restrict to only attribut e and class
         restrict: 'AC',
 
         // use the NgModelController
