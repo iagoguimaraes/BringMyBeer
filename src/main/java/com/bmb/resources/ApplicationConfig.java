@@ -11,7 +11,7 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MultivaluedMap;
-import org.apache.catalina.filters.CorsFilter;
+
 /**
  *
  * @author Miqueas Santos

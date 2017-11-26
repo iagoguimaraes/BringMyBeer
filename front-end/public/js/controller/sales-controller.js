@@ -7,7 +7,6 @@ angular.module('bringmybeer')
 	salesService.getSales(SessionService.getSession().idCliente)
 				.then(function(orders){
 					$scope.orders = orders;
-					console.log(orders);
 				}).catch(function(error){
 					console.log(error.error);
 					alertService.setMessage(7000, error.message, error.title);

@@ -26,6 +26,7 @@ angular.module('bringmybeer')
         $rootScope.products.push(product);
         $cookies.putObject(product.idProduto, product);
         service.getTotal();
+        alertService.setMessage(2000, product.produto, "Adicionado");
     }
 
     service.removeProduct = function(product){

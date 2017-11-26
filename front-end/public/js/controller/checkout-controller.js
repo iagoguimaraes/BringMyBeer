@@ -1,12 +1,12 @@
 angular.module('bringmybeer').controller('CheckoutController', function($scope, cartService, $rootScope, $window, $state){
 	$scope.increment = function(p){
-		p.quantity++;
+		p.quantidade++;
 		cartService.getTotal();
 	}
 
 	$scope.decrement = function(p){
-		if(p.quantity)
-			p.quantity--;
+		if(p.quantidade)
+			p.quantidade--;
 		cartService.getTotal();
 	}
 
@@ -15,7 +15,7 @@ angular.module('bringmybeer').controller('CheckoutController', function($scope, 
 	}
 
 	$scope.getTotal = function(product){
-		if(product.quantity < 0 ) { product.quantity = 0; }
+		if(product.quantidade < 0 ) { product.quantidade = 0; }
 		cartService.getTotal();
 	}
 

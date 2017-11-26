@@ -96,10 +96,18 @@ angular.module('bringmybeer')
     }
 
     service.searchFilter = function(params){
+        if(!params.marca){
+            delete params['marca'];
+        }
+
+        if(!params.tipo){
+            delete params['tipo'];
+        }
+
         $rootScope.$broadcast('show');
         return $q(function(resolve, reject){
             categoryResource.save(params, function(products){
-                products = filterCookie(products);
+                // products = filterCookie(products);
                 $rootScope.$broadcast('hide');
                 resolve(products);
             }, function(error){

@@ -263,9 +263,9 @@ body{
 .main-container{
 	margin-top: 111px;
 }		
-@media screen and (max-width: 792px) {
+@media screen and (max-width: 992px) {
 	.main-container{
-			margin-top: 140px ;
+			margin-top: 70px ;
 	}
 }
 

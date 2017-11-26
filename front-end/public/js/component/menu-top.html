@@ -25,9 +25,9 @@
 			   		<div class="table bg-white table-responsive search" ng-if="showList">
 						<div class="lines col-md-12" ng-repeat="product in productSearch" >
 							<div class="px-5 py-3 col-md-12" ng-click="goToDetail(product.idProduto)">
-						   		<img src="{{product.foto[0].path}}"  width=60 class="img-responsive">
+						   		<img src="{{product.foto.path}}" alt="product.produto"  width=60 class="img-responsive">
 						   		<b>{{product.product}}</b>
-						   		<p class="text-secondary">{{product.descricao}}</p>
+						   		<p class="text-secondary">{{product.descricao | limitTo: 50}}... <br> valor: {{product.preco | currency: 'R$' : 2}}</p>
 						   	</div>
 						</div>
 				   	</div>
@@ -49,7 +49,10 @@
 								<span>{{products.length}}</span>
 							</div>
 						</a>
-						<div ng-if="products.length" class="collapse cart-list pb-2 bg-white" id="navbarToggleExternalContent">
+						<div ng-if="products.length" 
+							 class="collapse cart-list pb-2 bg-white" 
+							 id="navbarToggleExternalContent"
+							 style="z-index: 10000;">
 							<a ui-sref="checkout" class="btn btn-success w-100 rounded-0" 
 							   data-toggle="collapse" 
 							   data-target="#navbarToggleExternalContent">Finalizar Compra</a>
@@ -71,13 +74,13 @@
 			      	</a>
 		      	</li>			      
 		      	<li class="hidden nav-item">
-			      	<a class="nav-link" href="/products/category/cerveja" ui-sref-active="active">
+			      	<a class="nav-link" href="/products/category/cervejas" ui-sref-active="active">
 			      		<i class="fa fa-beer" aria-hidden="true"></i>
 			      		Cervejas
 			      	</a>
 		      	</li>			      
 		      	<li class="hidden nav-item">
-			      	<a class="nav-link" ui-sref-active="active" ui-sref="/products/category/vinho">
+			      	<a class="nav-link" ui-sref-active="active" ui-sref="/products/category/vinhos">
 			      		<i class="fa fa-glass" aria-hidden="true"></i>
 			      		Vinhos
 			      	</a>
@@ -98,11 +101,11 @@
 		    	<i class="fa fa-home" aria-hidden="true"></i>
 		    	Home
 		    </a>
-		    <a class="text-dark nav-item nav-link" ui-sref-active="active" href="/products/category/cerveja">
+		    <a class="text-dark nav-item nav-link" ui-sref-active="active" href="/products/category/cervejas">
 		    	<i class="fa fa-beer" aria-hidden="true"></i>
 		    	Cervejas
 		    </a>
-		    <a class="text-dark nav-item nav-link" ui-sref-active="active" href="/products/category/vinho">
+		    <a class="text-dark nav-item nav-link" ui-sref-active="active" href="/products/category/vinhos">
 		    	<i class="fa fa-glass" aria-hidden="true"></i>
 		    	Vinhos
 		    </a>

@@ -7,12 +7,12 @@
   </div>
   <img class="card-img-top" ng-click="detail()" src="{{product.foto.path}}" alt="Card image cap">
   <div class="card-title px-3">
-    <h6  ng-click="detail()">{{product.produto}}</h6>
+    <h6  ng-click="detail()">{{product.produto | limitTo: 40}}</h6>
   </div>
   <div class="card-body bg-white">
     <div class="body-bottom">
       <p class="text-secondary" >
-        <p class="card-text" ng-click="detail()">{{product.descricao | limitTo: 70}}</p>
+        <p class="card-text" ng-click="detail()">{{product.descricao | limitTo: 70}}...</p>
         <span ng-class="{'valid-off mr-1': off > 0}">{{product.preco | currency : 'R$' : 2}}</span> 
         <span ng-if="off > 0" class="text-success"> por apenas {{product.preco * (1-(off/100)) | currency: 'R$' : 2}}</span> 
       </p>

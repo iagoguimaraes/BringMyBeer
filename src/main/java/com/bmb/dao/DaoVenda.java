@@ -89,7 +89,7 @@ public class DaoVenda {
             while (rs.next()) {
                 vendas.add(new Venda(
                         rs.getInt("id_venda"),
-                        rs.getDate("data"),
+                        rs.getDate("data_venda"),
                         rs.getBoolean("confirmado"),
                         rs.getBoolean("cancelado"),
                         daoItemVenda.obter(rs.getInt("id_venda")),

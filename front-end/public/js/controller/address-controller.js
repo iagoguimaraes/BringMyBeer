@@ -6,7 +6,6 @@ angular.module('bringmybeer')
 	$scope.test = [];
 
 	$scope.insertAddress = function(address){
-		address.cep=04844150;
 		var user = {
 			idCliente: SessionService.getSession().idCliente,
 			enderecos: [address]

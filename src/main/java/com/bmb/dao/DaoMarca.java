@@ -57,6 +57,29 @@ public class DaoMarca {
             throw e;
         }
     }
+    
+    public ArrayList<Marca> obter() throws Exception {
+        try {
+            ArrayList<Marca> marcas = new ArrayList<Marca>();
+            Connection conn = SQLConnection.getConexao();
+            String sql = "select * from marca";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                marcas.add(new Marca(
+                       rs.getInt("id_marca"),
+                       rs.getString("marca")
+                ));
+            }
+            stmt.close();
+            conn.close();
+
+            return marcas;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 
     public void deletar(Marca marca) throws Exception {
         try {

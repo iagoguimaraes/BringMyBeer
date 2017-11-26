@@ -6,7 +6,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `cadastrar_venda`(
 )
 begin
 
-insert into venda(data,confirmado,cancelado,id_cliente,id_forma_pagamento,id_endereco)
+insert into venda(data_venda,confirmado,cancelado,id_cliente,id_forma_pagamento,id_endereco)
 values (now(),0,0,_id_cliente,_id_forma_pagamento,_id_endereco);
 
 select LAST_INSERT_ID();
@@ -102,7 +102,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `cadastrar_endereco`(
 ,in _bairro varchar(150)
 ,in _cidade varchar(150)
 ,in _estado varchar(2)
-,in _cep int
+,in _cep varchar(9)
 ,in _principal int
 ,in _id_cliente int 
 )
@@ -127,7 +127,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `alterar_endereco`(
 ,in _bairro varchar(150)
 ,in _cidade varchar(150)
 ,in _estado varchar(2)
-,in _cep int
+,in _cep varchar(9)
 ,in _principal int
 )
 begin
@@ -142,7 +142,6 @@ set
 	,estado = _estado
 	,cep = _cep
 	,principal = _principal
-	,id_cliente = _id_cliente
 where
 	id_endereco = _id_endereco;
 	
@@ -243,7 +242,7 @@ DELIMITER ;
 -------------------------------------------------------------------------
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_produto`
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_produto`()
 begin
 
 select * from produto;	
@@ -259,7 +258,7 @@ in _id_tipo int
 )
 begin
 
-select * from tipo where id_tipo_produto = _id_tipo;	
+select * from tipo_produto where id_tipo_produto = _id_tipo;	
 
 end$$
 DELIMITER ;
@@ -285,7 +284,7 @@ in _id_marca int
 )
 begin
 
-select * from marca where _id_marca = _id_marca;	
+select * from marca where id_marca = _id_marca;	
 
 end$$
 DELIMITER ;
@@ -382,5 +381,71 @@ select * from cliente where email = _email and senha = _senha;
 
 end$$
 DELIMITER ;
+-------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_produto_by_pesquisa`(
+ in _produto varchar(150)
+,in _tipo varchar(150)
+,in _marca varchar(150)
+,in _vlrmin double
+,in _vlrmax double
+)
+begin
+
+select
+	p.*
+from
+	produto p
+    inner join tipo_produto tp
+		on tp.id_tipo_produto = p.id_tipo_produto
+	inner join marca m
+		on m.id_marca = p.id_marca
+where
+	(p.produto like '%%' or _produto is null)
+    and (tp.tipo = _tipo or _tipo is null) 
+    and (m.marca = _marca or _marca is null)
+    and p.preco between _vlrmin and _vlrmax;
+
+end$$
+DELIMITER ;
 
 -------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_produto_desconto`()
+begin
+
+select
+	*
+from
+	desconto d
+    inner join produto p
+		on p.id_produto = d.id_produto
+where
+	data_final < now();
+
+end$$
+DELIMITER ;
+
+-------------------------------------------------------------------------
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_produto_mais_vendido`()
+begin
+
+select
+	 p.*
+    ,count(*) qtd
+from
+	item_venda v
+    inner join produto p
+		on p.id_produto = v.id_produto
+order by 
+		qtd desc
+limit
+	5;
+
+end$$
+DELIMITER ;
+ 

@@ -16,14 +16,20 @@ angular.module('bringmybeer').controller('MenuController',
 	};
 
 	$scope.searchField = function() {
-		if(!$scope.searchDesc) { return;}
-		productService.getDesc($scope.searchDesc)
-					  .then(function(products){
-					  	$scope.productSearch = products
-					  	// console.log(products)
-					  }).catch(function(errors){
-					  	console.log(errors.message);
-					  });
+		productService
+		.getProducts()
+	  	.then(function(productList){
+	  		$scope.productSearch = productList.filter(function(items){
+				if(['produto','descricao'].some(function(key){
+					return items.hasOwnProperty(key) && new RegExp($scope.searchDesc, 'ig').test(items[key]);
+					}))
+				{
+				 	return items;
+				};
+			});
+	  	}).catch(function(error){
+	  		console.log(error);
+	  	})
 	}
 
 	// $scope.goToUser = function() {

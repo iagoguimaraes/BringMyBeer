@@ -10,7 +10,7 @@
 		<div id="carouselExampleControls2" class="carousel slide" data-keyboard="true" data-pause="true">
 		  	<div class="carousel-inner">
 		  		<div class="carousel-item active">
-				      <img class="d-block w-100" src="{{product.foto[0].path}}" alt="First slide">
+				      <img class="d-block w-100" src="{{product.foto.path}}" alt="First slide" data-zoom-image="{{product.foto.path}}">
 				</div>
 	  			<div class="carousel-item" ng-repeat="image in product.foto track by $index" ng-if="$index > 0">
 			      <img class="d-block w-100" src="{{image.path}}" alt="First slide">
@@ -32,7 +32,7 @@
 		<p>{{product.descricao}}</p>
 		<h5 class="text-secondary text-center py-4" >
 	        <span ng-class="{'valid-off mr-1': product.off > 0}">{{product.preco | currency : 'R$' : 2}}</span> 
-	        <span ng-if="product.off > 0" class="text-success"> por apenas {{product.preco * (1-(product.desconto/100)) | currency: 'R$' : 2}}</span> 
+	        <span ng-if="product.off > 0" class="text-success"> por apenas {{product.preco * (1-(product.desconto/100) || 1) | currency: 'R$' : 2}}</span> 
       	</h5>
 		<div class="btn-group" style="width: 100%">
 			<button ng-click="buy(product)" style="width: 50%" class="btn btn-success">
@@ -42,16 +42,26 @@
 				Adicionar
 			</button>
 		</div>
-		<div class="card detail mt-3">
+		<div class="card detail my-3">
 			<div class="card-header">
 				<h5 class="card-title">Calcular Frete</h5>
 			</div>
 			<div class="card-body">
-				<div class="input-group">
-					<input type="text" placeholder="CEP 044444-10" class="form-control"/>
+				<div class="input-group w-25 mx-auto">
+					<input ng-model="cep" type="text" placeholder="044444-10" class="form-control" input-mask="{mask: '99999-999'}"/>
 					<span class="input-group-btn">
-				        <button class="btn btn-warning" type="button">Buscar</button>
+				        <button class="btn btn-warning" type="button" ng-click="calcFrete()">Buscar</button>
 				    </span>
+				</div>
+				<div class="py-1 text-secondary" ng-if="fretes.length">
+					<div ng-repeat="frete in fretes" class="bg-light box-shadow my-1 py-3 px-3" ng-hide="frete.PrazoEntrega == 0">
+						Serviço: {{frete.Codigo===40010 ? 'SEDEX Varejo' : ''}} {{frete.Codigo===41106 ? 'PAC Varejo' : ''}} {{frete.Codigo===40215 ? 'SEDEX 10 Varejo' : ''}} <br>
+							Prazo de Entrega: <b> {{frete.PrazoEntrega}} </b> <br>
+							Valor: <b class="text-success"> {{frete.Valor}} </b> <br>
+							<div class="alert alert-danger rounded-0 my-2" ng-ig="frete.obsFim">
+								{{frete.obsFim}}
+							</div>
+					</div>
 				</div>
 			</div>
 		</div>

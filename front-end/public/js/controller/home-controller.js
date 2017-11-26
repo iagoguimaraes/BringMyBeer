@@ -1,49 +1,82 @@
 angular.module('bringmybeer').controller('HomeController', 
-	function(productService, $scope, cartService, $rootScope, $stateParams, $state, alertService, categoryService){
+	function(productService, $scope, cartService, $rootScope, $stateParams, $state, alertService, categoryService, $http){
 	$rootScope.productList = []
 	$scope.preco = 500;
 	$scope.desconto = 0;
 	$scope.maisComprados = false;
-	$scope.tipo = 'all';
+	$scope.tipo = '';
 	$scope.orderByCustom = ['tipo', 'produto'];
 	$scope.itemPerPage = 4;
+	$scope.tipos = [];
+	$scope.marcas = [];
+
+
+	$http.get('http://localhost:8080/BringMyBeer/webresources/produto/tipo')
+		 .then(function(tipos){
+		 	$scope.tipos = tipos.data;
+		 }).catch(function(error){
+		 	alertService.setMessage(7000, errors.data.message, "Tipos");
+		 });
+
+	$http.get('http://localhost:8080/BringMyBeer/webresources/produto/marca')
+		 .then(function(marcas){
+		 	$scope.marcas = marcas.data;
+		 }).catch(function(error){
+		 	alertService.setMessage(7000, errors.data.message, "Marcas");
+		 });
 
 	var params = {
 		tipo: $scope.tipo,
-		preco: $scope.preco,
-		desconto: $scope.desconto,
-		maisComprados: $scope.maisComprados
+		valormax: $scope.preco,
+		// desconto: $scope.desconto,
+		marca: '',
+		valormin: 0
+		// produto: ''
 	}
 
-
 	$scope.all = function(){
-			params.tipo = $scope.tipo = 'all';
-			params.preco = $scope.preco = 500;
+			params.tipo = $scope.tipo = '';
+			params.valormax = $scope.preco = 500;
 			params.desconto = $scope.desconto = 0;
-			params.maisComprados = $scope.maisComprados = false;
+			// params.maisComprados = $scope.maisComprados = false;
+			params.marca = '';
 			$scope.searchFilter();
 			$scope.orderByCustom = ['tipo', 'produto'];
 			$scope.updown = null;
+			$scope.marca = "";
+			$scope.itemPerPage = 4;
 	}
 
+	$scope.brand = function(){
+		if($scope.marca){
+			params.marca = $scope.marca.marca;
+		} else {
+			params.marca = '';
+		}
+		$scope.searchFilter();
+	}
 
 	$scope.categoryF = function(cat){
 		params.tipo = cat;
-		$scope.searchFilter();
+		Promise.resolve($scope.searchFilter())
+			   .then(function(){
+			   		$scope.itemPerPage = $rootScope.productList[0].productList.length;
+			   });
+
 	}
 
 	$scope.searchFilter = function(){
 		productService.searchFilter(params)
 						  .then(function(productList){
-						  	console.log(productList)
-				          	// $scope.orderByCategory(productList);
+						  	
+				          	$scope.orderByCategory(productList);
 						  }).catch(function(errors){
-						  	alertService.setMessage(7000, errors.message, errors.title)
+						  	alertService.setMessage(7000, errors.message, errors.title);
 						  });
 	}
 	
 	$scope.searchByPrice= function(){
-		params.preco = $scope.preco;
+		params.valormax = $scope.preco;
 		$scope.searchFilter();
 	}
 
@@ -53,20 +86,21 @@ angular.module('bringmybeer').controller('HomeController',
 	}
 
 	$scope.offChange = function(){
-		params.off = $scope.off;
-		$scope.searchFilter();
-	}
-
-	if($stateParams.list){
-		params.tipo = $stateParams.list;
-		$scope.searchFilter();
-	} else {
-		productService.getProducts()
-			  .then(function(productList){
-			  	$scope.orderByCategory(productList);
-			  }).catch(function(errors){
-			  	console.log(errors);
-			  });
+		$http.get('http://localhost:8080/BringMyBeer/webresources/produto/desconto')
+		 .then(function(productList){
+		 	$scope.orderByCategory(productList.data);
+		 }).catch(function(error){
+		 	alertService.setMessage(7000, errors.data.message, "Tipos");
+		 });
+		params.tipo = $scope.tipo = '';
+		params.valormax = $scope.preco = 500;
+		// params.desconto = $scope.desconto = 0;
+		// params.maisComprados = $scope.maisComprados = false;
+		params.marca = '';
+		$scope.orderByCustom = ['tipo', 'produto'];
+		$scope.updown = null;
+		$scope.marca = "";
+		$scope.itemPerPage = 4;
 	}
 
 	$scope.addProduct = function(product) {
@@ -96,7 +130,6 @@ angular.module('bringmybeer').controller('HomeController',
 						  		}
 						  		return;
 						  	});
-
 						  	$rootScope.productList = test;
 					   })
 	}
@@ -109,6 +142,18 @@ angular.module('bringmybeer').controller('HomeController',
 
 	$scope.orderPrice = function(){
 		$scope.orderByCustom = $scope.updown;
+	}
+
+	if($stateParams.list){
+		params.tipo = $stateParams.list;
+		$scope.searchFilter();
+	} else {
+		productService.getProducts()
+			  .then(function(productList){
+			  	$scope.orderByCategory(productList);
+			  }).catch(function(errors){
+			  	console.log(errors);
+			  });
 	}
 
 });

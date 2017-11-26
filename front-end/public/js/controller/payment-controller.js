@@ -1,8 +1,15 @@
-angular.module('bringmybeer').controller('PaymentController', ['$scope', 'productService', 'SessionService', 'cartService', '$rootScope', 'alertService', "$state",
-	function($scope, productService, SessionService, cartService, $rootScope,alertService, $state){
+angular.module('bringmybeer').controller('PaymentController', ['$scope', 'productService', 'SessionService', 'cartService', '$rootScope', 'alertService', "$state", '$http',
+	function($scope, productService, SessionService, cartService, $rootScope,alertService, $state, $http){
 	$scope.type = 'Boleto';
 	$scope.editAddress = false;
 	$scope.currentAddress = {};
+	$scope.total = 0;
+	$scope.fretes = [];
+
+	if($rootScope.products.length===0){
+		alertService.setMessage(7000, "Você não possui produtos no carrinho", "Erro");
+		$state.go('home');
+	}
 
 	$scope.changePayment = function(){
 		$scope.type === 'Boleto' ? $scope.type = 'Cartão de crédito' : $scope.type = 'Boleto';
@@ -10,6 +17,15 @@ angular.module('bringmybeer').controller('PaymentController', ['$scope', 'produc
 
 	$scope.buy = function(){
 
+		if(!$scope.currentAddress.idEndereco){
+			alertService.setMessage(7000, "Selecione um endereço para entrega", "Endereço");
+			return;
+		}
+
+		if($scope.total == 0){
+			alertService.setMessage(7000, "selecione o serviço de entrega", "Entrega");
+			return;
+		}
 		var infoBuy = {
 				"data": Date.now(),
 			    "confirmado": false,
@@ -26,12 +42,7 @@ angular.module('bringmybeer').controller('PaymentController', ['$scope', 'produc
 			    "endereco": $scope.currentAddress
 		}
 
-		if(!$scope.currentAddress.idEndereco){
-			alertService.setMessage(7000, "Selecione um endereço para entrega", "Endereço");
-			return;
-		}
 
-		console.log(infoBuy);
 		productService.buy(infoBuy)
 					  .then(function(data){
 					  	alertService.setMessage(7000, "realizada com sucesso", "Compra");
@@ -54,6 +65,37 @@ angular.module('bringmybeer').controller('PaymentController', ['$scope', 'produc
 		});
 		address.principal = true;
 		$scope.currentAddress = address;
+		if(address.cep.length <= 8){
+			alertService.setMessage(7000, "inválido insira corretamente", "CEP");
+			return;
+		}
+
+		/*
+			40010 = SEDEX Varejo
+			40045 = SEDEX a Cobrar Varejo
+			40215 = SEDEX 10 Varejo
+			40290 = SEDEX Hoje Varejo
+			41106 = PAC Varejo
+		*/
+
+		$http.get('/frete?cep=' +address.cep.replace('-', ''))
+			 .then(function(result){
+			 	if(result.data[0].MsgErro.length && result.data[0].PrazoEntrega==0){
+			 		alertService.setMessage(7000, result.data[0].MsgErro, result.data[0].Erro);
+			 		return;
+			 	}
+			 	$scope.fretes = result.data;
+			 	$('#novoservico').modal('show');
+			 }).catch(function(error){
+			 	alertService.setMessage(7000, error[0].MsgErro, error[0].Erro);
+			 })
+	}
+
+	$scope.selectFrete = function(frete){
+		$scope.total = $rootScope.subTotal + parseFloat(frete.Valor);
+		console.log($scope.total);
+		$scope.fretes = [];
+		$('#novoservico').modal('hide');
 	}
 
 }]);

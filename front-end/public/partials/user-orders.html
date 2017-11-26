@@ -18,7 +18,7 @@
 		<tr ng-repeat="order in orders" ng-click="openList(order.items, $event)" style="cursor: pointer;" class="{{'lines lines'+$index}}"> 
 			<td>{{order.idVenda}}</td>
 			<td>{{order.formaPagamento.formaPagamento}}</td>
-			<td>{{order.data}}</td>
+			<td>{{order.data | date : 'dd/MM/yyyy'}}</td>
 			<td>{{order.confirmado ? 'Entregue' : 'Em andamento'}}</td>
 			<td>{{totalList(order.items) | currency : 'R$' : 2}}</td>
 		</tr>

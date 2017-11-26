@@ -1,16 +1,26 @@
 <div class="row no-gutters">
 	<div class="col-md-3 filters bg-dark text-secondary pb-1">
-		<label class="text-center pt-1" style="width: 100%" for="">Categorias</label>
-		<div class="btn-group" style="width: 100%">
-			<button ng-click="all()"  type="button" style="width: 50%" class="btn border-bottom-0 border-left-0 border-right-0 btn-outline-secondary rounded-0">Todos</button>
-			<button ng-click="categoryF('cerveja')" type="button" style="width: 50%" class="btn border-bottom-0 border-left-0 border-right-0 btn-outline-secondary rounded-0">Cervejas</button>
+		<label class="text-center text-white pt-1 w-100" for="">Categorias</label>
+		<div class="row no-gutters">
+			<div ng-repeat="tipo in tipos" class="col-md-6">
+				<button ng-click="categoryF(tipo.tipo)"  
+						type="button" 
+						class="btn w-100 text-white border-0 btn-outline-secondary rounded-0">
+						{{tipo.tipo}}
+				</button>
+			</div>
 		</div>
-		<div class="btn-group" style="width: 100%">
-			<button ng-click="categoryF('vinho')"  type="button" style="width: 50%" class="btn border-top-0 border-left-0 border-right-0 btn-outline-secondary rounded-0">Vinhos</button>
-			<button ng-click="categoryF('outros')" type="button" style="width: 50%" class="btn border-top-0 border-left-0 border-right-0 btn-outline-secondary rounded-0">Outros</button>
+		<div class="form-group px-5 text-center">
+			<label for="marcas" class="text-white text-center">Marcas</label>
+			    <select name="group" class="form-control" required 
+			            ng-model="marca"
+			            ng-options="marca.marca for marca in marcas"
+			            ng-change="brand()">
+			        <option value="">Escolha um grupo</option>
+			    </select>
 		</div>
-		<div class="form-group pt-1 px-1 text-center">
-			<label for="price">Preço: {{preco | currency : "R$" : 2}}</label>
+		<div class="form-group pt-1 px-1 text-center text-white">
+			<label for="price">Valor Maximo: {{preco | currency : "R$" : 2}}</label>
 			<input ng-change="searchByPrice()" 
 				   ng-model-options="{debounce: 500}" 
 				   ng-model="preco" class="form-control" 
@@ -18,32 +28,32 @@
 				   style="width: 100%;"
 				   id="range">
 		</div>
-		<label class="text-center pt-1" style="width: 100%" for="">Buscar Por</label>
-		<div class="form-group text-center">
+		<label class="text-center pt-1 text-white" style="width: 100%" for="">Buscar Por</label>
+		<div class="form-group text-center text-white">
 			<hr>
 			<label for="off" class="form-check-label">
 				<input ng-model="desconto" ng-change="offChange()" type="checkbox" class="form-check-input" name="off">
 				Descontos
 			</label>
-			<label for="sale" class="form-check-label">
+<!-- 			<label for="sale" class="form-check-label">
 				<input ng-model="maisComprados" ng-change="saleChange()" type="checkbox" class="form-check-input" name="sale">
 				Mais comprados
-			</label>
+			</label> -->
 			<hr>
 			<label class="text-center pt-1" style="width: 100%" for="">Ordenar Por</label>
 			<div class="form-check form-check-inline">
-			  <label class="form-check-label">
-			    <input ng-click="orderPrice()" ng-model="updown" class="form-check-input" type="radio" id="inlineCheckbox1" value="price" name="order"> Crescente
+			  <label class="form-check-label text-white">
+			    <input ng-click="orderPrice()" ng-model="updown" class="form-check-input" type="radio" id="inlineCheckbox1" value="preco" name="order"> Crescente
 			  </label>
 			</div>
-			<div class="form-check form-check-inline">
+			<div class="form-check form-check-inline text-white">
 			  <label class="form-check-label">
-			    <input ng-click="orderPrice()" ng-model="updown" class="form-check-input" type="radio" id="inlineCheckbox2" value="-price" name="order"> Descrecente
+			    <input ng-click="orderPrice()" ng-model="updown" class="form-check-input" type="radio" id="inlineCheckbox2" value="-preco" name="order"> Descrecente
 			  </label>
 			</div>
 		</div>
-		<div class="text-center">
-			<button class="btn-outline-secondary btn rounded-0" ng-click="cleanFilter()">Limpar filtros</button>
+		<div class="text-center text-white">
+			<button class="btn-outline-secondary btn rounded-0 text-white" ng-click="cleanFilter()">Limpar filtros</button>
 		</div>
 	</div>
 	<div class="col-md-9">
@@ -51,14 +61,14 @@
 		<!-- 	<div class="breadcrumb-home col-md-12 rounded-0 text-center text-white" ng-if="product.productList.length">
 				{{product.category}}
 			</div> -->
-			<card dir-paginate="item in product.productList | orderBy: orderByCustom | itemsPerPage: itemPerPage " pagination-id="product.tipo.tipo"
+			<card dir-paginate="item in product.productList | orderBy: orderByCustom | itemsPerPage: itemPerPage " pagination-id="product.category"
 				  class="col-md-3 col-sm-6 card-animation"
 				  product="item"
 				  detail="goToDetail(item.idProduto)"
 				  action="addProduct(item)">
 			</card>
 			<div class="col-md-12 py-0 rounded-0 text-center text-white" ng-if="product.productList.length > itemPerPage">
-				<dir-paginations-controls class="mx-auto" pagination-id="product.tipo.tipo"></dir-pagination-controls>
+				<dir-pagination-controls class="mx-auto" pagination-id="product.category"></dir-pagination-controls>
 			</div>
 		</div>
 	</div>

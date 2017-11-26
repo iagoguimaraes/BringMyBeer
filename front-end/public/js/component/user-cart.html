@@ -9,7 +9,7 @@
 	    <tr class="thead-dark">
 	      <th scope="col">Minhas Beers</th>
 	      <th scope="col"></th>
-	      <th scope="col"></th>
+	      <th scope="col" class="descricao"></th>
 	      <!-- <th scope="col"></th> -->
 	      <th scope="col" class="text-right">
 	      	<span ng-if="subTotal">
@@ -21,11 +21,11 @@
   	<tbody class="border bg-white">
 	    <tr  ng-repeat="product in products">
 		    <td>
-		      	<img src="{{product.foto[0].path}}" width=60 class="img-circle" />
-		      	{{product.produto}}
+		      	<img src="{{product.foto.path}}" width=60 alt="{{product.produto}}" />
+		      	<!-- {{product.produto}} -->
 		    </td>
-			<td>
-		      	{{product.descricao}}
+			<td class="descricao">
+		      	{{product.descricao | limitTo: 40}}...
 		    </td>
 		    <td>
 		      	{{(product.preco * product.quantidade * (1-(product.desconto/100) || 1)) | currency : 'R$' : 2}}
@@ -39,15 +39,15 @@
 				  		   ng-model="product.quantidade" 
 				  		   ng-change="getTotal(product)"
 				  		   type="text" 
-				  		   class="form-control text-white text-center bg-dark" 
+				  		   class="form-control text-white text-center bg-dark px-0" 
 				  		   aria-label="Amount (to the nearest dollar)"
 				  		   ng-disabled="!controls">
 
 				  	<span class="input-group-addon bg-white border-0" ng-show="controls">
 				  		<button class="btn btn-outline-danger" ng-click="decrement(product)">-</button>
 				  	</span>
-				  	<button type="button" class="btn btn-danger" ng-click="removeProduct(product)" ng-show="remove">
-				  		<i class="fa fa-trash" aria-hidden="true"></i>
+				  	<button type="button" class="btn btn-danger position-relative" ng-click="removeProduct(product)" ng-show="remove">
+				  		<i class="fa fa-trash" aria-hidden="true" style="top: 30%"></i>
 				  	</button>
 				</div>
 		    </td>
@@ -58,3 +58,10 @@
 	<a href="#" ng-click="action()"
 	   class="btn btn-success rounded-0 col-md-12">{{buttonText}}</a>
 </div>
+<style>
+	@media screen and (max-width: 762px){
+		.descricao{
+			display: none;
+		}
+	}
+</style>

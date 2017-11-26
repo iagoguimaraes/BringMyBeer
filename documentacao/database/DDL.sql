@@ -71,7 +71,7 @@ drop table if exists estoque;
 create table estoque(
  id_estoque int primary key auto_increment
 ,quantidade int
-,data datetime
+,data_estoque datetime
 ,id_produto int 
 ,constraint fk_estoque_produto foreign key (id_produto) references produto(id_produto)
 );
@@ -95,7 +95,7 @@ create table endereco(
 ,bairro varchar(150)
 ,cidade varchar(150)
 ,estado varchar(2)
-,cep int
+,cep varchar(9)
 ,principal int
 ,id_cliente int 
 ,constraint fk_endereco_cliente foreign key (id_cliente) references cliente(id_cliente)
@@ -104,7 +104,7 @@ create table endereco(
 drop table if exists venda;
 create table venda(
  id_venda int primary key auto_increment
-,data datetime
+,data_venda datetime
 ,confirmado int
 ,cancelado int
 ,id_cliente int 

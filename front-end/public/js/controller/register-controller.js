@@ -21,7 +21,7 @@ angular.module('bringmybeer').controller('RegisterController', ['$scope', 'userS
 
 	$scope.submit = function(){
 		var date = $scope.user.dataNascimento.split("/");
-		$scope.user.dataNascimento = Date.parse(new Date(date[2] + "-" + date[1] + "-"  + date[0] + "T00:00:00"));
+		$scope.user.dataNascimento = Date.parse(new Date(date[2] + "-" + date[1] + "-"  + date[0] + "T01:00:00"));
 		userService.saveUser($scope.user)
 				   .then(function(user){
 				   		$rootScope.lastRoute.length ? $rootScope.lastRoute : $rootScope.lastRoute = "user-cart";
@@ -36,7 +36,7 @@ angular.module('bringmybeer').controller('RegisterController', ['$scope', 'userS
 		userService.getAddres($scope.enderecos.cep)
 					  .then(function(address){
 					  	$scope.enderecos = {
-					  		cep: 04844150,//server side has to be String
+					  		cep: address.cep,//server side has to be String
 					  		logradouro: address.logradouro,
 					  		bairro: address.bairro,
 					  		cidade: address.localidade,

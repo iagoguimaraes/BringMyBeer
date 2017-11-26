@@ -21,9 +21,20 @@ angular.module('bringmybeerFactory', ['ngResource'])
     });
 }).factory('categoryResource', function($resource){
     // { params: { category: '@category', price: '@price', sale: '@sale', off: '@off'} }
-    return $resource('http://localhost:8080/BringMyBeer/webresources/produto/filter/:tipo', null, {
+    return $resource('http://localhost:8080/BringMyBeer/webresources/produto/filter', null, {
         'update': {
             method: 'PUT'
+        },
+        'save': {
+            method: 'POST',
+            params: {
+                marca: '@marca',
+                tipo: '@tipo',
+                valormax: '@valormax',
+                valormin: 0,
+                produto: '@produto'
+            },
+            isArray: true
         }
     });
 }).factory('searchResource', function($resource){

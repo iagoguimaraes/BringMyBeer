@@ -7,6 +7,7 @@ package com.bmb.controller;
 
 import com.bmb.dao.DaoMarca;
 import com.bmb.model.Marca;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,5 +15,15 @@ import java.util.List;
  * @author DocSpider01
  */
 public class ControllerMarca {
+    
+    private DaoMarca dao = new DaoMarca();
+    
+    public ArrayList<Marca> obter () throws Exception {
+        try {
+            return dao.obter();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
     
 }

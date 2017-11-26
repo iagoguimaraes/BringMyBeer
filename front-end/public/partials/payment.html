@@ -68,60 +68,11 @@
 			</user-data>
 		</div>
    	</div>
-
 	<div class="col-md-4">
 		<div class="card rounded-0">
 			<div class="card-header rounded-0 text-white" style="background: #212529">
 				<h5>Forma de Pagamento</h5>
 			</div>
-
-	  		<!-- <a class="btn btn-warning col-md-12 rounded-0 mb-2" 
-	  		     data-toggle="collapse" 
-	  		     href="#" 
-	  		     aria-expanded="false" 
-	  		     aria-controls="collapseExample"
-	  		     ng-click="changePayment()">
-			    Deseja Pagar em {{type !='Boleto' ? 'Cartão de crédito' : 'Boleto' }}?
-			</a>
-			<div class=" px-2 py-3 mx-auto" ng-if="type!='Cartão de crédito'">
-			    <div class="content">
-			    	<div class="form-group">
-			    		<label for="card">Número do cartão</label>
-			    		<input type="text" 
-			    		       name="card"
-			    		       ng-model="number"
-			    		       input-mask="{mask: '9999 9999 9999 9999 999'}"
-			    			   class="form-control col-md-10" />
-			    	</div>
-			    	<div class="form-group">
-			    		<label for="card">Nome impresso no cartão </label>
-			    		<input type="text" name="card" class="form-control" />
-			    	</div>
-			    	<div class="row">
-				    	<div class="col-md-4 col-sm-4">
-					    		<label>Vencimento</label>
-						    	<input class="form-control text-center col-md-12"
-						    		   ng-model="deadline"
-						    		   placeholder="M/A" 
-						    		   input-mask="{mask: '99/99'}" />
-				    	</div>
-				    	<div class="col-md-4">
-				    		<label for="parc">
-					    		Parcelas
-				    		</label>
-					    		<select class="form-control text-center col-md-12">
-					    			<option value="">1</option>
-					    			<option value="">2</option>
-					    			<option value="">3</option>
-					    			<option value="">4</option>
-					    		</select>
-				    	</div>
-			    	</div>
-			    </div>
-			</div>
-			<div class="pb-3 py-2 mx-auto" ng-if="type!='Boleto'">
-			  		Boleto Bancário
-			</div> -->
 			<nav class="nav nav-pills text-center w-100" id="myTab" role="tablist">
 			  <a class="nav-item nav-link active rounded-0 w-50" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Boleto</a>
 			  <a class="nav-item nav-link rounded-0 w-50" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Cartão</a>
@@ -210,8 +161,12 @@
 		    </tr>
 		  </tbody>
 		</table>
+		<div class="bg-dark py-2 w-100 text-center text-white" ng-if="total">
+			Valor com frete: {{ total | currency: 'R$' : 2}}
+		</div>
 	</div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-controller="AddressController">
   <div class="modal-dialog" role="document">
@@ -232,6 +187,32 @@
       <div class="modal-footer">
         <button class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         <button class="btn btn-primary" data-dismiss="modal" ng-click="insertAddress(newAddress)">Concluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal servicos-->
+<div class="modal fade" id="novoservico" tabindex="-1" role="dialog" aria-labelledby="novoservicolabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title" id="servicoModalLabel">Serviços de Entrega</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<div class="py-1 text-secondary" ng-if="fretes.length">
+			<div ng-repeat="frete in fretes" class="bg-light box-shadow my-1 py-3 px-3" ng-hide="frete.PrazoEntrega == 0">
+				Serviço: {{frete.Codigo===40010 ? 'SEDEX Varejo' : ''}} {{frete.Codigo===41106 ? 'PAC Varejo' : ''}} {{frete.Codigo===40215 ? 'SEDEX 10 Varejo' : ''}} <br>
+					Prazo de Entrega: <b> {{frete.PrazoEntrega}} Dias úteis</b> <br>
+					Valor: <b class="text-success"> {{frete.Valor}} </b> <br>
+				<div class="alert alert-danger rounded-0 my-2" ng-ig="frete.obsFim">
+					{{frete.obsFim}}
+				</div>
+				<button type="button" data-dismiss="modal" class="btn btn-success w-100 my-2 rounded-0" ng-click="selectFrete(frete)">Selecionar</button>
+			</div>
+		</div>
       </div>
     </div>
   </div>
