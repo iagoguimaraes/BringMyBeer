@@ -17,6 +17,7 @@ drop table if exists marca;
 create table marca(
  id_marca int primary key auto_increment
 ,marca varchar(150) 
+,ativo int
 );
 
 drop table if exists foto;
@@ -50,6 +51,7 @@ drop table if exists tipo_produto;
 create table tipo_produto(
  id_tipo_produto int primary key auto_increment
 ,tipo varchar(150)
+,ativo int
 );
 
 drop table if exists produto;
@@ -98,7 +100,8 @@ create table endereco(
 ,estado varchar(2)
 ,cep varchar(9)
 ,principal int
-,id_cliente int 
+,id_cliente int
+,ativo int
 ,constraint fk_endereco_cliente foreign key (id_cliente) references cliente(id_cliente)
 );
 
