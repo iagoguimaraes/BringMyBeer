@@ -158,23 +158,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `remover_endereco`(
 )
 begin
 
-SET foreign_key_checks = 0;
-
-DELETE FROM endereco WHERE id_endereco = _id_endereco;
-
-SET foreign_key_checks = 1;
-
-end$$
-DELIMITER ;
-
--------------------------------------------------------------------------
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `remover_endereco`(
- in _id_endereco int
-)
-begin
-
 update endereco
 set
 	ativo = 0
