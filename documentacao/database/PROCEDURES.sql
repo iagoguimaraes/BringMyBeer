@@ -449,4 +449,189 @@ limit
 
 end$$
 DELIMITER ;
+
+
+
+DELIMITER $$	
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `cadastrar_produto`(	 
+	in _produto varchar(150)
+	,in _preco double
+	,in _descricao varchar(1000)
+	,in _data_cadastro datetime
+	,in_ativo int
+	,in _id_marca int
+	,in_id_foto int
+ 	,in _id_tipo int	
+	)
+	begin
+
+
+	insert into produto(produto,preco,descricao,data_cadastro,ativo,id_marca,id_foto,id_tipo)
+	values (_produto,_preco,_descricao,_data_cadastro,_ativo,_id_marca,_id_foto,_id_tipo);
+
+	select LAST_INSERT_ID();
+	
+end$$
+DELIMITER ;	
+
+-------------------------------------------------------------------------
+
+DELIMITER $$	
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `alterar_produto`(
+	in _id_produto int
+	,in _produto varchar(150)
+	,in _preco double
+	,in _descricao varchar(1000)
+	,in _data_cadastro datetime
+	,in_ativo int
+	,in _id_marca int
+	,in_id_foto int
+ 	,in _id_tipo int
+	)
+	begin
+	
+
+	update produto
+	set
+	
+		produto = _produto
+       		,preço = _preco	
+       		,descricao = _descricao
+       		,data_cadastro = _data_cadastro	
+       		,ativo = _ativo		
+       		,id_marca = _id_marca	
+       		,id_foto= _id_foto	
+       		,id_tipo = _id_tipo	
+	where		
+		id_produto = _id_produto;			
+	
+end$$	
+DELIMITER ;		
+
+-------------------------------------------------------------------------
+DELIMITER $$
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `remover_produto`(
+	 in _id_produto int
+	)
+	begin
+
+	update produto
+	set
+		ativo = 0
+	where
+		id_produto = _id_produto;
+
+	select LAST_INSERT_ID();
+
+
+end$$
+DELIMITER ;
+
+-------------------------------------------------------------------------
+DELIMITER $$
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `cadastrar_marca`(
+	 in _marca varchar(150)
+	)
+	begin
+
+	insert into marca(marca)
+	values (_marca);
+
+	select LAST_INSERT_ID();
+
+
+end$$
+DELIMITER ;
+
+-------------------------------------------------------------------------
+DELIMITER $$
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `alterar_marca`(
+	 in _id_marca int
+	,in _marca varchar(150)
+	)
+	begin
+
+	update marca
+	set
+		marca = _marca
+	where
+		id_marca = _id_marca;
+
+
+end$$
+DELIMITER ;
+
+-------------------------------------------------------------------------
+DELIMITER $$
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `remover_marca`(
+	 in _id_marca int
+	)
+	begin
+
+	update marca
+	set
+		ativo = 0
+	where
+		id_marca = _id_marca;
+
+	select LAST_INSERT_ID();
+
+
+end$$
+DELIMITER ;
+
+——————————————————————————————————
+
+DELIMITER $$
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `cadastrar_tipo_produto`(
+	 in _tipo varchar(150)
+	)
+	begin
+
+	insert into tipo_produto(tipo)
+	values (_tipo);
+
+	select LAST_INSERT_ID();
+
+
+end$$
+DELIMITER ;
+
+-------------------------------------------------------------------------
+DELIMITER $$
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `alterar_tipo_produto`(
+	 in _id_tipo_produto int
+	,in _produto varchar(150)
+	)
+	begin
+
+	update tipo_produto
+	set
+		 tipo = _tipo
+	where
+		id_tipo_produto = _id_tipo_produto;
+
+
+end$$
+DELIMITER ;
+
+
+-------------------------------------------------------------------------
+
+DELIMITER $$
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `remover_tipo_produto`(
+	 in _id_tipo_produto int
+	)
+	begin
+
+	update tipo_produto
+	set
+		ativo = 0
+	where
+		id_tipo_produto = _id_tipo_produto;
+
+	select LAST_INSERT_ID();
+
+end$$
+DELIMITER ;
  
