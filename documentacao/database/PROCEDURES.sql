@@ -618,3 +618,15 @@ DELIMITER $$
 end$$
 DELIMITER ;
  
+DELIMITER $$
+	CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_quantidade_estoque`(
+	 in _id_produto int
+	)
+	begin
+
+        select
+        (select ifnull(sum(quantidade),0) from estoque where id_produto = _id_produto)
+	-(select ifnull(sum(quantidade),0) from item_venda where id_produto = _id_produto) quantidade;
+        
+end$$
+DELIMITER ;
