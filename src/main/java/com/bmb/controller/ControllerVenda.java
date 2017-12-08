@@ -41,6 +41,14 @@ public class ControllerVenda {
             }
 
             venda = daoVenda.cadastrar(venda);
+            
+            for (int i = 0; i < venda.getItems().size(); i++) {
+                int qtd = daoVenda.cadastrar(venda.getItems().get(i).getProduto().getIdProduto());
+                if(qtd < venda.getItems().get(i).getQuantidade()){
+                    throw new Exception("Quantidade inválida" + qtd + " Produto: " + venda.getItems().get(i).getProduto().getProduto());
+                }
+            }
+            
             for (int i = 0; i < venda.getItems().size(); i++) {
                 ItemVenda itemVenda = venda.getItems().get(i);
                 itemVenda = daoItemVenda.cadastrar(itemVenda, venda.getIdVenda());

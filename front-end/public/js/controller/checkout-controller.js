@@ -1,11 +1,16 @@
-angular.module('bringmybeer').controller('CheckoutController', function($scope, cartService, $rootScope, $window, $state){
+angular.module('bringmybeer').controller('CheckoutController', function($scope, cartService, $rootScope, $window, $state, alertService){
 	$scope.increment = function(p){
-		p.quantidade++;
-		cartService.getTotal();
+	    if(p.quantidadeEstoque > p.quantidade){
+			p.quantidade++;
+			cartService.getTotal();
+	    }else {
+	    	p.quantidade = p.quantidadeEstoque;
+	    	alertService.setMessage(7000, "você atingiu a quantidade máxima de produto", "Estoque");
+	    }
 	}
 
 	$scope.decrement = function(p){
-		if(p.quantidade)
+		if(p.quantidade > 1)
 			p.quantidade--;
 		cartService.getTotal();
 	}
@@ -14,9 +19,14 @@ angular.module('bringmybeer').controller('CheckoutController', function($scope, 
 		cartService.removeProduct(product);
 	}
 
-	$scope.getTotal = function(product){
-		if(product.quantidade < 0 ) { product.quantidade = 0; }
-		cartService.getTotal();
+	$scope.getTotal = function(p){
+	    if(p.quantidadeEstoque > p.quantidade){
+	    	p.quantidade < 1 ? p.quantidade = 1 : "" ;
+			cartService.getTotal();
+	    }else {
+	    	p.quantidade = p.quantidadeEstoque;
+	    	alertService.setMessage(7000, "você atingiu a quantidade máxima de produto", "Estoque");
+	    }
 	}
 
 	$scope.back = function(){

@@ -1,8 +1,11 @@
 angular.module('bringmybeer')
-.controller('HomeUserController', ['$scope', '$state', '$rootScope', 'productService', 'alertService','userService', 'SessionService',
-	function($scope, $state, $rootScope, productService, alertService, userService, SessionService){
+.controller('HomeUserController', ['$scope', '$state', '$rootScope', 'productService', 'alertService','userService', 'SessionService', '$filter',
+	function($scope, $state, $rootScope, productService, alertService, userService, SessionService, $filter){
 	$scope.disable = true;
-	
+	$rootScope.user.dataNascimento = new Date($rootScope.user.dataNascimento);
+	// $rootScope.user.dataNascimento = new Date(Date.UTC(2015, 0, 28, 4, 0, 0));
+	// var date = new Date(Date.UTC(2015, 0, 28, 4, 0, 0));
+
 	$scope.logout = function(){
 		SessionService.logout();
 	}

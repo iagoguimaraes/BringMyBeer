@@ -2,7 +2,7 @@
   <div class="off bg-dark" ng-if="product.desconto > 0">
   	<div class="text-center text-white">
       Desc <br>
-      {{product.desconto}}%
+      {{product.desconto.percentual}}%
     </div>
   </div>
   <img class="card-img-top" ng-click="detail()" src="{{product.foto.path}}" alt="Card image cap">
@@ -13,10 +13,11 @@
     <div class="body-bottom">
       <p class="text-secondary" >
         <p class="card-text" ng-click="detail()">{{product.descricao | limitTo: 70}}...</p>
-        <span ng-class="{'valid-off mr-1': off > 0}">{{product.preco | currency : 'R$' : 2}}</span> 
-        <span ng-if="off > 0" class="text-success"> por apenas {{product.preco * (1-(off/100)) | currency: 'R$' : 2}}</span> 
+        <span ng-class="{'valid-off mr-1': product.desconto.percentual > 0}">{{product.preco | currency : 'R$' : 2}}</span> 
+        <span ng-if="product.desconto.percentual > 0" class="text-success"> por apenas {{product.preco * (1-(product.desconto.percentual/100)) | currency: 'R$' : 2}}</span> 
       </p>
-    	<button type="button" ng-click="action()" class="btn btn-warning">Adicionar</button>
+    	<button type="button" ng-click="action()" class="btn btn-warning" ng-if="product.quantidadeEstoque >= 1">Adicionar</button>
+      <div class="btn btn-info w-75 mx-auto rounded-0" ng-if="product.quantidadeEstoque < 1">Produto indisponivel</button>
    	</div>
   </div>
 </div> 

@@ -5,6 +5,7 @@
  */
 package com.bmb.dao;
 
+import com.bmb.model.Desconto;
 import com.bmb.model.Produto;
 import java.sql.Connection;
 import java.sql.Date;
@@ -85,12 +86,35 @@ public class DaoProduto {
                         rs.getBoolean("ativo"),
                         daoTipo.obter(rs.getInt("id_tipo_produto")),
                         daoMarca.obter(rs.getInt("id_marca")),
-                        daoFoto.obter(rs.getInt("id_foto")));
+                        daoFoto.obter(rs.getInt("id_foto")),
+                        obter_desconto(rs.getInt("id_produto")),
+                        obterEstoque(rs.getInt("id_produto"))
+                );
             }
             stmt.close();
             conn.close();
 
             return produto;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    public int obterEstoque(int id) throws Exception {
+        try {
+            Connection conn = SQLConnection.getConexao();
+            String sql = "call obter_quantidade_estoque(?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, id);
+           
+            ResultSet rs = stmt.executeQuery();
+            rs.last();
+            int quantidade  = rs.getInt(1);
+            
+            stmt.close();
+            conn.close();
+            return quantidade;
         } catch (Exception e) {
             throw e;
         }
@@ -114,7 +138,9 @@ public class DaoProduto {
                         rs.getBoolean("ativo"),
                         daoTipo.obter(rs.getInt("id_tipo_produto")),
                         daoMarca.obter(rs.getInt("id_marca")),
-                        daoFoto.obter(rs.getInt("id_foto"))
+                        daoFoto.obter(rs.getInt("id_foto")),
+                        obter_desconto(rs.getInt("id_produto")),
+                        obterEstoque(rs.getInt("id_produto"))
                 ));
             }
             stmt.close();
@@ -144,7 +170,9 @@ public class DaoProduto {
                         rs.getBoolean("ativo"),
                         daoTipo.obter(rs.getInt("id_tipo_produto")),
                         daoMarca.obter(rs.getInt("id_marca")),
-                        daoFoto.obter(rs.getInt("id_foto"))
+                        daoFoto.obter(rs.getInt("id_foto")),
+                        obter_desconto(rs.getInt("id_produto")),
+                        obterEstoque(rs.getInt("id_produto"))
                 ));
             }
             stmt.close();
@@ -155,7 +183,32 @@ public class DaoProduto {
             throw e;
         }
     }
-
+    
+    public Desconto obter_desconto(int id) throws Exception {
+        try {
+            Connection conn = SQLConnection.getConexao();
+            String sql = "call obter_desconto_by_produto(?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+           
+            ResultSet rs = stmt.executeQuery();
+            Desconto d = new Desconto();
+            while (rs.next()) {                
+                d.setDataFinal(rs.getDate("data_final"));
+                d.setDataInicial(rs.getDate("data_inicial"));
+                d.setPercentual(rs.getInt("percentual"));
+                d.setIdDesconto(rs.getInt("id_produto"));
+            }
+            
+            stmt.close();
+            conn.close();
+            return d;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    
     public ArrayList<Produto> obter(String produto, String tipo, String marca, double vlrmin, double vlrmax) throws Exception {
         try {
             ArrayList<Produto> produtos = new ArrayList<Produto>();
@@ -180,7 +233,9 @@ public class DaoProduto {
                         rs.getBoolean("ativo"),
                         daoTipo.obter(rs.getInt("id_tipo_produto")),
                         daoMarca.obter(rs.getInt("id_marca")),
-                        daoFoto.obter(rs.getInt("id_foto"))
+                        daoFoto.obter(rs.getInt("id_foto")),
+                        obter_desconto(rs.getInt("id_produto")),
+                        obterEstoque(rs.getInt("id_produto"))
                 ));
             }
             stmt.close();
@@ -210,7 +265,9 @@ public class DaoProduto {
                         rs.getBoolean("ativo"),
                         daoTipo.obter(rs.getInt("id_tipo_produto")),
                         daoMarca.obter(rs.getInt("id_marca")),
-                        daoFoto.obter(rs.getInt("id_foto"))
+                        daoFoto.obter(rs.getInt("id_foto")),
+                        obter_desconto(rs.getInt("id_produto")),
+                        obterEstoque(rs.getInt("id_produto"))
                 ));
             }
             stmt.close();
@@ -240,7 +297,9 @@ public class DaoProduto {
                         rs.getBoolean("ativo"),
                         daoTipo.obter(rs.getInt("id_tipo_produto")),
                         daoMarca.obter(rs.getInt("id_marca")),
-                        daoFoto.obter(rs.getInt("id_foto"))
+                        daoFoto.obter(rs.getInt("id_foto")),
+                        obter_desconto(rs.getInt("id_produto")),
+                        obterEstoque(rs.getInt("id_produto"))
                 ));
             }
             stmt.close();

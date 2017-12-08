@@ -41,15 +41,7 @@ public class Desconto {
         this.dataFinal = dataFinal;
     }
 
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
     private double percentual;
     private Date dataInicial;
     private Date dataFinal;
-    private Produto produto;
 }

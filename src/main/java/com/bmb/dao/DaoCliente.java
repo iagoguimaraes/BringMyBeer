@@ -27,8 +27,8 @@ public class DaoCliente {
 
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getSobrenome());
-            stmt.setDate(3, cliente.getDataNascimento());
-            stmt.setDate(4, cliente.getDataCadastro());
+            stmt.setDate(3, new java.sql.Date (cliente.getDataNascimento().getTime()));
+            stmt.setDate(4, new java.sql.Date (cliente.getDataCadastro().getTime()));
             stmt.setString(5, cliente.getCpf());
             stmt.setString(6, cliente.getEmail());
             stmt.setString(7, cliente.getSenha());
@@ -60,8 +60,8 @@ public class DaoCliente {
             stmt.setInt(1, cliente.getIdCliente());
             stmt.setString(2, cliente.getNome());
             stmt.setString(3, cliente.getSobrenome());
-            stmt.setDate(4, cliente.getDataNascimento());
-            stmt.setDate(5, cliente.getDataCadastro());
+            stmt.setDate(4, new java.sql.Date (cliente.getDataNascimento().getTime()));
+            stmt.setDate(5, new java.sql.Date (cliente.getDataCadastro().getTime()));
             stmt.setString(6, cliente.getCpf());
             stmt.setString(7, cliente.getEmail());
             stmt.setString(8, cliente.getSenha());

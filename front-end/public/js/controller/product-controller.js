@@ -47,7 +47,6 @@ angular.module('bringmybeer').controller('ProductController',
 		$state.go('checkout');
 	}
 
-
 	// $scope.goToDetail = function ( path ) {
 	//   $state.go( 'product-detail', {id: path});
 	// };

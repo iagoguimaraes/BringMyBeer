@@ -1,23 +1,7 @@
-select 
-     v.id_venda
-    ,v.data
-    ,f.forma_pagamento
-    ,p.produto
-    ,i.quantidade
-    ,i.preco
-from 
-	venda v
-    inner join forma_pagamento f
-		on f.id_forma_pagamento = v.id_forma_pagamento
-	inner join item_venda i
-		on i.id_venda = v.id_venda
-	inner join produto p
-		on p.id_produto = i.id_produto
-where
-    v.id_venda = 1
 
 
-/*tipo*/
+
+
 
 INSERT INTO tipo_produto(tipo)
 VALUES ('CERVEJAS'),('VINHOS'),('OUTROS');
@@ -68,3 +52,28 @@ VALUES
 ('Copo de Cristal Bohemia Pale Ale 300ml', 22.90, 'A Cervejaria Bohemia pensou em todos os detalhes para tornar sua experiência especial. Muito superior que os copos de cerveja de vidro tradicionais, conheça o Copo de Cristal Bohemia 838 Pale Ale 300ml, do estilo Pint (Nonic), muito famoso nos Pubs Ingleses e Irlandeses, foi idealizado para comportar boas doses de cerveja.', now(), true, 8, 9, 3),
 ('Cerveja Brahma Extra Marzen Oktoberfest 355ml - Caixa com 6 unidades', 20.90, 'A Cerveja Budweiser 600ml é uma Standard American Lager de sabor leve, cor clara e aroma discreto.A Cerveja Brahma Extra Marzen Oktoberfest 355ml traz consigo a tradição alemã, de cor acobreada, sabor refrescante com notas maltadas e teor alcoólico de 6%. ', now(), true, 9, 10, 1),
 ('Cerveja Corona Extra 355ml Caixa com 06 unidades', 35.90, 'A Corona é patrocinadora oficial da WSL e criou uma linha de produtos exclusiva para você acompanhar as etapas do maior campeonato de surf do mundo em boa companhia. Mergulhe em um universo de sensações.', now(), true, 10, 11, 1);
+
+
+/*ESTOQUE*/
+
+INSERT INTO estoque(quantidade, data_estoque, id_produto) 
+       VALUES (30, now(), 1),
+        (10, now(), 2),
+        (5, now(), 3),
+        (0, now(), 4),
+        (3, now(), 5),
+        (50, now(), 6),
+        (100, now(), 7),
+        (10, now(), 8),
+        (40, now(), 9),
+        (40, now(), 10),
+        (40, now(), 11)
+
+
+/*DESCONTOS*/
+INSERT INTO desconto(percentual, data_inicial, data_final, id_produto) 
+       VALUES (30, now(), '2017-12-31', 1),
+              (10, now(), '2017-12-31', 4),
+              (40, now(), '2017-12-31', 5),
+              (13, now(), '2017-12-31', 10), 
+              (60, now(), '2017-12-31', 11);

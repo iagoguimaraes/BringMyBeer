@@ -46,7 +46,27 @@ public class DaoVenda {
         }
     }
     
-        public Venda obter(int idVenda) throws Exception {
+    public int cadastrar(int id) throws Exception {
+        try {
+            Connection conn = SQLConnection.getConexao();
+            String sql = "call obter_quantidade_estoque(?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, id);
+           
+            ResultSet rs = stmt.executeQuery();
+            rs.last();
+            int quantidade  = rs.getInt(1);
+            
+            stmt.close();
+            conn.close();
+            return quantidade;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    public Venda obter(int idVenda) throws Exception {
         try {
             Venda venda = new Venda();
             Connection conn = SQLConnection.getConexao();
@@ -89,7 +109,7 @@ public class DaoVenda {
             while (rs.next()) {
                 vendas.add(new Venda(
                         rs.getInt("id_venda"),
-                        rs.getDate("data_venda"),
+                        (rs.getDate("data_venda")),
                         rs.getBoolean("confirmado"),
                         rs.getBoolean("cancelado"),
                         daoItemVenda.obter(rs.getInt("id_venda")),

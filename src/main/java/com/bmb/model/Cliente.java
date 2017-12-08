@@ -1,8 +1,8 @@
-
 package com.bmb.model;
 
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Cliente {
     private int idCliente;
@@ -14,7 +14,10 @@ public class Cliente {
         this.idCliente = idCliente;
         this.nome = nome;
         this.sobrenome = sobrenome;
-        this.dataNascimento = dataNascimento;
+        Calendar c = Calendar.getInstance();
+        c.setTime(dataNascimento);
+        c.add(Calendar.DATE, +1);
+        this.dataNascimento = c.getTime();
         this.dataCadastro = dataCadastro;
         this.cpf = cpf;
         this.email = email;

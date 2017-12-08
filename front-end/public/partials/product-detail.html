@@ -31,8 +31,8 @@
 		<hr>
 		<p>{{product.descricao}}</p>
 		<h5 class="text-secondary text-center py-4" >
-	        <span ng-class="{'valid-off mr-1': product.off > 0}">{{product.preco | currency : 'R$' : 2}}</span> 
-	        <span ng-if="product.off > 0" class="text-success"> por apenas {{product.preco * (1-(product.desconto/100) || 1) | currency: 'R$' : 2}}</span> 
+	        <span ng-class="{'valid-off mr-1': product.desconto.percentual > 0}">{{product.preco | currency : 'R$' : 2}}</span> 
+	        <span ng-if="product.desconto.percentual > 0" class="text-success"> por apenas {{product.preco * (1-(product.desconto.percentual/100) || 1) | currency: 'R$' : 2}}</span> 
       	</h5>
 		<div class="btn-group" style="width: 100%">
 			<button ng-click="buy(product)" style="width: 50%" class="btn btn-success">

@@ -400,14 +400,8 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obter_produto_desconto`()
 begin
 
-select
-	*
-from
-	desconto d
-    inner join produto p
-		on p.id_produto = d.id_produto
-where
-	data_final < now();
+select * from desconto d inner join produto p
+on p.id_produto = d.id_produto where d.data_final > now();
 
 end$$
 DELIMITER ;
@@ -630,3 +624,6 @@ DELIMITER $$
         
 end$$
 DELIMITER ;
+
+
+insert INTO desconto(percentual, data_inicial, data_final, id_produto) VALUES (50, now(), '2017-12-31', 1);

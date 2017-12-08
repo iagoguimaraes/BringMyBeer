@@ -28,7 +28,7 @@
 		      	{{product.descricao | limitTo: 40}}...
 		    </td>
 		    <td>
-		      	{{(product.preco * product.quantidade * (1-(product.desconto/100) || 1)) | currency : 'R$' : 2}}
+		      	{{(product.preco * product.quantidade * (1-(product.desconto.percentual/100) || 1)) | currency : 'R$' : 2}}
 		    </td>
 		    <td>
 		      	<div class="input-group bg-white">
@@ -42,7 +42,6 @@
 				  		   class="form-control text-white text-center bg-dark px-0" 
 				  		   aria-label="Amount (to the nearest dollar)"
 				  		   ng-disabled="!controls">
-
 				  	<span class="input-group-addon bg-white border-0" ng-show="controls">
 				  		<button class="btn btn-outline-danger" ng-click="decrement(product)">-</button>
 				  	</span>

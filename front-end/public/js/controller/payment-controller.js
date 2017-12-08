@@ -37,20 +37,18 @@ angular.module('bringmybeer').controller('PaymentController', ['$scope', 'produc
 			    		preco: item.price
 			    	}
 			    }),
-			    "formaPagamento": { idFormaPagamento: $scope.type === 'Boleto' ? 1 : 2},
+			    "formaPagamento": { idFormaPagamento: $scope.type === 'Boleto' ?  $scope.type = 1 :  $scope.type = 2},
 			    "cliente": {idCliente: SessionService.getSession().idCliente},
 			    "endereco": $scope.currentAddress
 		}
 
-
 		productService.buy(infoBuy)
-					  .then(function(data){
+					  .then(function(){
 					  	alertService.setMessage(7000, "realizada com sucesso", "Compra");
 					  	$state.go("user-orders");
 					  	cartService.clearAll();
 					  }).catch(function(error){
-					  	alertService.setMessage(7000, error.message, error.title);
-					  	console.log(error.error)
+					  	alertService.setMessage(7000, error.error.data.message, error.title);
 					  });
 		// $state.go(path);
 	}
@@ -93,7 +91,6 @@ angular.module('bringmybeer').controller('PaymentController', ['$scope', 'produc
 
 	$scope.selectFrete = function(frete){
 		$scope.total = $rootScope.subTotal + parseFloat(frete.Valor);
-		console.log($scope.total);
 		$scope.fretes = [];
 		$('#novoservico').modal('hide');
 	}

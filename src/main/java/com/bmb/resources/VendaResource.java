@@ -37,13 +37,13 @@ public class VendaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response buyProduct(Venda venda) {
         Properties p = new Properties();
-        p.setProperty("message", "venda realizada com sucesso");
         try {
             ctrlVenda.cadastrarVenda(venda);
+            p.setProperty("message", "venda realizada com sucesso");
             return Response.ok().entity(p).build();
         } catch (Exception e) {
-            System.out.println(e);
-            return Response.ok().entity(null).build();
+            p.setProperty("message", e.getMessage());
+            return Response.serverError().entity(p).status(401).build();
         }
         //System.out.println("consultou");
     }

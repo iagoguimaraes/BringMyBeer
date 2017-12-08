@@ -179,4 +179,5 @@ public class ProductResource {
             return Response.status(Response.Status.NOT_MODIFIED).build();
         }
     }
+    
 }

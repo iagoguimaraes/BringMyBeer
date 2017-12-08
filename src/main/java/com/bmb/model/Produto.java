@@ -5,11 +5,12 @@ import java.util.Date;
 
 public class Produto {
     public int idProduto;
-
+    private int quantidadeEstoque;
+    
     public Produto() {
     }
 
-    public Produto(int idProduto, String produto, double preco, String descricao, Date dataCadastro, boolean ativo, Tipo tipo, Marca marca, Foto foto) {
+    public Produto(int idProduto, String produto, double preco, String descricao, Date dataCadastro, boolean ativo, Tipo tipo, Marca marca, Foto foto, Desconto d, int q) {
         this.idProduto = idProduto;
         this.produto = produto;
         this.preco = preco;
@@ -19,8 +20,18 @@ public class Produto {
         this.tipo = tipo;
         this.marca = marca;
         this.foto = foto;
+        this.desconto = d;
+        this.quantidadeEstoque = q;
     }
 
+    public int getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+
+    public void setQuantidadeEstoque(int quantidade) {
+        this.quantidadeEstoque = quantidade;
+    }
+    
     public int getIdProduto() {
         return idProduto;
     }
@@ -92,6 +103,15 @@ public class Produto {
     public void setFoto(Foto foto) {
         this.foto = foto;
     }
+
+    public Desconto getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(Desconto desconto) {
+        this.desconto = desconto;
+    }
+    
     private String produto;
     private double preco;
     private String descricao;
@@ -100,4 +120,5 @@ public class Produto {
     private Tipo tipo;
     private Marca marca;
     private Foto foto;
+    private Desconto desconto;
 }
